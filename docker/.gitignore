@@ -1,0 +1,6 @@
+mongodb/data/
+mysql/
+postgres/
+redis/
+backup/
+.env

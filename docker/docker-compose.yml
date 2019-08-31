@@ -1,0 +1,51 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:${POSTGRES_VERSION}
+    container_name: ${CONTAINER_NAME_PREFIX}postgres
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - ${POSTGRES_DIR}:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_ROOT_PASSWORD}
+  redis:
+    image: redis:${REDIS_VERSION}
+    container_name: ${CONTAINER_NAME_PREFIX}redis
+    command: --requirepass ${REDIS_ROOT_PASSWORD}
+    ports:
+      - ${REDIS_PORT}:6379
+    volumes:
+      - ${REDIS_DIR}:/data
+  mongodb:
+    image: mongo:${MONGODB_VERSION}
+    container_name: ${CONTAINER_NAME_PREFIX}mongodb
+    ports:
+      - ${MONGODB_PORT}:27017
+    volumes:
+      - ${MONGODB_DIR}:/data/db
+      - ${MONGODB_CONFIGDB}:/data/configdb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
+  api:
+    image: tingkai/prototype:${API_VERSION}
+    container_name: ${CONTAINER_NAME_PREFIX}api
+    ports:
+      - ${API_PORT}:8080
+    depends_on:
+      - postgres
+      - mongodb
+      - redis
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_ROOT_PASSWORD}
+#  tomcat:
+#    image: tomcat:${TOMCAT_VERSION}
+#    container_name: ${CONTAINER_NAME_PREFIX}tomcat
+#    ports:
+#      - ${TOMCAT_PORT}:8080
+#    volumes:
+#      - ${TOMCAT_DIR}:/usr/local/tomcat
