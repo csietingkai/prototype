@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 REDIS_PACKAGES=redis-tools
 MONGO_PACKAGES=mongo-tools
