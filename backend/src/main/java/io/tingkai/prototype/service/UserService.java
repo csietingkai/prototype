@@ -26,6 +26,15 @@ public class UserService {
 		}
 	}
 
+	public User get(String account) {
+		Optional<User> user = this.userDao.findByAccount(account);
+		if (user.isPresent()) {
+			return user.get();
+		} else {
+			return null;
+		}
+	}
+
 	public List<User> getAll() {
 		Iterable<User> userIterable = this.userDao.findAll();
 
