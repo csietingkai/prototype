@@ -35,14 +35,10 @@ declare -a commands=("localhost" "build" "deploy" "backup")
 commit_date="$(git show -s --format=%ci --date=short)"
 api_version=v"$(git log -1 --pretty=format:%h)"-"$(echo $commit_date | cut -d' ' -f1 | tr "-" .)"
 
-
 if [ "$1" = ${commands[0]} ]; then
-	cd docker
-	docker-compose down
-	docker image rm tingkai/prototype:latest
-	docker-compose up -d
+	container_prefix=prototype
+	docker container start $container_prefix-postgres $container_prefix-mongodb $container_prefix-redis
 	docker container ls -a
-	cd ..
 
 elif [ "$1" = ${commands[1]} ]; then
 	container_name=prototype-api
