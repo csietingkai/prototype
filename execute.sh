@@ -35,12 +35,12 @@ declare -a commands=("localhost" "build" "deploy" "backup")
 commit_date="$(git show -s --format=%ci --date=short)"
 api_version=v"$(git log -1 --pretty=format:%h)"-"$(echo $commit_date | cut -d' ' -f1 | tr "-" .)"
 
-if [ "$1" = ${commands[0]} ]; then
+if [ "$1" = 'localhost' ]; then
 	container_prefix=prototype
 	docker container start $container_prefix-postgres $container_prefix-mongodb $container_prefix-redis
 	docker container ls -a
 
-elif [ "$1" = ${commands[1]} ]; then
+elif [ "$1" = 'build' ]; then
 	container_name=prototype-api
 	cd docker
 	docker container stop $container_name
@@ -51,14 +51,14 @@ elif [ "$1" = ${commands[1]} ]; then
 	mvn clean install package
 	docker build . --rm --tag=$image_name:latest --tag=$image_name:$api_version
 	docker push $image_name:latest
-	docker push $image_name:$version
+	docker push $image_name:$api_version
 	docker image rm $image_name:latest $image_name:$api_version
 	cd ..
 
-elif [ "$1" = ${commands[2]} ]; then
+elif [ "$1" = 'deploy' ]; then
 	echo ${commands[2]}
 
-elif [ "$1" = ${commands[3]} ]; then
+elif [ "$1" = 'backup' ]; then
 	cd docker
 	timestamp=$(date +%y%m%d-%h%m%s)
 	host=127.0.0.1
@@ -94,6 +94,14 @@ elif [ "$1" = ${commands[3]} ]; then
 
 	cd ..
 
+elif [ "$1" = 'backend' ]; then
+	cd backend
+	mvn clean install package spring-boot:run
+
+elif [ "$1" = 'frontend' ]; then
+	cd frontend
+	npm start
+
 else
 	echo ""
 	echo "usage: ./execute.sh [ARGS]"
@@ -103,6 +111,8 @@ else
 	echo -e "  build \t\t use docker build backend image and use npm build frontend target"
 	echo -e "  deploy \t\t deploy backend and frontend to docker"
 	echo -e "  backup \t\t backup db data"
+	echo -e "  backend \t\t start backend localhost"
+	echo -e "  frontend \t\t start frontend localhost"
 fi
 
 exit 0
