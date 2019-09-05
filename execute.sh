@@ -46,21 +46,19 @@ elif [ "$1" = ${commands[1]} ]; then
 	docker container stop $container_name
 	docker container rm $container_name
 	cd ..
+	image_name=tingkai/prototype-backend
 	cd backend
 	mvn clean install package
-	docker build . --rm --tag=tingkai/prototype --tag=tingkai/prototype:$version
-	docker push tingkai/prototype:latest
-	docker push tingkai/prototype:$version
-	docker image rm tingkai/prototype:$version tingkai/prototype:latest
-	cd ..
-	cd docker
-	docker-compose up -d
+	docker build . --rm --tag=$image_name:latest --tag=$image_name:$api_version
+	docker push $image_name:latest
+	docker push $image_name:$version
+	docker image rm $image_name:latest $image_name:$api_version
 	cd ..
 
 elif [ "$1" = ${commands[2]} ]; then
 	echo ${commands[2]}
 
-elif [ "$1" = ${commands[2]} ]; then
+elif [ "$1" = ${commands[3]} ]; then
 	cd docker
 	timestamp=$(date +%y%m%d-%h%m%s)
 	host=127.0.0.1
@@ -101,9 +99,10 @@ else
 	echo "usage: ./execute.sh [ARGS]"
 	echo ""
 	echo "ARGS:"
-	echo -e "  localhost \t\t start localhost services, include db in docker, backend frontend in localhost"
+	echo -e "  localhost \t\t start localhost services, include db in docker"
 	echo -e "  build \t\t use docker build backend image and use npm build frontend target"
 	echo -e "  deploy \t\t deploy backend and frontend to docker"
+	echo -e "  backup \t\t backup db data"
 fi
 
 exit 0
