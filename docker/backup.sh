@@ -27,7 +27,7 @@ echo "redis dumped"
 ## backup mongodb
 MONGO_CLI=/usr/bin/mongodump
 MONGO_DUMP_FILE=$BACKUP_DIR/mongo-dump-$TIMESTAMP.archive
-$MONGO_CLI -h--username $MONGODB_ROOT_USERNAME --password $MONGODB_ROOT_PASSWORD --authenticationDatabase=admin --forceTableScan --archive=$MONGO_DUMP_FILE
+$MONGO_CLI -h $HOST --username $MONGODB_ROOT_USERNAME --password $MONGODB_ROOT_PASSWORD --authenticationDatabase=admin --forceTableScan --archive=$MONGO_DUMP_FILE
 echo "mongodb dumped"
 
 ## backup postgres
