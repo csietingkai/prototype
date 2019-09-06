@@ -18,7 +18,7 @@ class App extends React.Component {
   }
 
 	render() {
-		const items = this.state.users.map(user => <li>{user.account}</li>);
+		const items = this.state.users.map((user, idx) => <li key={idx}>{user.account}</li>);
 
 		return (
 			<div>
