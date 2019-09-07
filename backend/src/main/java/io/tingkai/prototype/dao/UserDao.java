@@ -9,5 +9,5 @@ import io.tingkai.prototype.entity.User;
 
 public interface UserDao extends CrudRepository<User, UUID> {
 
-	Optional<User> findByAccount(String account);
+	Optional<User> findByName(String name);
 }

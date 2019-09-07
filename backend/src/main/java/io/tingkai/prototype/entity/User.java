@@ -3,6 +3,8 @@ package io.tingkai.prototype.entity;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,21 +13,25 @@ import javax.persistence.Table;
 public class User {
 
 	@Id
-	UUID id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private UUID id;
 
-	String account;
+	private String name;
 
-	String pwd;
+	private String pwd;
+
+	private String role;
 
 	public User() {
-
+		super();
 	}
 
-	public User(UUID id, String account, String pwd) {
+	public User(UUID id, String name, String pwd, String role) {
 		super();
 		this.id = id;
-		this.account = account;
+		this.name = name;
 		this.pwd = pwd;
+		this.role = role;
 	}
 
 	public UUID getId() {
@@ -36,12 +42,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getAccount() {
-		return account;
+	public String getName() {
+		return name;
 	}
 
-	public void setAccount(String account) {
-		this.account = account;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPwd() {
@@ -50,5 +56,13 @@ public class User {
 
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 }
