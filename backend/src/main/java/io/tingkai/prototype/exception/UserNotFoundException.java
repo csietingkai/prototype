@@ -1,4 +1,4 @@
-package io.tingkai.prototype.security;
+package io.tingkai.prototype.exception;
 
 @SuppressWarnings("serial")
 public class UserNotFoundException extends Exception {

@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import io.tingkai.prototype.entity.enums.Role;
+import io.tingkai.prototype.exception.IllegalRoleException;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -26,12 +29,12 @@ public class User {
 		super();
 	}
 
-	public User(UUID id, String name, String pwd, String role) {
+	public User(UUID id, String name, String pwd, String role) throws IllegalRoleException {
 		super();
 		this.id = id;
 		this.name = name;
 		this.pwd = pwd;
-		this.role = role;
+		this.setRole(role);
 	}
 
 	public UUID getId() {
@@ -62,7 +65,16 @@ public class User {
 		return role;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setRole(String role) throws IllegalRoleException {
+		switch (role) {
+		case Role.ADMIN:
+		case Role.USER:
+		case Role.NONE:
+			this.role = role;
+			break;
+
+		default:
+			throw new IllegalRoleException();
+		}
 	}
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import io.tingkai.prototype.dao.UserDao;
 import io.tingkai.prototype.entity.User;
-import io.tingkai.prototype.security.UserNotFoundException;
+import io.tingkai.prototype.exception.UserNotFoundException;
 
 @Service
 public class UserService {
