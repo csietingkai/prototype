@@ -1,7 +1,9 @@
 package io.tingkai.prototype.config;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+@Configuration
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 }
