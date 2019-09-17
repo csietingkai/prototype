@@ -5,6 +5,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
+import io.tingkai.prototype.controller.AuthController;
+
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -13,7 +15,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().disable()
 			.csrf().disable()
 			.authorizeRequests()
-			.antMatchers("/login").permitAll()
+			.antMatchers(AuthController.LOGIN_PATH).permitAll()
 			.anyRequest().authenticated().and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}

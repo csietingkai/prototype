@@ -10,7 +10,9 @@ import io.tingkai.prototype.security.AuthToken;
 @RestController
 public class AuthController {
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public static final String LOGIN_PATH = "/login";
+
+	@RequestMapping(value = AuthController.LOGIN_PATH, method = RequestMethod.POST)
 	public AuthToken login(@RequestParam String username, @RequestParam String password) {
 		return null;
 	}
