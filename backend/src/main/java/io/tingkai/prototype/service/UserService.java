@@ -3,7 +3,7 @@ package io.tingkai.prototype.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import io.tingkai.prototype.dao.UserDao;
@@ -17,7 +17,7 @@ public class UserService {
 	private UserDao userDao;
 
 	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private PasswordEncoder bCryptPasswordEncoder;
 
 	public User findByName(String name) throws UserNotFoundException {
 		Optional<User> userOptional = this.userDao.findByName(name);
