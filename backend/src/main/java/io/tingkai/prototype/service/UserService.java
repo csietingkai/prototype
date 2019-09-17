@@ -19,8 +19,8 @@ public class UserService {
 	@Autowired
 	private PasswordEncoder bCryptPasswordEncoder;
 
-	public User findByName(String name) throws UserNotFoundException {
-		Optional<User> userOptional = this.userDao.findByName(name);
+	public User findByNameAndPwd(String name, String pwd) throws UserNotFoundException {
+		Optional<User> userOptional = this.userDao.findByNameAndPwd(name, pwd);
 		if (userOptional.isPresent()) {
 			return userOptional.get();
 		} else {

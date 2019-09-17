@@ -1,8 +1,10 @@
 package io.tingkai.prototype.security;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class AuthToken {
+@SuppressWarnings("serial")
+public class AuthToken implements Serializable {
 
 	String name;
 
