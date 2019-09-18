@@ -17,10 +17,11 @@ import io.tingkai.prototype.security.AuthTokenAuthenticationProvider;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Bean
-	public AuthTokenAuthenticationProvider authAuthenticationProvider() {
-		return new AuthTokenAuthenticationProvider();
-	}
+	@Autowired
+	private AuthTokenAuthenticationProvider authAuthenticationProvider;
+
+	@Autowired
+	private AuthTokenAuthenticationFilter authTokenAuthenticationFilter;
 
 	@Bean(name = "authenticationManager")
 	@Override
@@ -28,14 +29,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 
-	@Bean(name = "jwtFilter")
-	public AuthTokenAuthenticationFilter authTokenAuthenticationFilter() {
-		return new AuthTokenAuthenticationFilter();
-	}
-
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(this.authAuthenticationProvider());
+		auth.authenticationProvider(this.authAuthenticationProvider);
 	}
 
 	@Override
@@ -43,6 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().disable().csrf().disable().authorizeRequests().antMatchers(AuthController.LOGIN_PATH).permitAll()
 				.anyRequest().authenticated().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		http.addFilterBefore(this.authTokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(this.authTokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 }
