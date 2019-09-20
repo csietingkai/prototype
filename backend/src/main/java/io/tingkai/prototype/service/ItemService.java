@@ -56,6 +56,16 @@ public class ItemService {
 		}
 	}
 
+	public boolean delete(UUID id) {
+		try {
+			this.itemDao.deleteById(id);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	public boolean delete(Item item) {
 		try {
 			this.itemDao.delete(item);
