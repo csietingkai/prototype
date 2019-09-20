@@ -1,5 +1,6 @@
 import React from 'react';
-import axios from 'axios';
+import auth from 'api/auth';
+import item from 'api/item';
 import 'css/main.css';
 
 class App extends React.Component {
@@ -11,18 +12,10 @@ class App extends React.Component {
 	}
 
 	componentDidMount() {
-		const params= {
-			username: 'tingkai',
-			password: 'htkkoeoh'
-		}
-		axios.post('/api/login', null, {params}).then((response) => {
-			console.log(response);
-			const headers = {
-				'Access-Control-Allow-Headers': 'x-access-token',
-				'X-Auth-Token': response.data.tokenString
-			};
-			axios.get('/api/item/getAll', {headers}).then(items => {
-				console.log(items);
+		const username = 'tingkai';
+		const password = 'htkkoeoh';
+		auth.login(username, password).then((response) => {
+			item.getAll(response.data.tokenString).then(items => {
 				this.setState({
 					items: items.data
 				});
