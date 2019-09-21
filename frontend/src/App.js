@@ -1,7 +1,7 @@
 import React from 'react';
 import auth from 'api/auth';
 import item from 'api/item';
-import 'css/main.css';
+import 'assets/css/main.css';
 
 class App extends React.Component {
 	constructor() {
