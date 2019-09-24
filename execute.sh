@@ -33,7 +33,7 @@ fi
 declare -a commands=("localhost" "build" "deploy" "backup")
 
 commit_date="$(git show -s --format=%ci --date=short)"
-api_version=v"$(git log -1 --pretty=format:%h)"-"$(echo $commit_date | cut -d' ' -f1 | tr "-" .)"
+version=v"$(git log -1 --pretty=format:%h)"-"$(echo $commit_date | cut -d' ' -f1 | tr "-" .)"
 
 if [ "$1" = 'localhost' ]; then
 	container_prefix=prototype
@@ -41,18 +41,28 @@ if [ "$1" = 'localhost' ]; then
 	docker container ls -a
 
 elif [ "$1" = 'build' ]; then
-	container_name=prototype-api
+	backend_container_name=prototype-api
+	frontend_container_name=prototype-client
 	cd docker
-	docker container stop $container_name
-	docker container rm $container_name
+	docker container stop $backend_container_name
+	docker container rm $backend_container_name
+	docker container stop $frontend_container_name
+	docker container rm $frontend_container_name
 	cd ..
-	image_name=tingkai/prototype-backend
+	backend_image_name=tingkai/prototype-backend
 	cd backend
 	mvn clean install package
-	docker build . --rm --tag=$image_name:latest --tag=$image_name:$api_version
-	docker push $image_name:latest
-	docker push $image_name:$api_version
-	docker image rm $image_name:latest $image_name:$api_version
+	docker build . --rm --tag=$backend_image_name:latest --tag=$backend_image_name:$version
+	docker push $backend_image_name:latest
+	docker push $backend_image_name:$version
+	docker image rm $backend_image_name:latest $backend_image_name:$version
+	cd ..
+	frontend_image_name=tingkai/prototype-frontend
+	cd frontend
+	docker build . --rm --tag=$frontend_image_name:latest --tag=$frontend_image_name:$version
+	docker push $frontend_image_name:latest
+	docker push $frontend_image_name:$version
+	docker image rm $frontend_image_name:latest $frontend_image_name:$version
 	cd ..
 
 elif [ "$1" = 'deploy' ]; then
@@ -77,7 +87,7 @@ else
 	echo ""
 	echo "ARGS:"
 	echo -e "  localhost \t\t start localhost services, include db in docker"
-	echo -e "  build \t\t use docker build backend image and use npm build frontend target"
+	echo -e "  build \t\t use docker build backend and frontend image"
 	echo -e "  deploy \t\t deploy backend and frontend to docker"
 	echo -e "  backup \t\t backup db data"
 	echo -e "  backend \t\t start backend localhost"

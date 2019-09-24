@@ -29,23 +29,28 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGODB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
-#  api:
-#    image: tingkai/prototype-backend:${API_VERSION}
-#    container_name: ${CONTAINER_NAME_PREFIX}api
-#    ports:
-#      - ${API_PORT}:8080
-#    depends_on:
-#      - postgres
-#      - mongodb
-#      - redis
-#    environment:
-#      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres
-#      - SPRING_DATASOURCE_USERNAME=postgres
-#      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_ROOT_PASSWORD}
-#  tomcat:
-#    image: tomcat:${TOMCAT_VERSION}
-#    container_name: ${CONTAINER_NAME_PREFIX}tomcat
-#    ports:
-#      - ${TOMCAT_PORT}:8080
-#    volumes:
-#      - ${TOMCAT_DIR}:/usr/local/tomcat
+  api:
+    image: tingkai/prototype-backend:${API_VERSION}
+    container_name: ${CONTAINER_NAME_PREFIX}api
+    ports:
+      - ${API_PORT}:8080
+    depends_on:
+      - postgres
+      - mongodb
+      - redis
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_ROOT_PASSWORD}
+      - SPRING_DATASOURCE_MONGODB_URI=mongo://mongo:27017/test
+      - SPRING_DATASOURCE_MONGODB_USERNAME=${MONGODB_ROOT_USERNAME}
+      - SPRING_DATASOURCE_MONGODB_PASSWORD=${MONGODB_ROOT_PASSWORD}
+  client:
+    image: tingkai/prototype-frontend:${FRONTEND_VERSION}
+    container_name: ${CONTAINER_NAME_PREFIX}client
+    ports:
+      - ${FRONTEND_PORT}:3000
+    depends_on:
+      - api
+    environment:
+      - NODE_PATH=src/
