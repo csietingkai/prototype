@@ -1,6 +1,7 @@
 import React from 'react';
 import auth from 'api/auth';
 import item from 'api/item';
+import LoginPage from 'component/LoginPage'
 import 'assets/css/main.css';
 
 class App extends React.Component {
@@ -27,10 +28,7 @@ class App extends React.Component {
 		const items = this.state.items.map((item, idx) => <li key={idx}>{item.name} - ${item.price}</li>);
 
 		return (
-			<div>
-				<h1>Hello World!</h1>
-				<ul>{items}</ul>
-			</div>
+			<LoginPage />
 		)
 	}
 }
