@@ -25,8 +25,6 @@ class App extends React.Component {
 	}
 
 	render() {
-		const items = this.state.items.map((item, idx) => <li key={idx}>{item.name} - ${item.price}</li>);
-
 		return (
 			<LoginPage />
 		)
