@@ -59,5 +59,3 @@ services:
       - ${FRONTEND_PORT}:3000
     depends_on:
       - api
-    environment:
-      - NODE_PATH=src/
