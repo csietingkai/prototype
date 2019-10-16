@@ -35,21 +35,26 @@ declare -a commands=("localhost" "build" "deploy" "backup")
 commit_date="$(git show -s --format=%ci --date=short)"
 version=v"$(git log -1 --pretty=format:%h)"-"$(echo $commit_date | cut -d' ' -f1 | tr "-" .)"
 
+backend_image_name=tingkai/prototype-backend
+frontend_image_name=tingkai/prototype-frontend
+
+container_prefix=prototype
+backend_container_name=$container_prefix-api
+frontend_container_name=$container_prefix-client
+
 if [ "$1" = 'localhost' ]; then
-	container_prefix=prototype
-	docker container start $container_prefix-postgres $container_prefix-mongodb $container_prefix-redis
+	cd docker
+	docker-compose up -d postgres mongodb redis
 	docker container ls -a
+	cd ..
 
 elif [ "$1" = 'build' ]; then
-	backend_container_name=prototype-api
-	frontend_container_name=prototype-client
 	cd docker
 	docker container stop $backend_container_name
 	docker container rm $backend_container_name
 	docker container stop $frontend_container_name
 	docker container rm $frontend_container_name
 	cd ..
-	backend_image_name=tingkai/prototype-backend
 	cd backend
 	mvn clean install package
 	docker build . --rm --tag=$backend_image_name:latest --tag=$backend_image_name:$version
@@ -57,12 +62,13 @@ elif [ "$1" = 'build' ]; then
 	docker push $backend_image_name:$version
 	docker image rm $backend_image_name:latest $backend_image_name:$version
 	cd ..
-	frontend_image_name=tingkai/prototype-frontend
 	cd frontend
+	sed -i "s/localhost/api/g" package.json
 	docker build . --rm --tag=$frontend_image_name:latest --tag=$frontend_image_name:$version
 	docker push $frontend_image_name:latest
 	docker push $frontend_image_name:$version
 	docker image rm $frontend_image_name:latest $frontend_image_name:$version
+	git checkout -- package.json
 	cd ..
 
 elif [ "$1" = 'deploy' ]; then
@@ -81,6 +87,13 @@ elif [ "$1" = 'frontend' ]; then
 	cd frontend
 	npm start
 
+elif [ "$1" = 'clean' ]; then
+	cd docker
+	docker-compose stop
+	docker container rm $backend_container_name $frontend_container_name
+	docker image rm $backend_image_name:latest $frontend_image_name:latest
+	cd ..
+
 else
 	echo ""
 	echo "usage: ./execute.sh [ARGS]"
@@ -92,6 +105,7 @@ else
 	echo -e "  backup \t\t backup db data"
 	echo -e "  backend \t\t start backend localhost"
 	echo -e "  frontend \t\t start frontend localhost"
+	echo -e "  clean \t\t remove frontend and backend image and container"
 fi
 
 exit 0
