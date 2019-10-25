@@ -13,6 +13,7 @@ export default class LoginPage extends React.Component {
 		this.handleUsernameChanged = this.handleUsernameChanged.bind(this);
 		this.handlePasswordChanged = this.handlePasswordChanged.bind(this);
 		this.handleLoginClick = this.handleLoginClick.bind(this);
+		this.handleRegisterClick = this.handleRegisterClick.bind(this);
 	}
 
 	handleUsernameChanged(event) {
@@ -29,6 +30,12 @@ export default class LoginPage extends React.Component {
 
 	handleLoginClick() {
 		auth.login(this.state.username, this.state.password).then((response) => {
+			console.log(response);
+		});
+	}
+
+	handleRegisterClick() {
+		auth.register(this.state.username, this.state.password).then((response) => {
 			console.log(response);
 		});
 	}
@@ -49,6 +56,7 @@ export default class LoginPage extends React.Component {
 						</div>
 						<div className="loginBtn">
 							<button onClick={this.handleLoginClick}>LOGIN</button>
+							<button onClick={this.handleRegisterClick}>REGISTER</button>
 						</div>
 					</div>
 				</div>

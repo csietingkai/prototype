@@ -8,5 +8,13 @@ export default {
 				password
 			}
 		});
+	},
+	register(username, password) {
+		const user = {
+			name: username,
+			pwd: password,
+			role: 'USER'
+		};
+		return axios.post('/api/register', user);
 	}
 };
