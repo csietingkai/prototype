@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.tingkai.prototype.entity.User;
 import io.tingkai.prototype.exception.UserNotFoundException;
-import io.tingkai.prototype.exception.WrongPasswordException;
+import io.tingkai.prototype.exception.WrongPasswordExpection;
 import io.tingkai.prototype.security.AuthToken;
 import io.tingkai.prototype.security.AuthTokenService;
 import io.tingkai.prototype.service.UserService;
@@ -27,7 +27,8 @@ public class AuthController {
 	private AuthTokenService authTokenService;
 
 	@RequestMapping(value = AuthController.LOGIN_PATH, method = RequestMethod.POST)
-	public AuthToken login(@RequestParam String username, @RequestParam String password) throws UserNotFoundException, WrongPasswordException {
+	public AuthToken login(@RequestParam String username, @RequestParam String password)
+			throws UserNotFoundException, WrongPasswordExpection {
 		User user = this.userService.login(username, password);
 		return this.authTokenService.issue(user);
 	}
