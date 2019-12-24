@@ -3,12 +3,14 @@ package io.tingkai.prototype.security;
 import java.io.Serializable;
 import java.util.Date;
 
+import io.tingkai.prototype.entity.enums.Role;
+
 @SuppressWarnings("serial")
 public class AuthToken implements Serializable {
 
 	String name;
 
-	String role;
+	Role role;
 
 	String tokenString;
 
@@ -26,11 +28,11 @@ public class AuthToken implements Serializable {
 		this.name = name;
 	}
 
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 

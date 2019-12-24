@@ -3,6 +3,8 @@ package io.tingkai.prototype.entity;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,13 +25,14 @@ public class User {
 
 	private String pwd;
 
-	private String role;
+	@Enumerated(EnumType.STRING)
+	private Role role;
 
 	public User() {
 		super();
 	}
 
-	public User(UUID id, String name, String pwd, String role) throws IllegalRoleException {
+	public User(UUID id, String name, String pwd, Role role) throws IllegalRoleException {
 		super();
 		this.id = id;
 		this.name = name;
@@ -61,20 +64,11 @@ public class User {
 		this.pwd = pwd;
 	}
 
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(String role) throws IllegalRoleException {
-		switch (role) {
-		case Role.ADMIN:
-		case Role.USER:
-		case Role.NONE:
-			this.role = role;
-			break;
-
-		default:
-			throw new IllegalRoleException();
-		}
+	public void setRole(Role role) {
+		this.role = role;
 	}
 }

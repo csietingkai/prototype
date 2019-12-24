@@ -21,10 +21,9 @@ public class AuthTokenAuthentication implements Authentication {
 		this.authToken = authToken;
 		List<SimpleGrantedAuthority> newAuthorities = new ArrayList<SimpleGrantedAuthority>();
 
-		// roles
 		if (this.authToken.getTokenString() != null) {
 			this.isAuthenticated = true;
-			newAuthorities.add(new SimpleGrantedAuthority(authToken.getRole()));
+			newAuthorities.add(new SimpleGrantedAuthority(authToken.getRole().name()));
 		}
 
 		this.authorities = newAuthorities;
