@@ -6,6 +6,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * Simple configuration for spring, currently only provide
+ * {@link PasswordEncoder}
+ * 
+ * @author tingkai
+ */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 

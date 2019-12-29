@@ -1,5 +1,11 @@
 package io.tingkai.prototype.exception;
 
+/**
+ * when frontend send register request and role doesn't exist, throw this
+ * exception
+ * 
+ * @author tingkai
+ */
 @SuppressWarnings("serial")
 public class IllegalRoleException extends Exception {
 

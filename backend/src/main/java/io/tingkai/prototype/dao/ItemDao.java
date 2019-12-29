@@ -8,6 +8,11 @@ import org.springframework.stereotype.Repository;
 
 import io.tingkai.prototype.entity.Item;
 
+/**
+ * CrudRepository for sql database table 'item'
+ * 
+ * @author tingkai
+ */
 @Repository
 public interface ItemDao extends CrudRepository<Item, UUID> {
 

@@ -10,6 +10,11 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 
+/**
+ * Setting of {@link RedisTemplate} and redis connection
+ * 
+ * @author tingkai
+ */
 @Configuration
 @EnableRedisRepositories
 public class RedisConfig {

@@ -13,6 +13,11 @@ import javax.persistence.Table;
 import io.tingkai.prototype.entity.enums.Role;
 import io.tingkai.prototype.exception.IllegalRoleException;
 
+/**
+ * Entity for sql database table 'users'
+ * 
+ * @author tingkai
+ */
 @Entity
 @Table(name = "users")
 public class User {

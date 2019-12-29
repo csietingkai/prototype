@@ -14,6 +14,11 @@ import io.tingkai.prototype.controller.AuthController;
 import io.tingkai.prototype.security.AuthTokenAuthenticationFilter;
 import io.tingkai.prototype.security.AuthTokenAuthenticationProvider;
 
+/**
+ * Setting for login token, create filter to block requests without tokenString
+ * 
+ * @author tingkai
+ */
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -36,9 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().disable().csrf().disable().authorizeRequests().antMatchers(AuthController.LOGIN_PATH, AuthController.REGISTER_PATH).permitAll()
-				.anyRequest().authenticated().and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.cors().disable().csrf().disable().authorizeRequests()
+				.antMatchers(AuthController.LOGIN_PATH, AuthController.REGISTER_PATH).permitAll().anyRequest()
+				.authenticated().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(this.authTokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 }

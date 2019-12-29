@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import io.tingkai.prototype.entity.Item;
 import io.tingkai.prototype.service.ItemService;
 
+/**
+ * Simple controller for CRUD methods to postgresql
+ * 
+ * @author tingkai
+ */
 @RestController
 @RequestMapping(value = "/item")
 public class ItemController {

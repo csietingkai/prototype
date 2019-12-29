@@ -9,8 +9,14 @@ import org.springframework.stereotype.Service;
 import io.tingkai.prototype.dao.UserDao;
 import io.tingkai.prototype.entity.User;
 import io.tingkai.prototype.exception.UserNotFoundException;
-import io.tingkai.prototype.exception.WrongPasswordExpection;
+import io.tingkai.prototype.exception.WrongPasswordException;
 
+/**
+ * provide method for upload, download, find, delete files stored in sql
+ * database table 'users'
+ * 
+ * @author tingkai
+ */
 @Service
 public class UserService {
 
@@ -20,14 +26,14 @@ public class UserService {
 	@Autowired
 	private PasswordEncoder bCryptPasswordEncoder;
 
-	public User login(String name, String pwd) throws UserNotFoundException, WrongPasswordExpection {
+	public User login(String name, String pwd) throws UserNotFoundException, WrongPasswordException {
 		Optional<User> userOptional = this.userDao.findByName(name);
 		if (userOptional.isPresent()) {
 			User user = userOptional.get();
 			if (this.bCryptPasswordEncoder.matches(pwd, user.getPwd())) {
 				return user;
 			}
-			throw new WrongPasswordExpection();
+			throw new WrongPasswordException();
 		} else {
 			throw new UserNotFoundException();
 		}

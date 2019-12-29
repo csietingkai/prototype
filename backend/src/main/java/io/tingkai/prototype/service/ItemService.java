@@ -11,6 +11,12 @@ import org.springframework.stereotype.Service;
 import io.tingkai.prototype.dao.ItemDao;
 import io.tingkai.prototype.entity.Item;
 
+/**
+ * provide method for upload, download, find, delete files stored in sql
+ * database table 'item'
+ * 
+ * @author tingkai
+ */
 @Service
 public class ItemService {
 
