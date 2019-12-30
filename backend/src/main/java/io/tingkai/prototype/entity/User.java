@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import io.tingkai.prototype.entity.enums.Role;
+import io.tingkai.prototype.enumeration.Role;
 import io.tingkai.prototype.exception.IllegalRoleException;
 
 /**

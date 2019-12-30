@@ -1,4 +1,4 @@
-package io.tingkai.prototype.entity.enums;
+package io.tingkai.prototype.enumeration;
 
 /**
  * definition of user's role

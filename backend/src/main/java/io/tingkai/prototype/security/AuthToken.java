@@ -3,7 +3,7 @@ package io.tingkai.prototype.security;
 import java.io.Serializable;
 import java.util.Date;
 
-import io.tingkai.prototype.entity.enums.Role;
+import io.tingkai.prototype.enumeration.Role;
 
 @SuppressWarnings("serial")
 public class AuthToken implements Serializable {
