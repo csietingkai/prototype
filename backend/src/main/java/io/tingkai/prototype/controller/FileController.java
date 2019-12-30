@@ -1,10 +1,14 @@
 package io.tingkai.prototype.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.tomcat.util.file.ConfigurationSource.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,8 +38,8 @@ public class FileController {
 	@Autowired
 	private RepositoryService repositoryService;
 
-	@RequestMapping(value = UPLOAD_PATH, method = RequestMethod.POST)
-	public void uploadImage(@RequestParam MultipartFile file) throws IOException {
+	@RequestMapping(value = FileController.UPLOAD_PATH, method = RequestMethod.POST)
+	public void upload(@RequestParam MultipartFile file) throws IOException {
 		FileRepository fileRepository = this.repositoryService.getFileRepository(file.getOriginalFilename());
 		OutputStream updaloadStream = this.fileService.getUploadStream(fileRepository.getName(),
 				file.getOriginalFilename());
@@ -43,12 +47,16 @@ public class FileController {
 		updaloadStream.close();
 	}
 
-	@RequestMapping()
-	public ResponseEntity<Resource> downloadImage(@RequestParam String id) {
-//		Path path = Paths.get(file.getAbsolutePath());
-//		ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
-//		return ResponseEntity.ok().headers(headers).contentLength(file.length())
-//				.contentType(MediaType.parseMediaType("application/octet-stream")).body(resource);
-		return null;
+	@RequestMapping(value = FileController.DOWNLOAD_PATH)
+	public ResponseEntity<Resource> download(@RequestParam String id, @RequestParam String filename) {
+		FileRepository fileRepository = this.repositoryService.getFileRepository(filename);
+		InputStream downloadStream = this.fileService.getDownloadStream(fileRepository.getName(), filename);
+		InputStreamResource resource = new InputStreamResource(downloadStream);
+		HttpHeaders header = new HttpHeaders();
+		header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename);
+		header.add(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate");
+		header.add(HttpHeaders.PRAGMA, "no-cache");
+		header.add(HttpHeaders.EXPIRES, "0");
+		return ResponseEntity.ok().headers(header).contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
 	}
 }
