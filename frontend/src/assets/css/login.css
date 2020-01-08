@@ -1,40 +1,33 @@
-.container {
-	height: 100%;
-	width: 100%;
-	background-color: #f2f2f2;
-}
-
-.loginCard {
-	width: 400px;
-	height: 380px;
-	background-color: #ffffff;
-	padding: 30px;
-	border-radius: 10px;
+.login-block {
+	max-width: 30%;
 	position: absolute;
-	top: 50%;
 	left: 50%;
-	margin-left: -200px;
-	margin-top: -190px;
+	top: 40%;
+	transform: translate(-50%, -50%);
+	border: 2px solid;
+    border-radius: 5px;
 }
 
-.title {
-	text-align: center;
+.login-title {
+	padding: 15px;
 }
 
-.titleLOGO {
-	background-color: #606060;
-	border-radius: 5px;
-	text-align: center;
-	color: #ffffff;
-	width: 70px;
-	padding: 1px;
-	margin-left: 165px;
+.login-form {
+	margin: 5px;
 }
 
-.loginForm {
-	padding: 50px 15px 15px 0px;
+.login-btn {
+	margin-left: 5px;
+	margin-right: 5px;
 }
 
-.loginBtn {
-	text-align: center;
+.login-background-image {
+	background: no-repeat center center fixed;
+    background-size: cover;
+    display: block;
+    position: fixed;
+    z-index: -1;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+	-o-background-size: cover;
 }
