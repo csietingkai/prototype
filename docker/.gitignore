@@ -1,4 +1,5 @@
-mongodb/data/
+!mongodb/conf/mongod.conf
+!redis/conf/redis.conf
 mysql/
 postgres/
 redis/
