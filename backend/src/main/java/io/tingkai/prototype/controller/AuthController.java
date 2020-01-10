@@ -12,6 +12,7 @@ import io.tingkai.prototype.exception.UserNotFoundException;
 import io.tingkai.prototype.exception.WrongPasswordException;
 import io.tingkai.prototype.security.AuthToken;
 import io.tingkai.prototype.security.AuthTokenService;
+import io.tingkai.prototype.service.MailService;
 import io.tingkai.prototype.service.UserService;
 
 /**
@@ -24,6 +25,7 @@ public class AuthController {
 
 	public static final String LOGIN_PATH = "/login";
 	public static final String REGISTER_PATH = "/register";
+	public static final String CONFIRM_PATH = "/confirm";
 
 	@Autowired
 	private UserService userService;
@@ -31,9 +33,12 @@ public class AuthController {
 	@Autowired
 	private AuthTokenService authTokenService;
 
+	@Autowired
+	private MailService mailService;
+
 	@RequestMapping(value = AuthController.LOGIN_PATH, method = RequestMethod.POST)
-	public AuthToken login(@RequestParam String username, @RequestParam String password)
-			throws UserNotFoundException, WrongPasswordException {
+
+	public AuthToken login(@RequestParam String username, @RequestParam String password) throws UserNotFoundException, WrongPasswordException {
 		User user = this.userService.login(username, password);
 		return this.authTokenService.issue(user);
 	}
@@ -41,5 +46,12 @@ public class AuthController {
 	@RequestMapping(value = AuthController.REGISTER_PATH, method = RequestMethod.POST)
 	public void register(@RequestBody User user) {
 		this.userService.create(user);
+		this.mailService.sendConfirmEmail(user.getEmail());
+	}
+
+	@RequestMapping(value = AuthController.CONFIRM_PATH, method = RequestMethod.POST)
+	public void confirm(@RequestParam String email) {
+		// TODO browser can not open, but postman can
+		this.userService.confirm(email);
 	}
 }

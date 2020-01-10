@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import io.tingkai.prototype.dao.UserDao;
 import io.tingkai.prototype.entity.User;
+import io.tingkai.prototype.enumeration.Role;
 import io.tingkai.prototype.exception.UserNotFoundException;
 import io.tingkai.prototype.exception.WrongPasswordException;
+import io.tingkai.prototype.util.ContextUtil;
 
 /**
  * provide method for upload, download, find, delete files stored in sql
@@ -41,6 +43,38 @@ public class UserService {
 
 	public void create(User user) {
 		user.setPwd(this.bCryptPasswordEncoder.encode(user.getPwd()));
+		user.setRole(Role.USER);
 		this.userDao.save(user);
+	}
+
+	public void confirm(String email) {
+		Optional<User> optionalUser = this.userDao.findByEmail(email);
+		if (optionalUser.isPresent()) {
+			User user = optionalUser.get();
+			user.setConfirm(true);
+			this.userDao.save(user);
+		}
+	}
+
+	public void setUserAsAdmin(User userToBeAdmin) {
+		if (isCurrentUserRoot()) {
+			userToBeAdmin.setRole(Role.ADMIN);
+			this.userDao.save(userToBeAdmin);
+		}
+	}
+
+	public boolean isCurrentUserRoot() {
+		Optional<User> loginUser = getCurrentLoginUser();
+		return loginUser.isPresent() && loginUser.get().getRole() == Role.ROOT;
+	}
+
+	public boolean isUserConfirm() {
+		Optional<User> loginUser = getCurrentLoginUser();
+		return loginUser.isPresent() && loginUser.get().getRole() == Role.ROOT;
+	}
+
+	private Optional<User> getCurrentLoginUser() {
+		String loginUsername = ContextUtil.getUserName();
+		return this.userDao.findByName(loginUsername);
 	}
 }
