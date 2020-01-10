@@ -2,6 +2,7 @@ package io.tingkai.prototype.entity;
 
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -26,23 +27,31 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 
+	@Column(unique = true)
 	private String name;
+	
+	@Column(unique = true)
+	private String email;
 
 	private String pwd;
 
 	@Enumerated(EnumType.STRING)
 	private Role role;
+	
+	private boolean confirm;
 
 	public User() {
 		super();
 	}
 
-	public User(UUID id, String name, String pwd, Role role) throws IllegalRoleException {
+	public User(UUID id, String name, String email, String pwd, Role role, boolean confirm) throws IllegalRoleException {
 		super();
 		this.id = id;
 		this.name = name;
+		this.email = email;
 		this.pwd = pwd;
-		this.setRole(role);
+		this.role = role;
+		this.confirm = confirm;
 	}
 
 	public UUID getId() {
@@ -61,6 +70,14 @@ public class User {
 		this.name = name;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getPwd() {
 		return pwd;
 	}
@@ -75,5 +92,13 @@ public class User {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public boolean isConfirm() {
+		return confirm;
+	}
+
+	public void setConfirm(boolean confirm) {
+		this.confirm = confirm;
 	}
 }
