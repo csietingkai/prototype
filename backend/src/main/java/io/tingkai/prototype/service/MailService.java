@@ -10,14 +10,15 @@ import io.tingkai.prototype.controller.AuthController;
 
 @Service
 public class MailService {
-	
+
 	private static final String CONFIRM_EMAIL_SUBJECT = "Prototype Confrim Email";
 	private static final String CONFIRM_EMAIL_CONTENT = "Click the following link to verify email:\n";
-	
+
 	@Autowired
-    private JavaMailSender javaMailSender;
-	
+	private JavaMailSender javaMailSender;
+
 	public void sendConfirmEmail(String destination) {
+		// FIXME how to send confirm request
 		StringBuilder content = new StringBuilder();
 		content.append(CONFIRM_EMAIL_CONTENT);
 		content.append(AppConstants.CONFIRM_EMAIL_LINK);
@@ -26,14 +27,14 @@ public class MailService {
 		content.append(destination);
 		sendEmail(CONFIRM_EMAIL_SUBJECT, content.toString(), destination);
 	}
-	
+
 	private void sendEmail(String subject, String content, String... dests) {
 		SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo(dests);
+		msg.setTo(dests);
 
-        msg.setSubject(subject);
-        msg.setText(content);
+		msg.setSubject(subject);
+		msg.setText(content);
 
-        javaMailSender.send(msg);
-    }
+		this.javaMailSender.send(msg);
+	}
 }

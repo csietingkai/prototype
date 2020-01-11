@@ -1,6 +1,11 @@
 import React from 'react';
+import { NotificationContainer } from 'react-notifications';
+
 import LoginPage from 'component/LoginPage'
-import MainPage from 'component/MainPage'
+import MainPage from 'component/MainPage';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-notifications/lib/notifications.css';
 import 'assets/css/main.css';
 
 class App extends React.Component {
@@ -28,7 +33,12 @@ class App extends React.Component {
 			);
 		}
 
-		return app;
+		return (
+			<div>
+				{app}
+				<NotificationContainer/>
+			</div>
+		);
 	}
 }
 

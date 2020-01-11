@@ -7,6 +7,8 @@ export default {
 				username,
 				password
 			}
+		}).then((response) => {
+			return response.data;
 		});
 	},
 	register(username, password) {

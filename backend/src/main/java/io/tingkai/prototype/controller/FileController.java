@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import io.tingkai.prototype.model.response.SimpleResponse;
 import io.tingkai.prototype.repository.FileRepository;
 import io.tingkai.prototype.service.FileService;
 import io.tingkai.prototype.service.RepositoryService;
@@ -39,12 +40,13 @@ public class FileController {
 	private RepositoryService repositoryService;
 
 	@RequestMapping(value = FileController.UPLOAD_PATH, method = RequestMethod.POST)
-	public void upload(@RequestParam MultipartFile file) throws IOException {
+	public SimpleResponse upload(@RequestParam MultipartFile file) throws IOException {
 		FileRepository fileRepository = this.repositoryService.getFileRepository(file.getOriginalFilename());
 		OutputStream updaloadStream = this.fileService.getUploadStream(fileRepository.getName(),
 				file.getOriginalFilename());
 		updaloadStream.write(file.getBytes());
 		updaloadStream.close();
+		return new SimpleResponse();
 	}
 
 	@RequestMapping(value = FileController.DOWNLOAD_PATH)

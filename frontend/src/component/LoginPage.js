@@ -1,15 +1,21 @@
 import React from 'react';
+import { Button, Container, Row, Col, Form, Image, InputGroup, FormControl } from 'react-bootstrap';
+import { NotificationManager } from 'react-notifications';
+
 import auth from 'api/auth';
-import { Button, Container, Row, Col, Form, Image } from 'react-bootstrap';
+import notify from 'util/notify'
+
 import bg from 'assets/img/bg.jpg'
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.css';
 import 'assets/css/login.css'
 
 export default class LoginPage extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { 
+		this.state = {
 			username: '',
 			password: ''
 		};
@@ -29,18 +35,21 @@ export default class LoginPage extends React.Component {
 
 	handleLoginClick = () => {
 		auth.login(this.state.username, this.state.password).then((response) => {
-			this.props.setToken(response.data.tokenString);
+			let authToken = response.authToken;
+			console.log(response);
+			if (authToken) {
+				this.props.setToken(authToken.tokenString);
+			} else {
+				notify.warning(response.message);
+			}
 		});
 	}
 
 	handleRegisterClick = () => {
-		auth.register(this.state.username, this.state.password).then((response) => {
-			console.log(response);
-		});
+		
 	}
-	
+
 	render() {
-		// TODO 
 		let bgImg = (
 			<div className="login-background-image" >
 				<Image alt="bg" className="w-100 h-100" src={bg} ></Image>
@@ -53,22 +62,27 @@ export default class LoginPage extends React.Component {
 				</Row>
 				<Form className="login-form">
 					<Form.Group as={Row}>
-						<Form.Label column sm="3">Username</Form.Label>
-						<Col sm="9">
-							<Form.Control placeholder="Username" onChange={this.handleUsernameChanged} />
-						</Col>
+						<InputGroup className="login-input">
+							<InputGroup.Prepend>
+								<InputGroup.Text>
+									<i className="fa fa-user"></i>
+								</InputGroup.Text>
+							</InputGroup.Prepend>
+							<FormControl placeholder="Username" onChange={this.handleUsernameChanged} />
+						</InputGroup>
 					</Form.Group>
 					<Form.Group as={Row}>
-						<Form.Label column sm="3">Password</Form.Label>
-						<Col sm="9">
-							<Form.Control type="password" placeholder="Password" onChange={this.handlePasswordChanged}/>
-						</Col>
+						<InputGroup className="login-input">
+							<InputGroup.Prepend>
+								<InputGroup.Text>
+									<i className="fa fa-lock"></i>
+								</InputGroup.Text>
+							</InputGroup.Prepend>
+							<Form.Control type="password" placeholder="Password" onChange={this.handlePasswordChanged} />
+						</InputGroup>
 					</Form.Group>
-					<Button variant="primary" className="login-btn" onClick={this.handleLoginClick}>
+					<Button as={Row} variant="primary" className="login-btn" onClick={this.handleLoginClick}>
 						Login
-					</Button>
-					<Button variant="primary" className="login-btn" onClick={this.handleRegisterClick}>
-						Register
 					</Button>
 				</Form>
 			</Container>

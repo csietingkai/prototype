@@ -16,9 +16,15 @@
 	margin: 5px;
 }
 
+.login-input {
+	max-width: 70%;
+	margin : 0 auto;
+}
+
 .login-btn {
 	margin-left: 5px;
 	margin-right: 5px;
+	margin-bottom: 5px;
 }
 
 .login-background-image {

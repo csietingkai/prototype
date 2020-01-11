@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import io.tingkai.prototype.constant.CodeConstants;
 import io.tingkai.prototype.dao.UserDao;
 import io.tingkai.prototype.entity.User;
 import io.tingkai.prototype.enumeration.Role;
@@ -35,9 +36,9 @@ public class UserService {
 			if (this.bCryptPasswordEncoder.matches(pwd, user.getPwd())) {
 				return user;
 			}
-			throw new WrongPasswordException();
+			throw new WrongPasswordException(CodeConstants.ERROR_MSG_WRONG_PASSWORD);
 		} else {
-			throw new UserNotFoundException();
+			throw new UserNotFoundException(CodeConstants.ERROR_MSG_USER_NOT_FOUND);
 		}
 	}
 
@@ -68,9 +69,13 @@ public class UserService {
 		return loginUser.isPresent() && loginUser.get().getRole() == Role.ROOT;
 	}
 
-	public boolean isUserConfirm() {
+	public boolean isCurrentUserConfirm() {
 		Optional<User> loginUser = getCurrentLoginUser();
 		return loginUser.isPresent() && loginUser.get().getRole() == Role.ROOT;
+	}
+
+	public boolean isRootExist() {
+		return this.userDao.findByRole(Role.ROOT).isPresent();
 	}
 
 	private Optional<User> getCurrentLoginUser() {

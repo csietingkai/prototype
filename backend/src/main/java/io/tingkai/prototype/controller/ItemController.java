@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.tingkai.prototype.entity.Item;
+import io.tingkai.prototype.model.response.SimpleResponse;
 import io.tingkai.prototype.service.ItemService;
 
 /**
@@ -47,22 +48,26 @@ public class ItemController {
 	}
 
 	@RequestMapping(value = ItemController.INSERT_PATH, method = RequestMethod.PUT)
-	public boolean insert(@RequestBody Item item) {
-		return this.itemService.insert(item);
+	public SimpleResponse insert(@RequestBody Item item) {
+		boolean result = this.itemService.insert(item);
+		return new SimpleResponse(result);
 	}
 
 	@RequestMapping(value = ItemController.UPDATE_PATH, method = RequestMethod.POST)
-	public boolean update(@RequestBody Item item) {
-		return this.itemService.update(item);
+	public SimpleResponse update(@RequestBody Item item) {
+		boolean result = this.itemService.update(item);
+		return new SimpleResponse(result);
 	}
 
 	@RequestMapping(value = ItemController.DELETE_PATH, params = "id", method = RequestMethod.DELETE)
-	public boolean delete(@RequestParam UUID id) {
-		return this.itemService.delete(id);
+	public SimpleResponse delete(@RequestParam UUID id) {
+		boolean result = this.itemService.delete(id);
+		return new SimpleResponse(result);
 	}
 
 	@RequestMapping(value = ItemController.DELETE_PATH, method = RequestMethod.DELETE)
-	public boolean delete(@RequestBody Item item) {
-		return this.itemService.delete(item);
+	public SimpleResponse delete(@RequestBody Item item) {
+		boolean result = this.itemService.delete(item);
+		return new SimpleResponse(result);
 	}
 }
