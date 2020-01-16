@@ -16,6 +16,7 @@ public class AppConstants {
 	public static String ZIP_FILE_ENCODING;
 	public static int FILE_IO_BUFFER_SIZE;
 	public static String CONFIRM_EMAIL_LINK;
+	public static boolean DEVELOP_MODE;
 
 	@Value("${spring.data.mongodb.grid-fs-database}")
 	public void setGridFsDatabase(String gridFsDatabase) {
@@ -35,5 +36,10 @@ public class AppConstants {
 	@Value("${confirm-email-link}")
 	public void setConfirmEmailLink(String confirmEmailLink) {
 		AppConstants.CONFIRM_EMAIL_LINK = confirmEmailLink;
+	}
+	
+	@Value("${develop-mode}")
+	public void setDevelopMode(boolean developMode) {
+		AppConstants.DEVELOP_MODE = developMode;
 	}
 }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.tingkai.prototype.constant.CodeConstants;
+import io.tingkai.prototype.constant.AppConstants;
 import io.tingkai.prototype.entity.User;
 import io.tingkai.prototype.enumeration.Role;
 import io.tingkai.prototype.exception.UserNotFoundException;
@@ -61,7 +61,7 @@ public class AuthController {
 		if (user.getRole() == Role.USER) {
 			this.userService.create(user);
 		}
-		if (!CodeConstants.DEVELOP_MODE) {
+		if (!AppConstants.DEVELOP_MODE) {
 			this.mailService.sendConfirmEmail(user.getEmail());
 			if (user.getRole() == Role.ADMIN || (user.getRole() == Role.ROOT && !this.userService.isRootExist())) {
 				this.userService.create(user);

@@ -7,9 +7,6 @@ package io.tingkai.prototype.constant;
  */
 public class CodeConstants {
 
-	// XXX turn off develop mode when deploy
-	public static final boolean DEVELOP_MODE = true;
-
 	public static final String SIMPLE_RESPONSE_SUCCESS_MSG = "SUCCESS";
 
 	public static final String SIMPLE_RESPONSE_FAIL_MSG = "FAIL";
