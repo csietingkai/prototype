@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import io.tingkai.prototype.constant.CodeConstants;
+import io.tingkai.prototype.constant.MessageConstant;
 import io.tingkai.prototype.dao.UserDao;
 import io.tingkai.prototype.entity.User;
 import io.tingkai.prototype.enumeration.Role;
@@ -36,9 +36,9 @@ public class UserService {
 			if (this.bCryptPasswordEncoder.matches(pwd, user.getPwd())) {
 				return user;
 			}
-			throw new WrongPasswordException(CodeConstants.ERROR_MSG_WRONG_PASSWORD);
+			throw new WrongPasswordException(MessageConstant.ERROR_MSG_WRONG_PASSWORD);
 		} else {
-			throw new UserNotFoundException(CodeConstants.ERROR_MSG_USER_NOT_FOUND);
+			throw new UserNotFoundException(MessageConstant.ERROR_MSG_USER_NOT_FOUND);
 		}
 	}
 
