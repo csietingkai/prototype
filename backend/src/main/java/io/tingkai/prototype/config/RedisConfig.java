@@ -28,10 +28,14 @@ public class RedisConfig {
 	@Value("${spring.redis.password}")
 	private String password;
 
+	@Value("${spring.redis.database}")
+	private int database;
+
 	@Bean
 	RedisConnectionFactory connectionFactory() {
 		RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(host, port);
 		redisStandaloneConfiguration.setPassword(RedisPassword.of(password));
+		redisStandaloneConfiguration.setDatabase(database);
 		return new JedisConnectionFactory(redisStandaloneConfiguration);
 	}
 
@@ -43,5 +47,4 @@ public class RedisConfig {
 
 		return template;
 	}
-
 }
