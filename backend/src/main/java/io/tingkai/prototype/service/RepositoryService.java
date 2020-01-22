@@ -33,4 +33,8 @@ public class RepositoryService {
 			return repository.getAcceptedTypes().contains(fileType);
 		}).findFirst().get();
 	}
+
+	public List<FileRepository> getFileRepositories() {
+		return this.fileRepositories;
+	}
 }

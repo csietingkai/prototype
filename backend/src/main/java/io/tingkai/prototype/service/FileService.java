@@ -47,8 +47,16 @@ public class FileService {
 		this.getBucket(repositoryName).delete(new ObjectId(id));
 	}
 
+	public GridFSFindIterable find(String repositoryName) {
+		return this.getBucket(repositoryName).find();
+	}
+
 	public GridFSFindIterable find(String repositoryName, String id) {
 		return this.getBucket(repositoryName).find(Filters.eq("_id", id));
+	}
+
+	public GridFSFindIterable findByUploader(String repositoryName, String uploader) {
+		return this.getBucket(repositoryName).find(Filters.eq("metadata.uploader", uploader));
 	}
 
 	protected GridFSBucket getBucket(String repositoryName) {
