@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +77,7 @@ public class FileController {
 	public List<File> list(String repositoryName) {
 		GridFSFindIterable iterable = this.fileService.find(repositoryName);
 		List<File> files = new ArrayList<>();
-		iterable.forEach((GridFSFile gridfsFile) -> {
+		iterable.forEach((Consumer<GridFSFile>) (GridFSFile gridfsFile) -> {
 			files.add(FileUtil.convert(gridfsFile));
 		});
 		return files;
