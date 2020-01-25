@@ -56,7 +56,7 @@ public class FileService {
 	}
 
 	public GridFSFindIterable findByUploader(String repositoryName, String uploader) {
-		return this.getBucket(repositoryName).find(Filters.eq("metadata.uploader", uploader));
+		return this.getBucket(repositoryName).find(Filters.eq("metadata." + CodeConstants.METADATA_UPLOADER_KEY, uploader));
 	}
 
 	protected GridFSBucket getBucket(String repositoryName) {

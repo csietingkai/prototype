@@ -1,6 +1,5 @@
 package io.tingkai.prototype.model.response;
 
-import io.tingkai.prototype.constant.AppConstants;
 import io.tingkai.prototype.constant.CodeConstants;
 
 public class SimpleResponse {
@@ -30,9 +29,7 @@ public class SimpleResponse {
 	public SimpleResponse(Exception e) {
 		this.isSuccess = false;
 		this.message = e.getMessage();
-		if (AppConstants.DEVELOP_MODE) {
-			e.printStackTrace();
-		}
+		e.printStackTrace();
 	}
 
 	public boolean isSuccess() {
