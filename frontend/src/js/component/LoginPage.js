@@ -1,15 +1,14 @@
 import React from 'react';
 import { Button, Container, Row, Col, Form, Image, InputGroup, FormControl } from 'react-bootstrap';
-import { NotificationManager } from 'react-notifications';
 
-import auth from 'api/auth';
-import notify from 'util/notify'
+import auth from 'js/api/auth';
+import notify from 'js/util/notify'
 
-import bg from 'assets/img/bg.jpg'
+import bg from 'resource/img/bg.jpg'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.css';
-import 'assets/css/login.css'
+import 'resource/css/login.css'
 
 export default class LoginPage extends React.Component {
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import { NotificationContainer } from 'react-notifications';
 
-import LoginPage from 'component/LoginPage'
-import MainPage from 'component/MainPage';
+import LoginPage from 'js/component/LoginPage'
+import MainPage from 'js/component/MainPage';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-notifications/lib/notifications.css';
-import 'assets/css/main.css';
+import 'resource/css/main.css';
 
 class App extends React.Component {
 	constructor() {
