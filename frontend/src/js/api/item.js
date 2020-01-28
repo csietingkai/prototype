@@ -1,10 +1,8 @@
 import axios from 'axios';
 
 export default {
-	getAll(token) {
-		const headers = {
-			'X-Auth-Token': token
-		};
+	getAll() {
+		const headers = COMMON_HEADER(getToken());
 		return axios.get('/api/item/getAll', {
 			headers
 		});

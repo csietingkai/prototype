@@ -3,6 +3,7 @@ import { Button, Container, Row, Col, Form, Image, InputGroup, FormControl } fro
 
 import auth from 'js/api/auth';
 import notify from 'js/util/notify'
+import setting from 'js/util/setting'
 
 import bg from 'resource/img/bg.jpg'
 
@@ -37,15 +38,17 @@ export default class LoginPage extends React.Component {
 			let authToken = response.authToken;
 			console.log(response);
 			if (authToken) {
-				this.props.setToken(authToken.tokenString);
+				setting.setToken(authToken.tokenString);
 			} else {
 				notify.warning(response.message);
 			}
 		});
 	}
 
-	handleRegisterClick = () => {
-		
+	handleEnterKey = (event) => {
+		if (event.charCode === setting.ENTER_CHAR_CODE) {
+			this.handleLoginClick();
+		}
 	}
 
 	render() {
@@ -67,7 +70,7 @@ export default class LoginPage extends React.Component {
 									<i className="fa fa-user"></i>
 								</InputGroup.Text>
 							</InputGroup.Prepend>
-							<FormControl placeholder="Username" onChange={this.handleUsernameChanged} />
+							<FormControl placeholder="Username" onKeyPress={this.handleEnterKey} onChange={this.handleUsernameChanged} />
 						</InputGroup>
 					</Form.Group>
 					<Form.Group as={Row}>
@@ -77,7 +80,7 @@ export default class LoginPage extends React.Component {
 									<i className="fa fa-lock"></i>
 								</InputGroup.Text>
 							</InputGroup.Prepend>
-							<Form.Control type="password" placeholder="Password" onChange={this.handlePasswordChanged} />
+							<Form.Control type="password" placeholder="Password" onKeyPress={this.handleEnterKey} onChange={this.handlePasswordChanged} />
 						</InputGroup>
 					</Form.Group>
 					<Button as={Row} variant="primary" className="login-btn" onClick={this.handleLoginClick}>
