@@ -1,5 +1,7 @@
 package io.tingkai.prototype.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,7 @@ public class AuthController {
 	public static final String LOGIN_PATH = "/login";
 	public static final String REGISTER_PATH = "/register";
 	public static final String CONFIRM_PATH = "/confirm";
+	public static final String VALIDATE_PATH = "/validate";
 
 	@Autowired
 	private UserService userService;
@@ -41,14 +44,11 @@ public class AuthController {
 
 	@RequestMapping(value = AuthController.LOGIN_PATH, method = RequestMethod.POST)
 	public LoginResponse login(@RequestParam String username, @RequestParam String password) {
-		LoginResponse response;
-
 		User user = null;
 		try {
 			user = this.userService.login(username, password);
 		} catch (UserNotFoundException | WrongPasswordException e) {
-			response = new LoginResponse(e);
-			return response;
+			return new LoginResponse(e);
 		}
 
 		AuthToken token = this.authTokenService.issue(user);
@@ -72,5 +72,15 @@ public class AuthController {
 		// TODO browser can not open, but postman can
 		this.userService.confirm(email);
 		return new SimpleResponse();
+	}
+
+	@RequestMapping(value = AuthController.VALIDATE_PATH, method = RequestMethod.GET)
+	public LoginResponse validate(@RequestParam String tokenString) {
+		AuthToken token = this.authTokenService.validate(tokenString);
+		if (Optional.ofNullable(token).isPresent()) {
+			return new LoginResponse(token);
+		} else {
+			return new LoginResponse();
+		}
 	}
 }

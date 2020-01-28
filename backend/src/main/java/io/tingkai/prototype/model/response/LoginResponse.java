@@ -7,7 +7,7 @@ public class LoginResponse extends SimpleResponse {
 	private AuthToken authToken;
 
 	public LoginResponse() {
-		super();
+		super(false);
 	}
 
 	public LoginResponse(AuthToken authToken) {
