@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-import setting from 'js/util/setting'
+import constant from 'js/util/constant'
 
-const LOGIN_PATH = setting.API_BASE_URL + '/login';
-const REGISTER_PATH = setting.API_BASE_URL + '/login';
+const LOGIN_PATH = constant.API_BASE_URL + '/login';
+const REGISTER_PATH = constant.API_BASE_URL + '/register';
+const VALIDATE_PATH = constant.API_BASE_URL + '/validate';
 
 const login = async (username, password) => {
 	return axios.post(LOGIN_PATH, null, {
@@ -26,7 +27,16 @@ const register = (username, email, password) => {
 	return axios.post(REGISTER_PATH, user);
 }
 
+const validate = (token) => {
+	return axios.get(VALIDATE_PATH, null, {
+		params: {
+			tokenString: token
+		}
+	});
+}
+
 export default {
 	login,
-	register
+	register,
+	validate
 };

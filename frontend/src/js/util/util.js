@@ -1,6 +1,6 @@
 import Cookie from "js-cookie"
 
-const API_BASE_URL = '/api';
+import constant from 'js/util/constant'
 
 const getCommonHeader = (token) => {
 	return {
@@ -8,24 +8,17 @@ const getCommonHeader = (token) => {
 	};
 };
 
-const COOKIE_TOKEN_KEY = 'token'
-
 const setToken = (token) => {
-	Cookie.set('token', token)
+	Cookie.set(constant.COOKIE_TOKEN_KEY, token)
 }
 
 const getToken = () => {
-	Cookie.get('token');
+	Cookie.get(constant.COOKIE_TOKEN_KEY);
 }
 
-const ENTER_CHAR_CODE = 13;
-
 export default {
-	API_BASE_URL,
 	getCommonHeader,
-	COOKIE_TOKEN_KEY,
 	setToken,
-	getToken,
-	ENTER_CHAR_CODE
+	getToken
 }
 

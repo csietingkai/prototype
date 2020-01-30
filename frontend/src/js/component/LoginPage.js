@@ -2,8 +2,9 @@ import React from 'react';
 import { Button, Container, Row, Col, Form, Image, InputGroup, FormControl } from 'react-bootstrap';
 
 import auth from 'js/api/auth';
-import notify from 'js/util/notify'
-import setting from 'js/util/setting'
+import notify from 'js/util/notify';
+import constant from 'js/util/constant';
+import util from 'js/util/util';
 
 import bg from 'resource/img/bg.jpg'
 
@@ -38,7 +39,8 @@ export default class LoginPage extends React.Component {
 			let authToken = response.authToken;
 			console.log(response);
 			if (authToken) {
-				setting.setToken(authToken.tokenString);
+				util.setToken(authToken.tokenString);
+				this.props.root.setState({});
 			} else {
 				notify.warning(response.message);
 			}
@@ -46,7 +48,7 @@ export default class LoginPage extends React.Component {
 	}
 
 	handleEnterKey = (event) => {
-		if (event.charCode === setting.ENTER_CHAR_CODE) {
+		if (event.charCode === constant.ENTER_CHAR_CODE) {
 			this.handleLoginClick();
 		}
 	}
