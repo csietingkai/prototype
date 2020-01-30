@@ -10,30 +10,45 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-notifications/lib/notifications.css';
 import 'resource/css/main.css';
 
-class App extends React.Component {
+export default class App extends React.Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			token: ''
+		}
+	}
+
+	setToken = (token) => {
+		util.setToken(token);
+		this.setState({ token });
+	}
+
+	getValidateResult = async (token) => {
+		const validateResult = await auth.validate(token);
+		const result = await validateResult;
+		return result.success;
+	}
+
 	render() {
 		let app = (
-			<LoginPage root={this}/>
+			<LoginPage setToken={this.setToken} />
 		);
 
 		let token = util.getToken();
 		if (token) {
-			auth.validate(token).then((response) => {
-				if (response.success) {
-					app = (
-						<MainPage root={this}/>
-					);
-				}
-			});
+			if (this.getValidateResult(token)) {
+				app = (
+					<MainPage />
+				);
+			}
 		}
 
 		return (
 			<div>
 				{app}
-				<NotificationContainer/>
+				<NotificationContainer />
 			</div>
 		);
 	}
 }
-
-export default App;

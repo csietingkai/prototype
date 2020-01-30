@@ -4,10 +4,8 @@ import { Button, Container, Row, Col, Form, Image, InputGroup, FormControl } fro
 import auth from 'js/api/auth';
 import notify from 'js/util/notify';
 import constant from 'js/util/constant';
-import util from 'js/util/util';
 
 import bg from 'resource/img/bg.jpg'
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.css';
 import 'resource/css/login.css'
@@ -37,10 +35,8 @@ export default class LoginPage extends React.Component {
 	handleLoginClick = () => {
 		auth.login(this.state.username, this.state.password).then((response) => {
 			let authToken = response.authToken;
-			console.log(response);
-			if (authToken) {
-				util.setToken(authToken.tokenString);
-				this.props.root.setState({});
+			if (response.success && authToken) {
+				this.props.setToken(authToken.tokenString);
 			} else {
 				notify.warning(response.message);
 			}

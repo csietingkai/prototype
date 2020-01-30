@@ -9,11 +9,11 @@ const getCommonHeader = (token) => {
 };
 
 const setToken = (token) => {
-	Cookie.set(constant.COOKIE_TOKEN_KEY, token)
+	Cookie.set(constant.COOKIE_TOKEN_KEY, token);
 }
 
 const getToken = () => {
-	Cookie.get(constant.COOKIE_TOKEN_KEY);
+	return Cookie.get(constant.COOKIE_TOKEN_KEY);
 }
 
 export default {
