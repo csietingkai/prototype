@@ -3,9 +3,7 @@ package io.tingkai.prototype.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mongodb.client.gridfs.GridFSFindIterable;
-import com.mongodb.client.gridfs.model.GridFSFile;
 
+import io.tingkai.prototype.constant.GridFSFileField;
 import io.tingkai.prototype.entity.File;
 import io.tingkai.prototype.model.response.SimpleResponse;
 import io.tingkai.prototype.repository.FileRepository;
@@ -41,7 +39,9 @@ public class FileController {
 
 	public static final String UPLOAD_PATH = "/upload";
 	public static final String DOWNLOAD_PATH = "/download";
-	public static final String FILE_LIST_PATH = "/list";
+	public static final String FIND_ONE_PATH = "/findOne";
+	public static final String LIST_PATH = "/list";
+	public static final String HISTORY_PATH = "/history";
 	public static final String REPOSITORY_LIST_PATH = "/repositories";
 
 	@Autowired
@@ -73,14 +73,22 @@ public class FileController {
 		return ResponseEntity.ok().headers(header).contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
 	}
 
-	@RequestMapping(value = FileController.FILE_LIST_PATH, method = RequestMethod.GET)
-	public List<File> list(String repositoryName) {
+	@RequestMapping(value = FileController.FIND_ONE_PATH, method = RequestMethod.GET)
+	public File findOne(@RequestParam String repositoryName, @RequestParam String id) {
+		GridFSFindIterable iterable = this.fileService.findById(repositoryName, id);
+		return FileUtil.convert(iterable.first());
+	}
+
+	@RequestMapping(value = FileController.LIST_PATH, method = RequestMethod.GET)
+	public List<File> list(@RequestParam String repositoryName) {
 		GridFSFindIterable iterable = this.fileService.find(repositoryName);
-		List<File> files = new ArrayList<>();
-		iterable.forEach((Consumer<GridFSFile>) (GridFSFile gridfsFile) -> {
-			files.add(FileUtil.convert(gridfsFile));
-		});
-		return files;
+		return FileUtil.convert(iterable);
+	}
+
+	@RequestMapping(value = FileController.HISTORY_PATH, method = RequestMethod.GET)
+	public List<File> history(@RequestParam String repositoryName, @RequestParam String filename) {
+		GridFSFindIterable iterable = this.fileService.find(repositoryName, GridFSFileField.FILENAME, filename);
+		return FileUtil.convert(iterable);
 	}
 
 	@RequestMapping(value = FileController.REPOSITORY_LIST_PATH, method = RequestMethod.GET)

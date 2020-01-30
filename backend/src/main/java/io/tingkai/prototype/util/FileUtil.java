@@ -1,10 +1,18 @@
 package io.tingkai.prototype.util;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
+
 import org.apache.tika.Tika;
 
+import com.mongodb.client.gridfs.GridFSFindIterable;
 import com.mongodb.client.gridfs.model.GridFSFile;
 
 import io.tingkai.prototype.entity.File;
+import io.tingkai.prototype.enumeration.CompareOrderType;
 
 public class FileUtil {
 
@@ -13,15 +21,39 @@ public class FileUtil {
 		return tika.detect(filename); 
 	}
 
+	public static List<File> convert(GridFSFindIterable iterable) {
+		return convert(iterable, CompareOrderType.NEWEST_FIRST);
+	}
+
+	public static List<File> convert(GridFSFindIterable iterable, CompareOrderType orderType) {
+		List<File> files = new ArrayList<>();
+		iterable.forEach((Consumer<GridFSFile>) (GridFSFile gridfsFile) -> {
+			files.add(FileUtil.convert(gridfsFile));
+		});
+		files.sort((Comparator<File>) (File o1, File o2) -> {
+			switch (orderType) {
+			case OLDEST_FIRST:
+				return o1.getUploadDate().compareTo(o2.getUploadDate());
+			case NEWEST_FIRST:
+			default:
+				return o2.getUploadDate().compareTo(o1.getUploadDate());
+			}
+		});
+		return files;
+	}
+
 	@SuppressWarnings("deprecation")
 	public static File convert(GridFSFile gridfsFile) {
-		File file = new File();
-		file.setId(gridfsFile.getObjectId().toString());
-		file.setFilename(gridfsFile.getFilename());
-		file.setSize(gridfsFile.getLength());
-		file.setUploadDate(gridfsFile.getUploadDate());
-		file.setMd5(gridfsFile.getMD5());
-		file.setMetadata(gridfsFile.getMetadata());
+		File file = null;
+		if (Optional.ofNullable(gridfsFile).isPresent()) {
+			file = new File();
+			file.setId(gridfsFile.getObjectId().toString());
+			file.setFilename(gridfsFile.getFilename());
+			file.setSize(gridfsFile.getLength());
+			file.setUploadDate(gridfsFile.getUploadDate());
+			file.setMd5(gridfsFile.getMD5());
+			file.setMetadata(gridfsFile.getMetadata());
+		}
 		return file;
 	}
 }

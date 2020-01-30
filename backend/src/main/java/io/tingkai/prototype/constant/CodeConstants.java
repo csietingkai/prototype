@@ -13,10 +13,6 @@ public class CodeConstants {
 
 	public static final String SIMPLE_RESPONSE_FAIL_MSG = "FAIL";
 
-	public static final String METAFATA_HANDLE_KEY = "handle";
-
-	public static final String METADATA_UPLOADER_KEY = "uploader";
-
 	public static final ZoneId ZONE_TPE = ZoneId.of("Asia/Taipei");
 
 	public static final String DATE_FORMAT = "yyyy/MM/dd";

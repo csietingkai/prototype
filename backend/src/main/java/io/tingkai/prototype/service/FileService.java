@@ -17,7 +17,7 @@ import com.mongodb.client.gridfs.model.GridFSUploadOptions;
 import com.mongodb.client.model.Filters;
 
 import io.tingkai.prototype.constant.AppConstants;
-import io.tingkai.prototype.constant.CodeConstants;
+import io.tingkai.prototype.constant.GridFSFileField;
 import io.tingkai.prototype.repository.FileRepository;
 import io.tingkai.prototype.util.ContextUtil;
 
@@ -35,7 +35,7 @@ public class FileService {
 
 	public OutputStream getUploadStream(String repositoryName, String sourceFileName) {
 		GridFSUploadOptions options = new GridFSUploadOptions();
-		options.metadata(new Document(CodeConstants.METADATA_UPLOADER_KEY, ContextUtil.getUserName()));
+		options.metadata(new Document(GridFSFileField.METADATA_UPLOADER_KEY, ContextUtil.getUserName()));
 		return this.getBucket(repositoryName).openUploadStream(sourceFileName, options);
 	}
 
@@ -51,12 +51,16 @@ public class FileService {
 		return this.getBucket(repositoryName).find();
 	}
 
-	public GridFSFindIterable find(String repositoryName, String id) {
-		return this.getBucket(repositoryName).find(Filters.eq("_id", id));
+	public GridFSFindIterable find(String repositoryName, String attributeName, String value) {
+		return this.getBucket(repositoryName).find(Filters.eq(attributeName, value));
 	}
 
-	public GridFSFindIterable findByUploader(String repositoryName, String uploader) {
-		return this.getBucket(repositoryName).find(Filters.eq("metadata." + CodeConstants.METADATA_UPLOADER_KEY, uploader));
+	public GridFSFindIterable findById(String repositoryName, String id) {
+		return this.getBucket(repositoryName).find(Filters.eq(GridFSFileField.ID, new ObjectId(id)));
+	}
+
+	public GridFSFindIterable findByMetadata(String repositoryName, String attributeName, String value) {
+		return this.find(repositoryName, "metadata." + attributeName, value);
 	}
 
 	protected GridFSBucket getBucket(String repositoryName) {
