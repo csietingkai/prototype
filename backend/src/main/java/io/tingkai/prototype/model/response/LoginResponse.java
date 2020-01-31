@@ -1,5 +1,6 @@
 package io.tingkai.prototype.model.response;
 
+import io.tingkai.prototype.constant.MessageConstant;
 import io.tingkai.prototype.security.AuthToken;
 
 public class LoginResponse extends SimpleResponse {
@@ -11,7 +12,7 @@ public class LoginResponse extends SimpleResponse {
 	}
 
 	public LoginResponse(AuthToken authToken) {
-		super();
+		super(true, MessageConstant.INFO_MSG_LOGIN_SUCCESS);
 		this.authToken = authToken;
 	}
 

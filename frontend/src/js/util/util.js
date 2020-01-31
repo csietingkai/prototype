@@ -8,8 +8,10 @@ const getCommonHeader = (token) => {
 	};
 };
 
-const setToken = (token) => {
-	Cookie.set(constant.COOKIE_TOKEN_KEY, token);
+const setToken = (token, expires) => {
+	Cookie.set(constant.COOKIE_TOKEN_KEY, token, {
+		expires: expires
+	});
 }
 
 const getToken = () => {

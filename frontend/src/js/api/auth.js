@@ -32,6 +32,8 @@ const validate = async (tokenString) => {
 		params: {
 			tokenString
 		}
+	}).then((response) => {
+		return response.data;
 	});
 }
 

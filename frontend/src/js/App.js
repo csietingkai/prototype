@@ -15,19 +15,28 @@ export default class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			token: ''
-		}
+			tokenValidateResult: false
+		};
+
+	}
+
+	componentWillMount = () => {
+		this.getValidateResult(util.getToken());
 	}
 
 	setToken = (token) => {
 		util.setToken(token);
-		this.setState({ token });
+		this.setState({
+			tokenValidateResult: true
+		});
 	}
 
-	getValidateResult = async (token) => {
-		const validateResult = await auth.validate(token);
-		const result = await validateResult;
-		return result.success;
+	getValidateResult = (token) => {
+		auth.validate(token).then((response) => {
+			this.setState({
+				tokenValidateResult: response.success
+			});
+		});
 	}
 
 	render() {
@@ -36,12 +45,10 @@ export default class App extends React.Component {
 		);
 
 		let token = util.getToken();
-		if (token) {
-			if (this.getValidateResult(token)) {
-				app = (
-					<MainPage />
-				);
-			}
+		if (token && this.state.tokenValidateResult) {
+			app = (
+				<MainPage />
+			);
 		}
 
 		return (
