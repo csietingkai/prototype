@@ -9,4 +9,4 @@ export default {
 	COOKIE_TOKEN_KEY,
 	ENTER_CHAR_CODE,
 	ENTITIES
-}
+};

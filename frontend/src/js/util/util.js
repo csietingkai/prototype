@@ -1,4 +1,4 @@
-import Cookie from "js-cookie"
+import Cookie from 'js-cookie'
 
 import constant from 'js/util/constant'
 
@@ -18,9 +18,13 @@ const getToken = () => {
 	return Cookie.get(constant.COOKIE_TOKEN_KEY);
 }
 
+const removeToken = () => {
+	Cookie.remove(constant.COOKIE_TOKEN_KEY);
+}
+
 export default {
 	getCommonHeader,
 	setToken,
-	getToken
+	getToken,
+	removeToken
 }
-

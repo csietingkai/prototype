@@ -7,7 +7,7 @@ const ITEM_CONTROLLER_PREFIX = constant.API_BASE_URL + '/item';
 const GET_ALL_PATH = ITEM_CONTROLLER_PREFIX + '/getAll';
 
 const getAll = async () => {
-	const headers = util.COMMON_HEADER(util.getToken());
+	const headers = util.getCommonHeader(util.getToken());
 	return axios.get(GET_ALL_PATH, {
 		headers
 	});

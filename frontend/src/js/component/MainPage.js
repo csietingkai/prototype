@@ -1,12 +1,23 @@
 import React from 'react';
 
-import 'resource/css/login.css'
-import Header from './util/Header';
+import Header from 'js/component/util/Header';
+import Sidebar from 'js/component/router/SideBar';
+import RouterView from 'js/component/router/RouterView';
 
 export default class MainPage extends React.Component {
 	render() {
 		return (
-			<Header />
+			<div>
+				<Header />
+				<div className='row'>
+					<div className='col-md-3'>
+						<Sidebar />
+					</div>
+					<div className='col-md-9'>
+						<RouterView />
+					</div>
+				</div>
+			</div>
 		);
 	}
 };

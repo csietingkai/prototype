@@ -52,44 +52,44 @@ export default class LoginPage extends React.Component {
 
 	render() {
 		let bgImg = (
-			<div className="login-background-image" >
-				<Image alt="bg" className="w-100 h-100" src={bg} ></Image>
+			<div className='login-background-image' >
+				<Image alt='bg' className='w-100 h-100' src={bg} ></Image>
 			</div>
 		);
 		let loginBlock = (
-			<Container className="login-block">
-				<Row className="login-title">
+			<Container className='login-block'>
+				<Row className='login-title'>
 					<Col>Welcome</Col>
 				</Row>
-				<Form className="login-form">
+				<Form className='login-form'>
 					<Form.Group as={Row}>
-						<InputGroup className="login-input">
+						<InputGroup className='login-input'>
 							<InputGroup.Prepend>
 								<InputGroup.Text>
-									<i className="fa fa-user"></i>
+									<i className='fa fa-user'></i>
 								</InputGroup.Text>
 							</InputGroup.Prepend>
-							<FormControl placeholder="Username" onKeyPress={this.handleEnterKey} onChange={this.handleUsernameChanged} />
+							<FormControl placeholder='Username' onKeyPress={this.handleEnterKey} onChange={this.handleUsernameChanged} />
 						</InputGroup>
 					</Form.Group>
 					<Form.Group as={Row}>
-						<InputGroup className="login-input">
+						<InputGroup className='login-input'>
 							<InputGroup.Prepend>
 								<InputGroup.Text>
-									<i className="fa fa-lock"></i>
+									<i className='fa fa-lock'></i>
 								</InputGroup.Text>
 							</InputGroup.Prepend>
-							<Form.Control type="password" placeholder="Password" onKeyPress={this.handleEnterKey} onChange={this.handlePasswordChanged} />
+							<Form.Control type='password' placeholder='Password' onKeyPress={this.handleEnterKey} onChange={this.handlePasswordChanged} />
 						</InputGroup>
 					</Form.Group>
-					<Button as={Row} variant="primary" className="login-btn" onClick={this.handleLoginClick}>
+					<Button as={Row} variant='primary' className='login-btn' onClick={this.handleLoginClick}>
 						Login
 					</Button>
 				</Form>
 			</Container>
 		);
 		return (
-			<div className="App">
+			<div className='App'>
 				{bgImg}
 				{loginBlock}
 			</div>

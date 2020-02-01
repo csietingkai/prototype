@@ -10,7 +10,7 @@ export default class EntityTable extends React.Component {
 		this.state = {
 			list: []
 		};
-		this.fetchEntity()
+		this.fetchEntity();
 	}
 
 	fetchEntity = () => {
@@ -26,13 +26,10 @@ export default class EntityTable extends React.Component {
 			console.log(this.state.list[i]);
 		}
 		return (
-			<Table>
-				<thead>
-				</thead>
-				<tbody>
-
-				</tbody>
-			</Table>
+			<div>
+				<span>EntityTable</span>
+				<Table></Table>
+			</div>
 		);
 	}
 };
