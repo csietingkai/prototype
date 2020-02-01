@@ -8,7 +8,7 @@ export default class MainPage extends React.Component {
 	render() {
 		return (
 			<div>
-				<Header />
+				<Header removeToken={this.props.removeToken} />
 				<div className='row'>
 					<div className='col-md-3'>
 						<Sidebar />

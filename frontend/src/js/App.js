@@ -4,6 +4,7 @@ import { NotificationContainer } from 'react-notifications';
 import auth from 'js/api/auth';
 import LoginPage from 'js/component/LoginPage';
 import MainPage from 'js/component/MainPage';
+import notify from 'js/util/notify';
 import util from 'js/util/util';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -27,12 +28,22 @@ export default class App extends React.Component {
 		});
 	}
 
-	getValidateResult = (token) => {
-		auth.validate(token).then((response) => {
-			this.setState({
-				tokenValidateResult: response.success
-			});
+	removeToken = () => {
+		util.removeToken();
+		notify.success('Logout Success');
+		this.setState({
+			tokenValidateResult: false
 		});
+	}
+
+	getValidateResult = (token) => {
+		if (token) {
+			auth.validate(token).then((response) => {
+				this.setState({
+					tokenValidateResult: response.success
+				});
+			});
+		}
 	}
 
 	render() {
@@ -40,10 +51,9 @@ export default class App extends React.Component {
 			<LoginPage setToken={this.setToken} />
 		);
 
-		let token = util.getToken();
-		if (token && this.state.tokenValidateResult) {
+		if (this.state.tokenValidateResult) {
 			app = (
-				<MainPage />
+				<MainPage removeToken={this.removeToken} />
 			);
 		}
 

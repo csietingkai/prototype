@@ -9,7 +9,7 @@ export default class Header extends React.Component {
 
 	render() {
 		let formContent = (
-			<Button variant='outline-primary' className='logout-btn'>
+			<Button variant='outline-primary' className='logout-btn' onClick={this.props.removeToken}>
 				<i className='fa fa-sign-out'></i>
 				<span> Logout</span>
 			</Button>
