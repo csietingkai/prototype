@@ -56,14 +56,19 @@ public class AuthController {
 	}
 
 	@RequestMapping(value = AuthController.REGISTER_PATH, method = RequestMethod.POST)
-	public SimpleResponse register(@RequestBody User user) {
+	public SimpleResponse register(@RequestBody User user, @RequestParam(defaultValue="true") boolean sendMail) {
 		if (user.getRole() == Role.USER) {
 			this.userService.create(user);
+		} else if (user.getRole() == Role.ADMIN || (user.getRole() == Role.ROOT && !this.userService.isRootExist())) {
+			this.userService.create(user, false);
+		} else {
+			return new SimpleResponse(false);
 		}
-		this.mailService.sendConfirmEmail(user.getEmail());
-		if (user.getRole() == Role.ADMIN || (user.getRole() == Role.ROOT && !this.userService.isRootExist())) {
-			this.userService.create(user);
+
+		if (sendMail) {
+			this.mailService.sendConfirmEmail(user.getEmail());
 		}
+
 		return new SimpleResponse();
 	}
 

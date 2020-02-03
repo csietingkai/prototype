@@ -43,8 +43,14 @@ public class UserService {
 	}
 
 	public void create(User user) {
+		this.create(user, true);
+	}
+
+	public void create(User user, boolean normalRegister) {
 		user.setPwd(this.bCryptPasswordEncoder.encode(user.getPwd()));
-		user.setRole(Role.USER);
+		if (normalRegister) {
+			user.setRole(Role.USER);
+		};
 		this.userDao.save(user);
 	}
 
