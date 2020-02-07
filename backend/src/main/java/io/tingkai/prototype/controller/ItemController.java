@@ -20,9 +20,10 @@ import io.tingkai.prototype.service.ItemService;
  * @author tingkai
  */
 @RestController
-@RequestMapping(value = "/item")
+@RequestMapping(value = ItemController.ITEM_CONROLLER_PREFIX)
 public class ItemController {
 
+	public static final String ITEM_CONROLLER_PREFIX = "/item";
 	public static final String GET_ALL_PATH = "/getAll";
 	public static final String GET_PATH = "/get";
 	public static final String INSERT_PATH = "/insert";

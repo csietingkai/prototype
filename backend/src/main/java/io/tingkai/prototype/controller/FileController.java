@@ -34,9 +34,10 @@ import io.tingkai.prototype.util.FileUtil;
  * @author tingkai
  */
 @RestController
-@RequestMapping(value = "/file")
+@RequestMapping(value = FileController.FILE_CONTROLLER_PREFIX)
 public class FileController {
 
+	public static final String FILE_CONTROLLER_PREFIX = "/file";
 	public static final String UPLOAD_PATH = "/upload";
 	public static final String DOWNLOAD_PATH = "/download";
 	public static final String FIND_ONE_PATH = "/findOne";
