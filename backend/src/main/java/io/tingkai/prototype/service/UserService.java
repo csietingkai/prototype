@@ -50,7 +50,7 @@ public class UserService {
 		user.setPwd(this.bCryptPasswordEncoder.encode(user.getPwd()));
 		if (normalRegister) {
 			user.setRole(Role.USER);
-		};
+		}
 		this.userDao.save(user);
 	}
 

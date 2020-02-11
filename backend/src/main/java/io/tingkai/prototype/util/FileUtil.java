@@ -18,7 +18,7 @@ public class FileUtil {
 
 	public static String getMimeType(String filename) {
 		Tika tika = new Tika();
-		return tika.detect(filename); 
+		return tika.detect(filename);
 	}
 
 	public static List<File> convert(GridFSFindIterable iterable) {

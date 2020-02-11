@@ -13,7 +13,8 @@ public class File {
 	private String md5;
 	private Document metadata;
 
-	public File() { }
+	public File() {
+	}
 
 	public File(String id, String filename, long size, Date uploadDate, String md5, Document metadata) {
 		super();

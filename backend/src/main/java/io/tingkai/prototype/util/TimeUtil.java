@@ -9,19 +9,23 @@ import io.tingkai.prototype.constant.CodeConstants;
 import io.tingkai.prototype.enumeration.DateTimeFormatType;
 
 /**
- * Provide method to generate random datetime, convert datetime to String and reversely, get current date and time.
+ * Provide method to generate random datetime, convert datetime to String and
+ * reversely, get current date and time.
  * 
  * @author tingkai
  */
 public class TimeUtil {
 
-	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(CodeConstants.DATE_FORMAT).withZone(CodeConstants.ZONE_TPE);
-	private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(CodeConstants.TIME_FORMAT).withZone(CodeConstants.ZONE_TPE);
-	private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(CodeConstants.DATE_TIME_FORMAT).withZone(CodeConstants.ZONE_TPE);
+	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(CodeConstants.DATE_FORMAT)
+			.withZone(CodeConstants.ZONE_TPE);
+	private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(CodeConstants.TIME_FORMAT)
+			.withZone(CodeConstants.ZONE_TPE);
+	private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter
+			.ofPattern(CodeConstants.DATE_TIME_FORMAT).withZone(CodeConstants.ZONE_TPE);
 
 //	private static final int YEAR_MIN = 1900;
 //	private static final int YEAR_MAX = 9999;
-	
+
 //	private static final LocalDate START_DATE = LocalDate.of(YEAR_MIN, 1, 1);
 //	private static final LocalDate END_DATE = LocalDate.of(YEAR_MAX, 12, 31);
 
@@ -40,16 +44,16 @@ public class TimeUtil {
 	public static boolean verify(String str, DateTimeFormatType type) {
 		DateTimeFormatter formatter = null;
 		switch (type) {
-			case DATE:
-				formatter = DATE_FORMATTER;
-				break;
-			case TIME:
-				formatter = TIME_FORMATTER;
-				break;
-			case DATE_TIME:
-			default:
-				formatter = DATE_TIME_FORMATTER;
-				break;
+		case DATE:
+			formatter = DATE_FORMATTER;
+			break;
+		case TIME:
+			formatter = TIME_FORMATTER;
+			break;
+		case DATE_TIME:
+		default:
+			formatter = DATE_TIME_FORMATTER;
+			break;
 		}
 		try {
 			Instant.from(formatter.parse(str)).toEpochMilli();
@@ -67,11 +71,11 @@ public class TimeUtil {
 	public static long generate(DateTimeFormatType type) {
 		// TODO
 		switch (type) {
-			case DATE:
-			case TIME:
-			case DATE_TIME:
-			default:
-				return 0;
+		case DATE:
+		case TIME:
+		case DATE_TIME:
+		default:
+			return 0;
 		}
 	}
 
@@ -81,13 +85,13 @@ public class TimeUtil {
 
 	public static String convert(long timeStamp, DateTimeFormatType type) {
 		switch (type) {
-			case DATE:
-				return DATE_FORMATTER.format(Instant.ofEpochMilli(timeStamp));
-			case TIME:
-				return TIME_FORMATTER.format(Instant.ofEpochMilli(timeStamp));
-			case DATE_TIME:
-			default:
-				return DATE_TIME_FORMATTER.format(Instant.ofEpochMilli(timeStamp));
+		case DATE:
+			return DATE_FORMATTER.format(Instant.ofEpochMilli(timeStamp));
+		case TIME:
+			return TIME_FORMATTER.format(Instant.ofEpochMilli(timeStamp));
+		case DATE_TIME:
+		default:
+			return DATE_TIME_FORMATTER.format(Instant.ofEpochMilli(timeStamp));
 		}
 	}
 
@@ -98,14 +102,14 @@ public class TimeUtil {
 	public static long convert(String str, DateTimeFormatType type) {
 		LocalDateTime dateTime = null;
 		switch (type) {
-			case DATE:
-			case TIME:
-				// TODO
-				System.out.println("currently not avaliable");
-				return -1;
-			case DATE_TIME:
-			default:
-				dateTime = LocalDateTime.parse(str, DATE_TIME_FORMATTER);
+		case DATE:
+		case TIME:
+			// TODO
+			System.out.println("currently not avaliable");
+			return -1;
+		case DATE_TIME:
+		default:
+			dateTime = LocalDateTime.parse(str, DATE_TIME_FORMATTER);
 		}
 		Instant ts = dateTime.atZone(CodeConstants.ZONE_TPE).toInstant();
 		return ts.toEpochMilli();

@@ -41,7 +41,6 @@ public class RedisConfig {
 
 	@Bean
 	RedisTemplate<?, ?> redisTemplate(RedisConnectionFactory connectionFactory) {
-
 		RedisTemplate<byte[], byte[]> template = new RedisTemplate<>();
 		template.setConnectionFactory(connectionFactory);
 

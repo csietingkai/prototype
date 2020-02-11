@@ -29,7 +29,7 @@ public class User {
 
 	@Column(unique = true)
 	private String name;
-	
+
 	@Column(unique = true)
 	private String email;
 
@@ -37,14 +37,15 @@ public class User {
 
 	@Enumerated(EnumType.STRING)
 	private Role role;
-	
+
 	private boolean confirm;
 
 	public User() {
 		super();
 	}
 
-	public User(UUID id, String name, String email, String pwd, Role role, boolean confirm) throws IllegalRoleException {
+	public User(UUID id, String name, String email, String pwd, Role role, boolean confirm)
+			throws IllegalRoleException {
 		super();
 		this.id = id;
 		this.name = name;
