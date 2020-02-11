@@ -1,7 +1,7 @@
 import HomeIcon from '@material-ui/icons/Home';
 import AppsIcon from '@material-ui/icons/Apps';
 
-import EntityTable from 'js/component/util/EntityTable';
+import ItemTable from 'js/component/util/ItemTable';
 import About from 'js/component/view/About';
 
 export default [
@@ -17,9 +17,9 @@ export default [
 		icon: AppsIcon,
 		list: [
 			{
-				text: 'EntityTable',
-				route: '/EntityTable',
-				component: EntityTable
+				text: 'ItemTable',
+				route: '/ItemTable',
+				component: ItemTable
 			}
 		]
 	}
