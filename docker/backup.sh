@@ -11,6 +11,9 @@ TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 HOST=127.0.0.1
 BACKUP_DIR=./backup/$(date +%Y%m%d)
 
+if [ ! -d ./backup ]; then
+	mkdir backup
+fi
 if [ ! -d $BACKUP_DIR ]; then 
 	mkdir $BACKUP_DIR
 fi
