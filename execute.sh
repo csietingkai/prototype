@@ -2,32 +2,26 @@
 
 if ! [ -x "$(command -v docker)" ]; then
 	echo 'Error: docker is not installed.' >&2
-	exit 1
 fi
 
 if ! [ -x "$(command -v git)" ]; then
 	echo 'Error: git is not installed.' >&2
-	exit 1
 fi
 
 if ! [ -x "$(command -v mvn)" ]; then
 	echo 'Error: maven is not installed.' >&2
-	exit 1
 fi
 
 if ! [ -x "$(command -v redis-cli)" ]; then
 	echo 'Error: redis-tools is not installed.' >&2
-	exit 1
 fi
 
 if ! [ -x "$(command -v mongodump)" ]; then
 	echo 'Error: mongo-tools is not installed.' >&2
-	exit 1
 fi
 
 if ! [ -x "$(command -v pg_dumpall)" ]; then
 	echo 'Error: postgresql-client-11 and postgresql-client-common is not installed.' >&2
-	exit 1
 fi
 
 declare -a commands=("localhost" "build" "deploy" "backup")
