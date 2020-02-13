@@ -4,6 +4,7 @@ services:
   postgres:
     image: postgres:${POSTGRES_VERSION}
     container_name: ${CONTAINER_NAME_PREFIX}postgres
+    restart: always
     ports:
       - ${POSTGRES_PORT}:5432
     volumes:
@@ -13,6 +14,7 @@ services:
   redis:
     image: redis:${REDIS_VERSION}
     container_name: ${CONTAINER_NAME_PREFIX}redis
+    restart: always
     command: --requirepass ${REDIS_ROOT_PASSWORD}
     ports:
       - ${REDIS_PORT}:6379
@@ -21,6 +23,7 @@ services:
   mongodb:
     image: mongo:${MONGODB_VERSION}
     container_name: ${CONTAINER_NAME_PREFIX}mongodb
+    restart: always
     ports:
       - ${MONGODB_PORT}:27017
     volumes:
