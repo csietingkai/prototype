@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import io.tingkai.prototype.constant.CodeConstants;
 import io.tingkai.prototype.security.AuthTokenAuthentication;
 
 public class ContextUtil {
@@ -14,7 +15,7 @@ public class ContextUtil {
 		if (Optional.ofNullable(authToken).isPresent()) {
 			return authToken.getPrincipal().toString();
 		}
-		return "";
+		return CodeConstants.EMPTY_STRING;
 	}
 
 	public static String getTokenString() {
@@ -22,7 +23,7 @@ public class ContextUtil {
 		if (Optional.ofNullable(authToken).isPresent()) {
 			return authToken.getCredentials().toString();
 		}
-		return "";
+		return CodeConstants.EMPTY_STRING;
 	}
 
 	public static AuthTokenAuthentication getAuthToken() {
