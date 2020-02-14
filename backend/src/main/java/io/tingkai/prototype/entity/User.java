@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import io.tingkai.prototype.constant.DatabaseContants;
 import io.tingkai.prototype.enumeration.Role;
 import io.tingkai.prototype.exception.IllegalRoleException;
 
@@ -20,7 +21,7 @@ import io.tingkai.prototype.exception.IllegalRoleException;
  * @author tingkai
  */
 @Entity
-@Table(name = "users")
+@Table(name = DatabaseContants.TABLE_USER)
 public class User {
 
 	@Id

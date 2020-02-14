@@ -8,13 +8,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import io.tingkai.prototype.constant.DatabaseContants;
+
 /**
  * Entity for sql database table 'item'
  * 
  * @author tingkai
  */
 @Entity
-@Table(name = "item")
+@Table(name = DatabaseContants.TABLE_ITEM)
 public class Item {
 
 	@Id
