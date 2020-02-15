@@ -16,6 +16,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
+import io.tingkai.prototype.enumeration.Role;
+
+/**
+ * Filter Layer of Spring, filter token string send with request is passed or not. 
+ * 
+ * @author tingkai
+ */
 @Component
 public class AuthTokenAuthenticationFilter extends GenericFilterBean {
 
@@ -32,9 +39,16 @@ public class AuthTokenAuthenticationFilter extends GenericFilterBean {
 			AuthTokenAuthentication authTokenAuthentication = new AuthTokenAuthentication(authTokenString);
 			try {
 				Authentication authentication = this.authenticationManager.authenticate(authTokenAuthentication);
-				SecurityContextHolder.getContext().setAuthentication(authentication);
+				Object detail = authentication.getDetails();
+				if (detail instanceof AuthToken && Role.NONE != ((AuthToken) detail).getRole()) {
+					SecurityContextHolder.getContext().setAuthentication(authentication);
+				}
+				else {
+					SecurityContextHolder.getContext().setAuthentication(null);
+				}
 			} catch (AuthenticationException e) {
 				SecurityContextHolder.getContext().setAuthentication(null);
+				e.printStackTrace();
 			}
 		} else {
 			SecurityContextHolder.getContext().setAuthentication(null);

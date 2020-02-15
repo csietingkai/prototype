@@ -1,7 +1,12 @@
 package io.tingkai.prototype.model.response;
 
-import io.tingkai.prototype.constant.CodeConstants;
+import io.tingkai.prototype.constant.MessageConstant;
 
+/**
+ * simple response with success and message.
+ * 
+ * @author tingkai
+ */
 public class SimpleResponse {
 
 	private boolean isSuccess;
@@ -15,9 +20,9 @@ public class SimpleResponse {
 	public SimpleResponse(boolean isSuccess) {
 		this.isSuccess = isSuccess;
 		if (this.isSuccess) {
-			this.message = CodeConstants.SIMPLE_RESPONSE_SUCCESS_MSG;
+			this.message = MessageConstant.SIMPLE_RESPONSE_SUCCESS_MSG;
 		} else {
-			this.message = CodeConstants.SIMPLE_RESPONSE_FAIL_MSG;
+			this.message = MessageConstant.SIMPLE_RESPONSE_FAIL_MSG;
 		}
 	}
 

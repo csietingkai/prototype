@@ -5,6 +5,11 @@ import java.util.Date;
 
 import io.tingkai.prototype.enumeration.Role;
 
+/**
+ * AuthToken include user info and token string.
+ * 
+ * @author tingkai
+ */
 @SuppressWarnings("serial")
 public class AuthToken implements Serializable {
 

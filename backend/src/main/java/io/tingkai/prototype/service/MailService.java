@@ -6,13 +6,16 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import io.tingkai.prototype.constant.AppConstants;
+import io.tingkai.prototype.constant.CodeConstants;
 import io.tingkai.prototype.controller.AuthController;
 
+/**
+ * Provide method for send mail.
+ * 
+ * @author tingkai
+ */
 @Service
 public class MailService {
-
-	private static final String CONFIRM_EMAIL_SUBJECT = "Prototype Confrim Email";
-	private static final String CONFIRM_EMAIL_CONTENT = "Click the following link to verify email:\n";
 
 	@Autowired
 	private JavaMailSender javaMailSender;
@@ -20,12 +23,12 @@ public class MailService {
 	public void sendConfirmEmail(String destination) {
 		// FIXME how to send confirm request
 		StringBuilder content = new StringBuilder();
-		content.append(CONFIRM_EMAIL_CONTENT);
+		content.append(CodeConstants.CONFIRM_EMAIL_CONTENT);
 		content.append(AppConstants.CONFIRM_EMAIL_LINK);
 		content.append(AuthController.CONFIRM_PATH);
 		content.append("?");
 		content.append(destination);
-		sendEmail(CONFIRM_EMAIL_SUBJECT, content.toString(), destination);
+		sendEmail(CodeConstants.CONFIRM_EMAIL_SUBJECT, content.toString(), destination);
 	}
 
 	private void sendEmail(String subject, String content, String... dests) {

@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import io.tingkai.prototype.entity.User;
 import io.tingkai.prototype.enumeration.Role;
@@ -13,11 +14,12 @@ import io.tingkai.prototype.enumeration.Role;
  * 
  * @author tingkai
  */
+@Repository
 public interface UserDao extends CrudRepository<User, UUID> {
 
-	Optional<User> findByName(String name);
+	public Optional<User> findByName(String name);
 
-	Optional<User> findByEmail(String email);
+	public Optional<User> findByEmail(String email);
 
-	Optional<User> findByRole(Role role);
+	public Iterable<User> findByRole(Role role);
 }

@@ -9,6 +9,11 @@ import org.springframework.stereotype.Component;
 
 import io.tingkai.prototype.constant.CodeConstants;
 
+/**
+ * generate random tokenString
+ * 
+ * @author tingkai
+ */
 @Component
 public class TokenStringService {
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.tingkai.prototype.constant.MessageConstant;
 import io.tingkai.prototype.entity.User;
 import io.tingkai.prototype.enumeration.Role;
 import io.tingkai.prototype.exception.UserNotFoundException;
@@ -62,7 +63,7 @@ public class AuthController {
 		} else if (user.getRole() == Role.ADMIN || (user.getRole() == Role.ROOT && !this.userService.isRootExist())) {
 			this.userService.create(user, false);
 		} else {
-			return new SimpleResponse(false);
+			return new SimpleResponse(false, MessageConstant.ERROR_MSG_CREATE_USER_FAIL);
 		}
 
 		if (sendMail) {

@@ -10,7 +10,13 @@ import org.springframework.stereotype.Component;
 
 import io.tingkai.prototype.constant.CodeConstants;
 import io.tingkai.prototype.entity.User;
+import io.tingkai.prototype.util.TimeUtil;
 
+/**
+ * Store login token to redis
+ * 
+ * @author tingkai
+ */
 @Component
 public final class AuthTokenService {
 
@@ -27,7 +33,7 @@ public final class AuthTokenService {
 		String tokenString = this.tokenStringService.next();
 
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
+		calendar.setTime(new Date(TimeUtil.getCurrentDateTime()));
 		calendar.add(Calendar.HOUR, CodeConstants.AUTH_TOKEN_VALID_HOURS);
 		Date expiryDate = calendar.getTime();
 

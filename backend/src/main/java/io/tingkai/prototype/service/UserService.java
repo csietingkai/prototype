@@ -15,7 +15,7 @@ import io.tingkai.prototype.exception.WrongPasswordException;
 import io.tingkai.prototype.util.ContextUtil;
 
 /**
- * provide method for upload, download, find, delete files stored in sql
+ * provide method for upload, download, find, delete user stored in sql
  * database table 'users'
  * 
  * @author tingkai
@@ -81,7 +81,13 @@ public class UserService {
 	}
 
 	public boolean isRootExist() {
-		return this.userDao.findByRole(Role.ROOT).isPresent();
+		Iterable<User> users = this.userDao.findByRole(Role.ROOT);
+		for (User user : users) {
+			if (Role.ROOT == user.getRole()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private Optional<User> getCurrentLoginUser() {

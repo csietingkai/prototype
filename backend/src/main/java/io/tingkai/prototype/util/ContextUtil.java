@@ -8,6 +8,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import io.tingkai.prototype.constant.CodeConstants;
 import io.tingkai.prototype.security.AuthTokenAuthentication;
 
+/**
+ * Provide method to get current user and tokenString
+ * 
+ * @author tingkai
+ */
 public class ContextUtil {
 
 	public static String getUserName() {

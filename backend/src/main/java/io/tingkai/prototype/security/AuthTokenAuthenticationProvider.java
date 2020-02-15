@@ -6,6 +6,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+/**
+ * Override Spring Authentication flow, check current user's AuthToken is validate or not.
+ * 
+ * @author tingkai
+ */
 @Component
 public class AuthTokenAuthenticationProvider implements AuthenticationProvider {
 
