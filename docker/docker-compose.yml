@@ -42,11 +42,11 @@ services:
       - mongodb
       - redis
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:${POSTGRES_PORT}/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=${POSTGRES_ROOT_PASSWORD}
       - SPRING_DATA_MONGODB_HOST=mongodb
-      - SPRING_DATA_MONGODB_PORT=27017
+      - SPRING_DATA_MONGODB_PORT=${MONGODB_PORT}
       - SPRING_DATA_MONGODB_AUTHENTICATION-database=admin
       - SPRING_DATA_MONGODB_DATABASE=prototype
       - SPRING_DATA_MONGODB_GRID_FS_DATABASE=prototype

@@ -58,7 +58,7 @@ npm run start
 ```
 
 #### Step 4: Done!!
-Open your browser and type `localhost:3000`, the project will show on your screen
+Open your browser and type `localhost:33000`, the project will show on your screen
 
 ## More About This Application
 

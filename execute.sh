@@ -29,17 +29,20 @@ declare -a commands=("localhost" "build" "deploy" "backup")
 commit_date="$(git show -s --format=%ci --date=short)"
 version=v"$(git log -1 --pretty=format:%h)"-"$(echo $commit_date | cut -d' ' -f1 | tr "-" .)"
 
-backend_image_name=tingkai/prototype-backend
-frontend_image_name=tingkai/prototype-frontend
+user=tingkai
+project_name=prototype
 
-container_prefix=prototype
+backend_image_name=$user/$project_name-backend
+frontend_image_name=$user/$project_name-frontend
+
+container_prefix=$project_name
 backend_container_name=$container_prefix-api
 frontend_container_name=$container_prefix-client
 
 if [ "$1" = 'localhost' ]; then
 	if [ "$2" = 'server' ]; then
 		cd docker
-		docker-compose up -d postgres mongodb redis
+		docker-compose --project-name $project_name up -d postgres mongodb redis
 		docker container ls -a
 		cd ..
 	elif [ "$2" = 'backend' ]; then
@@ -80,9 +83,6 @@ elif [ "$1" = 'build' ]; then
 		cd ..
 	fi
 
-elif [ "$1" = 'deploy' ]; then
-	echo ${commands[2]}
-
 elif [ "$1" = 'backup' ]; then
 	cd docker
 	./backup.sh
@@ -98,7 +98,6 @@ else
 	echo -e "  localhost frontend     start frontend react app"
 	echo -e "  build backend          use docker build backend spring boot image"
 	echo -e "  build frontend         use docker build frontend react app image"
-	echo -e "  deploy                 deploy backend and frontend to docker"
 	echo -e "  backup                 backup db data"
 fi
 
