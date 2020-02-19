@@ -10,8 +10,8 @@ import io.tingkai.prototype.constant.MessageConstant;
 import io.tingkai.prototype.dao.UserDao;
 import io.tingkai.prototype.entity.User;
 import io.tingkai.prototype.enumeration.Role;
-import io.tingkai.prototype.exception.UserNotFoundException;
-import io.tingkai.prototype.exception.WrongPasswordException;
+import io.tingkai.prototype.model.exception.UserNotFoundException;
+import io.tingkai.prototype.model.exception.WrongPasswordException;
 import io.tingkai.prototype.util.ContextUtil;
 
 /**

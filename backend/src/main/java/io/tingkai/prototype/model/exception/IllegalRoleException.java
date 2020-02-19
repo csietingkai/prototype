@@ -1,4 +1,4 @@
-package io.tingkai.prototype.exception;
+package io.tingkai.prototype.model.exception;
 
 /**
  * when frontend send register request and role doesn't exist, throw this

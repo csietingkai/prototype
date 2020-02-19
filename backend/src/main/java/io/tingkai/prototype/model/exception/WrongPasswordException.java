@@ -1,4 +1,4 @@
-package io.tingkai.prototype.exception;
+package io.tingkai.prototype.model.exception;
 
 /**
  * when frontend send login request and username exist in sql database but

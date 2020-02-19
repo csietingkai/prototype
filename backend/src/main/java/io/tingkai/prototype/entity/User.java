@@ -13,7 +13,6 @@ import javax.persistence.Table;
 
 import io.tingkai.prototype.constant.DatabaseContants;
 import io.tingkai.prototype.enumeration.Role;
-import io.tingkai.prototype.exception.IllegalRoleException;
 
 /**
  * Entity for sql database table 'users'
@@ -45,8 +44,7 @@ public class User {
 		super();
 	}
 
-	public User(UUID id, String name, String email, String pwd, Role role, boolean confirm)
-			throws IllegalRoleException {
+	public User(UUID id, String name, String email, String pwd, Role role, boolean confirm) {
 		super();
 		this.id = id;
 		this.name = name;
