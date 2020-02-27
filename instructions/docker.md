@@ -3,7 +3,7 @@
 ## What is Docker?
 Docker is a containerization technology that enables us to cleanly abstract an environment configuration to a file (or set of files), and run it in a protected, isolated environment on a host. 
 
-Compare To a virtual machine, it's more performant than, a virtual machine This provides isolation for services without the overhead of running an entire operating system on the host.
+Compare to a virtual machine, it's more performance than a virtual machine. This provides isolation for services without the overhead of running an entire operating system on the host.
 
 ## Before Start to Use, You Need to Know...
 |  | Explanation |
