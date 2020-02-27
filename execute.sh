@@ -76,7 +76,8 @@ elif [ "$1" = 'build' ]; then
 		docker container rm $frontend_container_name
 		cd ..
 		cd frontend
-		sed -i "s/localhost/api/g" package.json
+		sed -i "s/localhost:38080/api:8080/g" package.json
+		sed -i "s/PORT=33000/PORT=3000/g" package.json
 		docker build . --rm --tag=$frontend_image_name:latest --tag=$frontend_image_name:$version
 		docker push $frontend_image_name:latest
 		docker push $frontend_image_name:$version

@@ -1,14 +1,20 @@
+# base image
 FROM node:12.10.0-alpine
 
+# set working directory
 WORKDIR /app
 
+# add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
 
-COPY . .
+# install and cache app dependencies
+COPY package*.json ./
 
-RUN npm install -qy && npm install -g serve && npm run build
+RUN npm install -qy
+
+COPY . .
 
 EXPOSE 3000
 
 # start app
-CMD ["serve", "-s", "build", "-l", "3000"]
+CMD ["npm", "start"]

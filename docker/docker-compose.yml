@@ -3,62 +3,62 @@ version: "3"
 services:
   postgres:
     image: postgres:${POSTGRES_VERSION}
-    container_name: ${CONTAINER_NAME_PREFIX}postgres
+    container_name: ${CONTAINER_NAME_PREFIX}-${POSTGRES_SERVICE}
     restart: always
     ports:
-      - ${POSTGRES_PORT}:5432
+      - ${POSTGRES_PORT}:${POSTGRES_INTERNEL_PORT}
     volumes:
       - ${POSTGRES_DIR}:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_ROOT_PASSWORD}
   redis:
     image: redis:${REDIS_VERSION}
-    container_name: ${CONTAINER_NAME_PREFIX}redis
+    container_name: ${CONTAINER_NAME_PREFIX}-${REDIS_SERVICE}
     restart: always
     command: --requirepass ${REDIS_ROOT_PASSWORD}
     ports:
-      - ${REDIS_PORT}:6379
+      - ${REDIS_PORT}:${REDIS_INTERNEL_PORT}
     volumes:
       - ${REDIS_DIR}:/data
-  mongodb:
-    image: mongo:${MONGODB_VERSION}
-    container_name: ${CONTAINER_NAME_PREFIX}mongodb
+  mongo:
+    image: mongo:${MONGO_VERSION}
+    container_name: ${CONTAINER_NAME_PREFIX}-${MONGO_SERVICE}
     restart: always
     ports:
-      - ${MONGODB_PORT}:27017
+      - ${MONGO_PORT}:${MONGO_INTERNEL_PORT}
     volumes:
-      - ${MONGODB_DIR}:/data/db
-      - ${MONGODB_CONFIGDB}:/data/configdb
+      - ${MONGO_DIR}:/data/db
+      - ${MONGO_CONFIG}:/etc/mongod.conf
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_ROOT_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
   api:
     image: tingkai/prototype-backend:${API_VERSION}
-    container_name: ${CONTAINER_NAME_PREFIX}api
+    container_name: ${CONTAINER_NAME_PREFIX}-${API_SERVICE}
     ports:
       - ${API_PORT}:8080
     depends_on:
       - postgres
-      - mongodb
+      - mongo
       - redis
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:${POSTGRES_PORT}/postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${POSTGRES_SERVICE}:${POSTGRES_INTERNEL_PORT}/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=${POSTGRES_ROOT_PASSWORD}
-      - SPRING_DATA_MONGODB_HOST=mongodb
-      - SPRING_DATA_MONGODB_PORT=${MONGODB_PORT}
+      - SPRING_DATA_MONGODB_HOST=${MONGO_SERVICE}
+      - SPRING_DATA_MONGODB_PORT=${MONGO_INTERNEL_PORT}
       - SPRING_DATA_MONGODB_AUTHENTICATION-database=admin
       - SPRING_DATA_MONGODB_DATABASE=prototype
       - SPRING_DATA_MONGODB_GRID_FS_DATABASE=prototype
-      - SPRING_DATA_MONGODB_USERNAME=${MONGODB_ROOT_USERNAME}
-      - SPRING_DATA_MONGODB_PASSWORD=${MONGODB_ROOT_PASSWORD}
-      - SPRING_REDIS_HOST=redis
+      - SPRING_DATA_MONGODB_USERNAME=${MONGO_ROOT_USERNAME}
+      - SPRING_DATA_MONGODB_PASSWORD=${MONGO_ROOT_PASSWORD}
+      - SPRING_REDIS_HOST=${REDIS_SERVICE}
       - SPRING_REDIS_PORT=${REDIS_PORT}
       - SPRING_REDIS_PASSWORD=${REDIS_ROOT_PASSWORD}
   client:
-    image: tingkai/prototype-frontend:${FRONTEND_VERSION}
-    container_name: ${CONTAINER_NAME_PREFIX}client
+    image: tingkai/prototype-frontend:${CLIENT_VERSION}
+    container_name: ${CONTAINER_NAME_PREFIX}-${CLIENT_SERVICE}
     ports:
-      - ${FRONTEND_PORT}:3000
+      - ${CLIENT_PORT}:3000
     depends_on:
       - api
