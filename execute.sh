@@ -64,10 +64,9 @@ elif [ "$1" = 'build' ]; then
 		cd backend
 		sed -i "s/38080/8080/g" src/main/resources/application.properties
 		mvn clean install package
-		docker build . --rm --tag=$backend_image_name:latest --tag=$backend_image_name:$version
-		docker push $backend_image_name:latest
+		docker build . --rm --tag=$backend_image_name:$version
 		docker push $backend_image_name:$version
-		docker image rm $backend_image_name:latest $backend_image_name:$version
+		docker image $backend_image_name:$version
 		git checkout -- src/main/resources/application.properties
 		cd ..
 	elif [ "$2" = 'frontend' ]; then
@@ -78,10 +77,9 @@ elif [ "$1" = 'build' ]; then
 		cd frontend
 		sed -i "s/localhost:38080/api:8080/g" package.json
 		sed -i "s/PORT=33000/PORT=3000/g" package.json
-		docker build . --rm --tag=$frontend_image_name:latest --tag=$frontend_image_name:$version
-		docker push $frontend_image_name:latest
+		docker build . --rm --tag=$frontend_image_name:$version
 		docker push $frontend_image_name:$version
-		docker image rm $frontend_image_name:latest $frontend_image_name:$version
+		docker image rm $frontend_image_name:$version
 		git checkout -- package.json
 		cd ..
 	fi
