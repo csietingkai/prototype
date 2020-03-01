@@ -128,7 +128,7 @@ class SideBarItem extends React.Component {
 
 		return (
 			<div>
-				<ListItem className='sidebar-item' onClick={this.onClick} button dense>
+				<ListItem className='sidebar-item' onClick={this.onClick} dense>
 					<div style={{ paddingLeft: this.props.level * 10 }} className='sidebar-item-content' >
 						{itemIcon}
 						<div className='sidebar-item-text'>
