@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 
 import file from 'js/api/file';
-import { Divider } from '@material-ui/core';
 import Table from 'js/component/util/Table';
+import notify from 'js/util/notify';
 
 export default class UploadPage extends Component {
 
@@ -30,6 +30,25 @@ export default class UploadPage extends Component {
                 repositories
             });
         });
+    }
+
+    onFileChange = (event) => {
+        this.setState({
+            file: event.target.files[0]
+        });
+    }
+
+    uploadFile = () => {
+        file.upload(this.state.file).then((response) => {
+            if (response.success) {
+                notify.success(response.message);
+            } else {
+                notify.error(response.message);
+            }
+            this.setState({
+                file: null
+            })
+        })
     }
 
     downloadFile = (filename) => {
@@ -62,7 +81,17 @@ export default class UploadPage extends Component {
         })
         return (
             <>
-                <Divider className='sidebar-divider' />
+                <br />
+                <div className="input-group">
+                    <div className="custom-file">
+                        <input type="file" className="custom-file-input" onChange={this.onFileChange} />
+                        <label className="custom-file-label">{this.state.file ? this.state.file.name : 'Choose file'}</label>
+                    </div>
+                    <div className="input-group-append">
+                        <button className="btn btn-outline-secondary" type="button" onClick={this.uploadFile}>upload</button>
+                    </div>
+                </div>
+                <br />
                 <Tabs defaultActiveKey='profile'>
                     {tabs}
                 </Tabs>

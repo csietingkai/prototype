@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mongodb.client.gridfs.GridFSFindIterable;
 
 import io.tingkai.prototype.constant.GridFSFileField;
+import io.tingkai.prototype.constant.MessageConstant;
 import io.tingkai.prototype.entity.File;
 import io.tingkai.prototype.model.response.SimpleResponse;
 import io.tingkai.prototype.repository.FileRepository;
@@ -58,7 +59,7 @@ public class FileController {
 				file.getOriginalFilename());
 		updaloadStream.write(file.getBytes());
 		updaloadStream.close();
-		return new SimpleResponse();
+		return new SimpleResponse(true, MessageConstant.INFO_MSG_FILE_UPLOAD_SUCCESS);
 	}
 
 	@RequestMapping(value = FileController.DOWNLOAD_PATH)

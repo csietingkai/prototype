@@ -26,7 +26,8 @@ export default class ItemTable extends React.Component {
 		let table = (<Table list={this.state.list} type='item' />);
 		return (
 			<div>
-				<span>ItemTable</span>
+				<h3>ItemTable</h3>
+				<br />
 				{table}
 			</div>
 		);
