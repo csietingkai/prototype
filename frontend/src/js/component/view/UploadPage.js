@@ -17,6 +17,7 @@ export default class UploadPage extends Component {
 
     fetchRepositories = async () => {
         let repositories = await file.getFileRepositories();
+        this.state.repositories = []
         repositories.data.map(async (repositoryName) => {
             let fileList = await file.getFileList(repositoryName);
             fileList = fileList.data;
@@ -45,6 +46,7 @@ export default class UploadPage extends Component {
             } else {
                 notify.error(response.message);
             }
+            this.fetchRepositories();
             this.setState({
                 file: null
             })
