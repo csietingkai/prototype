@@ -1,7 +1,7 @@
 import React from 'react';
 
 import item from 'js/api/item';
-import renderTable from 'js/component/util/Table'
+import Table from 'js/component/util/Table';
 
 export default class ItemTable extends React.Component {
 
@@ -23,7 +23,7 @@ export default class ItemTable extends React.Component {
 
 	render() {
 		// TODO edit function
-		let table = renderTable(this.state.list, 'item', null, null);
+		let table = (<Table list={this.state.list} type='item' />);
 		return (
 			<div>
 				<span>ItemTable</span>

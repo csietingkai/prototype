@@ -6,6 +6,7 @@ import util from 'js/util/util';
 const FILE_CONTROLLER_PREFIX = constant.API_BASE_URL + '/file';
 const REPOSITORIES_PATH = FILE_CONTROLLER_PREFIX + '/repositories';
 const FILE_LIST_PATH = FILE_CONTROLLER_PREFIX + '/list';
+const DOWNLOAD_PATH = FILE_CONTROLLER_PREFIX + '/download';
 
 const getFileRepositories = async () => {
     const headers = util.getCommonHeader(util.getToken());
@@ -24,7 +25,21 @@ const getFileList = async (repositoryName) => {
     });
 }
 
+const download = async (filename) => {
+    const headers = util.getCommonHeader(util.getToken());
+    return axios.get(DOWNLOAD_PATH, {
+        headers,
+        responseType: 'blob',
+        params: {
+            filename
+        }
+    }).then((response) => {
+        return response.data;
+    });
+}
+
 export default {
     getFileRepositories,
-    getFileList
+    getFileList,
+    download
 };
