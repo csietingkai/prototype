@@ -2,6 +2,7 @@ package io.tingkai.prototype.service;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Optional;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -34,8 +35,17 @@ public class FileService {
 	private MongoClient mongoClient;
 
 	public OutputStream getUploadStream(String repositoryName, String sourceFileName) {
+		return getUploadStream(repositoryName, sourceFileName, null);
+	}
+
+	public OutputStream getUploadStream(String repositoryName, String sourceFileName, String category) {
+		Document metadata = new Document();
+		metadata.append(GridFSFileField.METADATA_UPLOADER_KEY, ContextUtil.getUserName());
+		if (Optional.ofNullable(category).isPresent()) {
+			metadata.append(GridFSFileField.METADATA_CATEGORY_KEY, category);
+		}
 		GridFSUploadOptions options = new GridFSUploadOptions();
-		options.metadata(new Document(GridFSFileField.METADATA_UPLOADER_KEY, ContextUtil.getUserName()));
+		options.metadata(metadata);
 		return this.getBucket(repositoryName).openUploadStream(sourceFileName, options);
 	}
 

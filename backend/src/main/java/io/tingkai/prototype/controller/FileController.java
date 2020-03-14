@@ -53,10 +53,11 @@ public class FileController {
 	private RepositoryService repositoryService;
 
 	@RequestMapping(value = FileController.UPLOAD_PATH, method = RequestMethod.POST)
-	public SimpleResponse upload(@RequestParam MultipartFile file) throws IOException {
+	public SimpleResponse upload(@RequestParam MultipartFile file, @RequestParam(required = false) String category)
+			throws IOException {
 		FileRepository fileRepository = this.repositoryService.getFileRepository(file.getOriginalFilename());
 		OutputStream updaloadStream = this.fileService.getUploadStream(fileRepository.getName(),
-				file.getOriginalFilename());
+				file.getOriginalFilename(), category);
 		updaloadStream.write(file.getBytes());
 		updaloadStream.close();
 		return new SimpleResponse(true, MessageConstant.INFO_MSG_FILE_UPLOAD_SUCCESS);
