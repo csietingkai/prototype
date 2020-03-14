@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 
 import file from 'js/api/file';
+import LogFactory from 'js/component/util/LogFactory';
 import Table from 'js/component/util/Table';
 import notify from 'js/util/notify';
 
 export default class UploadPage extends Component {
+
+    static logger = LogFactory.getLogger(UploadPage.name);
 
     constructor(props) {
         super(props)
@@ -27,6 +30,7 @@ export default class UploadPage extends Component {
                 title: repositoryName.replace('Repository', ''),
                 list: fileList
             });
+            UploadPage.logger.debug("init repositories done.");
             this.setState({
                 repositories
             });
@@ -34,6 +38,7 @@ export default class UploadPage extends Component {
     }
 
     onFileChange = (event) => {
+        UploadPage.logger.debug('filename change to ' + event.target.files[0].name);
         this.setState({
             file: event.target.files[0]
         });

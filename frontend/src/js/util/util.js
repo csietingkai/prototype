@@ -26,26 +26,37 @@ const isFunction = (obj) => {
 	return !!(obj && obj.constructor && obj.call && obj.apply);
 }
 
-const formatDateTime = (datetime) => {
+const formatDateTime = (datetime, showMilisecond) => {
 	if (datetime instanceof Date) {
 		let year = datetime.getFullYear();
-		let month = formatTwoDigital(datetime.getMonth() + 1);
-		let date = formatTwoDigital(datetime.getDate());
-		let hour = formatTwoDigital(datetime.getHours());
-		let minute = formatTwoDigital(datetime.getMinutes());
-		let second = formatTwoDigital(datetime.getSeconds());
-		return year + '/' + month + '/' + date + ' ' + hour + ':' + minute + ':' + second;
+		let month = formatDigital(datetime.getMonth() + 1);
+		let date = formatDigital(datetime.getDate());
+		let hour = formatDigital(datetime.getHours());
+		let minute = formatDigital(datetime.getMinutes());
+		let second = formatDigital(datetime.getSeconds());
+		return year + '/' + month + '/' + date + ' ' + hour + ':' + minute + ':' + second + (showMilisecond ? '.' + formatDigital(datetime.getMilliseconds(), 3) : '');
 	} else {
 		// console.log('parameter is not a Date')
 	}
 }
 
-const formatTwoDigital = (num) => {
+const formatDigital = (num, digital) => {
+	if (isNaN(digital)) {
+		// default
+		digital = 2;
+	}
+
 	if (!isNaN(num)) {
-		return num < 10 ? '0' + num : num;
+		let str = '';
+		for (let i = 0; i < digital; i++) {
+			if (num < Math.pow(10, i)) {
+				str = '0' + str;
+			}
+		}
+		return str + num;
 	} else {
 		// console.log(num + ' is not a number');
-		return '' + num;
+		return '';
 	}
 }
 
