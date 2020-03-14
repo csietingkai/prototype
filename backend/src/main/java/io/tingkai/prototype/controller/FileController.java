@@ -41,6 +41,7 @@ public class FileController {
 	public static final String FILE_CONTROLLER_PREFIX = "/file";
 	public static final String UPLOAD_PATH = "/upload";
 	public static final String DOWNLOAD_PATH = "/download";
+	public static final String DELETE_PATH = "/delete";
 	public static final String FIND_ONE_PATH = "/findOne";
 	public static final String LIST_PATH = "/list";
 	public static final String HISTORY_PATH = "/history";
@@ -74,6 +75,13 @@ public class FileController {
 		header.add(HttpHeaders.PRAGMA, "no-cache");
 		header.add(HttpHeaders.EXPIRES, "0");
 		return ResponseEntity.ok().headers(header).contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
+	}
+
+	@RequestMapping(value = FileController.DELETE_PATH, method = RequestMethod.DELETE)
+	public SimpleResponse delete(@RequestParam String filename, @RequestParam String id) {
+		String repositoryName = this.repositoryService.getFileRepository(filename).getName();
+		this.fileService.delete(repositoryName, id);
+		return new SimpleResponse(true, MessageConstant.INFO_MSG_FILE_DELETE_SUCCESS);
 	}
 
 	@RequestMapping(value = FileController.FIND_ONE_PATH, method = RequestMethod.GET)

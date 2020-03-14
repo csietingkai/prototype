@@ -8,13 +8,14 @@ const REPOSITORIES_PATH = FILE_CONTROLLER_PREFIX + '/repositories';
 const FILE_LIST_PATH = FILE_CONTROLLER_PREFIX + '/list';
 const UPLOAD_PATH = FILE_CONTROLLER_PREFIX + '/upload';
 const DOWNLOAD_PATH = FILE_CONTROLLER_PREFIX + '/download';
+const DELETE_PATH = FILE_CONTROLLER_PREFIX + '/delete';
 
 const getFileRepositories = async () => {
     const headers = util.getCommonHeader(util.getToken());
     return axios.get(REPOSITORIES_PATH, {
         headers
     });
-}
+};
 
 const getFileList = async (repositoryName) => {
     const headers = util.getCommonHeader(util.getToken());
@@ -24,7 +25,7 @@ const getFileList = async (repositoryName) => {
             repositoryName
         }
     });
-}
+};
 
 const upload = async (file) => {
     const data = new FormData()
@@ -35,7 +36,7 @@ const upload = async (file) => {
     }).then((response) => {
         return response.data
     });
-}
+};
 
 const download = async (filename) => {
     const headers = util.getCommonHeader(util.getToken());
@@ -48,11 +49,25 @@ const download = async (filename) => {
     }).then((response) => {
         return response.data;
     });
-}
+};
+
+const remove = async (filename, id) => {
+    const headers = util.getCommonHeader(util.getToken());
+    return axios.delete(DELETE_PATH, {
+        headers,
+        params: {
+            filename,
+            id
+        }
+    }).then((response) => {
+        return response.data;
+    });
+};
 
 export default {
     getFileRepositories,
     getFileList,
     upload,
-    download
+    download,
+    remove
 };

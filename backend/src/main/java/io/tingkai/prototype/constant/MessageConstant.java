@@ -19,7 +19,9 @@ public class MessageConstant {
 
 	// file
 	public static final String INFO_MSG_FILE_UPLOAD_SUCCESS = "Upload File Success";
-	public static final String INFO_MSG_FILE_UPLOAD_FAIL = "Upload File Fail";
+	public static final String ERROR_MSG_FILE_UPLOAD_FAIL = "Upload File Fail";
 	public static final String INFO_MSG_FILE_DOWNLOAD_SUCCESS = "Download File Success";
-	public static final String INFO_MSG_FILE_DOWNLOAD_FAIL = "Download File Fail";
+	public static final String ERROR_MSG_FILE_DOWNLOAD_FAIL = "Download File Fail";
+	public static final String INFO_MSG_FILE_DELETE_SUCCESS = "Delete File Success";
+	public static final String ERROR_MSG_FILE_DELETE_FAIL = "Delete File Fail";
 }

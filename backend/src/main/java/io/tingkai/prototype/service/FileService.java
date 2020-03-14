@@ -70,7 +70,7 @@ public class FileService {
 	}
 
 	public GridFSFindIterable findByMetadata(String repositoryName, String attributeName, String value) {
-		return this.find(repositoryName, "metadata." + attributeName, value);
+		return this.find(repositoryName, GridFSFileField.METDATA_PREFIX + attributeName, value);
 	}
 
 	protected GridFSBucket getBucket(String repositoryName) {

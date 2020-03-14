@@ -65,12 +65,34 @@ export default class UploadPage extends Component {
         });
     }
 
+    deleteFile = (id) => {
+        this.setState({
+            deleted: false
+        });
+        let filename = null;
+        this.state.repositories.forEach((repository) => {
+            repository.list.forEach((file) => {
+                if (file.id === id) {
+                    filename = file.filename;
+                }
+            });
+        });
+        file.remove(filename, id).then((response) => {
+            if (response.success) {
+                notify.success(response.message);
+            } else {
+                notify.error(response.message);
+            }
+            this.fetchRepositories();
+        });
+    }
+
     render() {
         let tabs = this.state.repositories.map((repository) => {
             let table = null;
             if (repository) {
                 // TODO edit function
-                table = <Table list={repository.list} type='file' downloadFunction={this.downloadFile} />
+                table = <Table list={repository.list} type='file' downloadFunction={this.downloadFile} deleteFunction={this.deleteFile} />
             }
             return (
                 <Tab eventKey={repository.name} key={repository.name} title={repository.title}>

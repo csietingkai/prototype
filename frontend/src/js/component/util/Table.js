@@ -67,23 +67,39 @@ export default class Table extends React.Component {
 
     renderOperationBtns = (row) => {
         let downloadBtn = null;
-        if (this.props.type === 'file') {
+        if (this.props.type === 'file' && this.props.downloadFunction) {
             downloadBtn = (
                 <Button variant='primary' size='sm' onClick={this.props.downloadFunction.bind(this, row['filename'])}>
                     <i className='fa fa-download'></i>
                 </Button>
             );
         }
+
+        let editBtn = null;
+        if (this.props.editFunction) {
+            editBtn = (
+                <Button variant='primary' size='sm' onClick={this.props.editFunction.bind(this, row['id'])}>
+                    <i className='fa fa-edit'></i>
+                </Button>
+            );
+        }
+
+        let deleteBtn = null;
+        if (this.props.deleteFunction) {
+            deleteBtn = (
+                <Button variant='danger' size='sm' onClick={this.props.deleteFunction.bind(this, row['id'])}>
+                    <i className='fa fa-trash'></i>
+                </Button>
+            );
+        }
+
         return (
             <>
                 {downloadBtn}
-                {' '}
-                <Button variant='primary' size='sm' onClick={this.props.openEditModal}>
-                    <i className='fa fa-edit'></i>
-                </Button>{' '}
-                <Button variant='danger' size='sm' onClick={this.props.deleteFunction}>
-                    <i className='fa fa-trash'></i>
-                </Button>
+                {downloadBtn ? ' ' : null}
+                {editBtn}
+                {editBtn ? ' ' : null}
+                {deleteBtn}
             </>
         );
     }
@@ -137,8 +153,8 @@ export default class Table extends React.Component {
     }
 
     render() {
-        if (!util.isFunction(this.props.openEditModal)) {
-            //console.warn('openEditModal is not a function, edit button will not do nothing');
+        if (!util.isFunction(this.props.editFunction)) {
+            //console.warn('editFunction is not a function, edit button will not do nothing');
         }
         if (!util.isFunction(this.props.deleteFunction)) {
             //console.warn('deleteFunction is not a function, delete button will not do nothing');
@@ -159,7 +175,7 @@ export default class Table extends React.Component {
         }
 
         let thead = this.renderTableHead(columns);
-        let tbody = this.renderTableBody(this.props.list, columns, this.props.openEditModal, this.props.deleteFunction);
+        let tbody = this.renderTableBody(this.props.list, columns);
         return (
             <BsTable striped bordered hover>
                 {thead}
@@ -172,7 +188,7 @@ export default class Table extends React.Component {
 Table.propTypes = {
     list: PropTypes.array.isRequired,
     type: PropTypes.string,
-    openEditModal: PropTypes.func,
+    editFunction: PropTypes.func,
     deleteFunction: PropTypes.func,
     downloadFunction: PropTypes.func
 };
