@@ -1,6 +1,7 @@
 package io.tingkai.prototype.security;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -19,7 +20,8 @@ import org.springframework.web.filter.GenericFilterBean;
 import io.tingkai.prototype.enumeration.Role;
 
 /**
- * Filter Layer of Spring, filter token string send with request is passed or not. 
+ * Filter Layer of Spring, filter token string send with request is passed or
+ * not.
  * 
  * @author tingkai
  */
@@ -40,10 +42,10 @@ public class AuthTokenAuthenticationFilter extends GenericFilterBean {
 			try {
 				Authentication authentication = this.authenticationManager.authenticate(authTokenAuthentication);
 				Object detail = authentication.getDetails();
-				if (detail instanceof AuthToken && Role.NONE != ((AuthToken) detail).getRole()) {
+				if (detail instanceof AuthToken && Role.NONE != ((AuthToken) detail).getRole()
+						&& ((AuthToken) detail).getExpiryDate().after(new Date())) {
 					SecurityContextHolder.getContext().setAuthentication(authentication);
-				}
-				else {
+				} else {
 					SecurityContextHolder.getContext().setAuthentication(null);
 				}
 			} catch (AuthenticationException e) {
