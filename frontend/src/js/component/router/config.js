@@ -1,9 +1,9 @@
 import HomeIcon from '@material-ui/icons/Home';
 import AppsIcon from '@material-ui/icons/Apps';
 
-import About from 'js/component/view/About';
-import ItemTable from 'js/component/view/ItemTable';
-import UploadPage from 'js/component/view/UploadPage';
+import About from 'js/view/About';
+import ItemTable from 'js/view/ItemTable';
+import UploadPage from 'js/view/UploadPage';
 
 export default [
 	{

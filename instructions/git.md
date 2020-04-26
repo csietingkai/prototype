@@ -43,7 +43,7 @@ and to change files on remote server, on this example, GitHub, use `git-push` to
 $ git push origin master
 ```
 
-
+and open your repository url on web broswer, you will see your commit had push to remote server.
 
 ###
 

@@ -9,7 +9,7 @@ export default class Header extends React.Component {
 
 	render() {
 		let link = (
-			<a className="black-link" href="https://github.com/csietingkai/prototype">GitHub</a>
+			<a className='black-link' href='https://github.com/csietingkai/prototype'>GitHub</a>
 		);
 
 		let logoutBtn = (

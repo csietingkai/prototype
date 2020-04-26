@@ -69,7 +69,7 @@ export default class Table extends React.Component {
         let downloadBtn = null;
         if (this.props.type === 'file' && this.props.downloadFunction) {
             downloadBtn = (
-                <Button variant='primary' size='sm' onClick={this.props.downloadFunction.bind(this, row['filename'])}>
+                <Button variant='primary' size='sm' onClick={this.props.downloadFunction.bind(this, row)}>
                     <i className='fa fa-download'></i>
                 </Button>
             );
@@ -78,7 +78,7 @@ export default class Table extends React.Component {
         let editBtn = null;
         if (this.props.editFunction) {
             editBtn = (
-                <Button variant='primary' size='sm' onClick={this.props.editFunction.bind(this, row['id'])}>
+                <Button variant='primary' size='sm' onClick={this.props.editFunction.bind(this, row)}>
                     <i className='fa fa-edit'></i>
                 </Button>
             );
@@ -87,7 +87,7 @@ export default class Table extends React.Component {
         let deleteBtn = null;
         if (this.props.deleteFunction) {
             deleteBtn = (
-                <Button variant='danger' size='sm' onClick={this.props.deleteFunction.bind(this, row['id'])}>
+                <Button variant='danger' size='sm' onClick={this.props.deleteFunction.bind(this, row)}>
                     <i className='fa fa-trash'></i>
                 </Button>
             );

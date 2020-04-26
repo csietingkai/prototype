@@ -1,0 +1,40 @@
+.login-block {
+	max-width: 30%;
+	position: absolute;
+	left: 50%;
+	top: 40%;
+	transform: translate(-50%, -50%);
+	border: 3px solid;
+	border-radius: 15px;
+}
+
+.login-title {
+	padding: 15px;
+}
+
+.login-form {
+	margin: 5px;
+}
+
+.login-input {
+	max-width: 70%;
+	margin: 0 auto;
+}
+
+.login-btn {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	border-radius: 50px;
+}
+
+.login-background-image {
+	background: no-repeat center center fixed;
+	background-size: cover;
+	display: block;
+	position: fixed;
+	z-index: -1;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+}

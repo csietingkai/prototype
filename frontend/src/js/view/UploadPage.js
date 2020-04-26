@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 
 import file from 'js/api/file';
-import LogFactory from 'js/component/util/LogFactory';
+import Logger from 'js/component/util/Logger';
 import Table from 'js/component/util/Table';
 import notify from 'js/util/notify';
 
 export default class UploadPage extends Component {
 
-    static logger = LogFactory.getLogger(UploadPage.name);
+    static logger = new Logger(UploadPage.name);
 
     constructor(props) {
         super(props)
@@ -30,7 +30,7 @@ export default class UploadPage extends Component {
                 title: repositoryName.replace('Repository', ''),
                 list: fileList
             });
-            UploadPage.logger.debug("init repositories done.");
+            UploadPage.logger.debug('init repositories done.');
             this.setState({
                 repositories
             });
@@ -58,7 +58,8 @@ export default class UploadPage extends Component {
         })
     }
 
-    downloadFile = (filename) => {
+    downloadFile = (rowData) => {
+        const filename = rowData.filename;
         file.download(filename).then((response) => {
             const url = window.URL.createObjectURL(new Blob([response]));
             const link = document.createElement('a');
@@ -70,18 +71,12 @@ export default class UploadPage extends Component {
         });
     }
 
-    deleteFile = (id) => {
+    deleteFile = (rowData) => {
         this.setState({
             deleted: false
         });
-        let filename = null;
-        this.state.repositories.forEach((repository) => {
-            repository.list.forEach((file) => {
-                if (file.id === id) {
-                    filename = file.filename;
-                }
-            });
-        });
+        let id = rowData.id;
+        let filename = rowData.filename;
         file.remove(filename, id).then((response) => {
             if (response.success) {
                 notify.success(response.message);
@@ -111,13 +106,13 @@ export default class UploadPage extends Component {
         return (
             <>
                 <br />
-                <div className="input-group">
-                    <div className="custom-file">
-                        <input type="file" className="custom-file-input" onChange={this.onFileChange} />
-                        <label className="custom-file-label">{this.state.file ? this.state.file.name : 'Choose file'}</label>
+                <div className='input-group'>
+                    <div className='custom-file'>
+                        <input type='file' className='custom-file-input' onChange={this.onFileChange} />
+                        <label className='custom-file-label'>{this.state.file ? this.state.file.name : 'Choose file'}</label>
                     </div>
-                    <div className="input-group-append">
-                        <button className="btn btn-outline-secondary" type="button" onClick={this.uploadFile}>upload</button>
+                    <div className='input-group-append'>
+                        <button className='btn btn-outline-secondary' type='button' onClick={this.uploadFile}>upload</button>
                     </div>
                 </div>
                 <br />
