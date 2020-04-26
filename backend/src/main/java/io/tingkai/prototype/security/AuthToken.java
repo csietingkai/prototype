@@ -13,13 +13,13 @@ import io.tingkai.prototype.enumeration.Role;
 @SuppressWarnings("serial")
 public class AuthToken implements Serializable {
 
-	String name;
+	private String name;
 
-	Role role;
+	private Role role;
 
-	String tokenString;
+	private String tokenString;
 
-	Date expiryDate;
+	private Date expiryDate;
 
 	public AuthToken() {
 

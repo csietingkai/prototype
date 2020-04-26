@@ -2,11 +2,12 @@ package io.tingkai.prototype.security;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import io.tingkai.prototype.constant.CodeConstants;
 import io.tingkai.prototype.entity.User;
@@ -17,7 +18,7 @@ import io.tingkai.prototype.util.TimeUtil;
  * 
  * @author tingkai
  */
-@Component
+@Service
 public final class AuthTokenService {
 
 	@Autowired
@@ -29,36 +30,22 @@ public final class AuthTokenService {
 	@Autowired
 	private TokenStringService tokenStringService;
 
-	private AuthToken generate(User user) {
-		String tokenString = this.tokenStringService.next();
-
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date(TimeUtil.getCurrentDateTime()));
-		calendar.add(Calendar.HOUR, CodeConstants.AUTH_TOKEN_VALID_HOURS);
-		Date expiryDate = calendar.getTime();
-
-		AuthToken authToken = new AuthToken();
-		authToken.setName(user.getName());
-		authToken.setTokenString(tokenString);
-		authToken.setExpiryDate(expiryDate);
-		authToken.setRole(user.getRole());
-		authToken.setName(user.getName());
-
-		return authToken;
-	}
-
+	/**
+	 * if user had login, update expire date, else generate new {@link AuthToken}
+	 * and return it.
+	 */
 	public AuthToken issue(User user) {
 		String existingAuthTokenString = this.stringRedisTemplate.opsForValue()
 				.get(CodeConstants.AUTH_USER_KEY + user.getId());
 
-		// if token exist in redis, delete it
-		if (existingAuthTokenString != null) {
-			this.authTokenRedisTemplate.delete(CodeConstants.AUTH_TOKEN_KEY + existingAuthTokenString);
+		AuthToken authToken = null;
+		if (Optional.ofNullable(existingAuthTokenString).isPresent()) {
+			authToken = this.authTokenRedisTemplate.opsForValue()
+					.get(CodeConstants.AUTH_TOKEN_KEY + existingAuthTokenString);
+			authToken.setExpiryDate(getExpiryDate());
+		} else {
+			this.generate(user);
 		}
-		this.stringRedisTemplate.delete(CodeConstants.AUTH_USER_KEY + user.getId());
-
-		// generate AuthToken and store it into redis
-		AuthToken authToken = this.generate(user);
 		this.stringRedisTemplate.opsForValue().set(CodeConstants.AUTH_USER_KEY + user.getId(),
 				authToken.getTokenString(), CodeConstants.AUTH_TOKEN_VALID_HOURS, TimeUnit.HOURS);
 		this.authTokenRedisTemplate.opsForValue().set(CodeConstants.AUTH_TOKEN_KEY + authToken.getTokenString(),
@@ -74,5 +61,22 @@ public final class AuthTokenService {
 
 	public AuthToken validate(String tokenString) {
 		return this.authTokenRedisTemplate.opsForValue().get(CodeConstants.AUTH_TOKEN_KEY + tokenString);
+	}
+
+	private AuthToken generate(User user) {
+		AuthToken authToken = new AuthToken();
+		authToken.setName(user.getName());
+		authToken.setTokenString(this.tokenStringService.next());
+		authToken.setExpiryDate(this.getExpiryDate());
+		authToken.setRole(user.getRole());
+		authToken.setName(user.getName());
+		return authToken;
+	}
+
+	private Date getExpiryDate() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date(TimeUtil.getCurrentDateTime()));
+		calendar.add(Calendar.HOUR, CodeConstants.AUTH_TOKEN_VALID_HOURS);
+		return calendar.getTime();
 	}
 }

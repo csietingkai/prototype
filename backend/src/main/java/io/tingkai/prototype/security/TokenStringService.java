@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 import org.apache.commons.codec.binary.Hex;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import io.tingkai.prototype.constant.CodeConstants;
 
@@ -14,7 +14,7 @@ import io.tingkai.prototype.constant.CodeConstants;
  * 
  * @author tingkai
  */
-@Component
+@Service
 public class TokenStringService {
 
 	private SecureRandom secureRandom;

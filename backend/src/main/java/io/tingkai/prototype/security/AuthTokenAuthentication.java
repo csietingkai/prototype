@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
- * Instance of {@link Authentication}, used for Spring Security. 
+ * Instance of {@link Authentication}, used for Spring Security.
  * 
  * @author tingkai
  */
