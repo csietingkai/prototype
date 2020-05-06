@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import io.tingkai.prototype.constant.CodeConstants;
-import io.tingkai.prototype.enumeration.DateTimeFormatType;
+import io.tingkai.prototype.enumeration.CompareResult;
 
 /**
  * Provide method to generate random datetime, convert datetime to String and
@@ -16,47 +16,20 @@ import io.tingkai.prototype.enumeration.DateTimeFormatType;
  */
 public class TimeUtil {
 
-	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(CodeConstants.DATE_FORMAT)
-			.withZone(CodeConstants.ZONE_TPE);
-	private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(CodeConstants.TIME_FORMAT)
-			.withZone(CodeConstants.ZONE_TPE);
 	private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter
 			.ofPattern(CodeConstants.DATE_TIME_FORMAT).withZone(CodeConstants.ZONE_TPE);
 
-//	private static final int YEAR_MIN = 1900;
-//	private static final int YEAR_MAX = 9999;
-
-//	private static final LocalDate START_DATE = LocalDate.of(YEAR_MIN, 1, 1);
-//	private static final LocalDate END_DATE = LocalDate.of(YEAR_MAX, 12, 31);
-
 	public static long getCurrentDate() {
 		return LocalDate.now().atStartOfDay(CodeConstants.ZONE_TPE).toInstant().toEpochMilli();
-	}
-
-	public static long getCurrentTime() {
-		return getCurrentDateTime() - getCurrentDate();
 	}
 
 	public static long getCurrentDateTime() {
 		return LocalDateTime.now().atZone(CodeConstants.ZONE_TPE).toInstant().toEpochMilli();
 	}
 
-	public static boolean verify(String str, DateTimeFormatType type) {
-		DateTimeFormatter formatter = null;
-		switch (type) {
-		case DATE:
-			formatter = DATE_FORMATTER;
-			break;
-		case TIME:
-			formatter = TIME_FORMATTER;
-			break;
-		case DATE_TIME:
-		default:
-			formatter = DATE_TIME_FORMATTER;
-			break;
-		}
+	public static boolean verify(String str) {
 		try {
-			Instant.from(formatter.parse(str)).toEpochMilli();
+			convertToTimeStamp(str);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -64,55 +37,61 @@ public class TimeUtil {
 		return true;
 	}
 
-	public static long generate() {
-		return generate(DateTimeFormatType.DATE_TIME);
+	public static LocalDateTime generate() {
+		return generate(CodeConstants.DATE_TIME_MIN, CodeConstants.DATE_TIME_MAX);
 	}
 
-	public static long generate(DateTimeFormatType type) {
-		// TODO
-		switch (type) {
-		case DATE:
-		case TIME:
-		case DATE_TIME:
-		default:
-			return 0;
+	public static LocalDateTime generate(LocalDateTime start, LocalDateTime end) {
+		if (start.isAfter(end)) {
+			LocalDateTime temp = end;
+			end = start;
+			start = temp;
+		}
+		long startTimeStamp = convertToTimeStamp(start);
+		long endTimeStamp = convertToTimeStamp(end);
+		long randomTimeStamp = (long) (Math.random() * ((startTimeStamp - endTimeStamp) + 1) + startTimeStamp);
+		return convertToDateTime(randomTimeStamp);
+	}
+
+	public static LocalDateTime convertToDateTime(String str) {
+		return LocalDateTime.parse(str, DATE_TIME_FORMATTER);
+	}
+
+	public static LocalDateTime convertToDateTime(long timeStamp) {
+		return LocalDateTime.ofInstant(Instant.ofEpochMilli(timeStamp), CodeConstants.ZONE_TPE);
+	}
+
+	public static String convertToString(LocalDateTime dateTime) {
+		return DATE_TIME_FORMATTER.format(dateTime);
+	}
+
+	public static String convertToString(long timeStamp) {
+		return DATE_TIME_FORMATTER.format(Instant.ofEpochMilli(timeStamp));
+	}
+
+	public static long convertToTimeStamp(LocalDateTime dateTime) {
+		return dateTime.atZone(CodeConstants.ZONE_TPE).toInstant().toEpochMilli();
+	}
+
+	public static long convertToTimeStamp(String str) {
+		return Instant.from(DATE_TIME_FORMATTER.parse(str)).toEpochMilli();
+	}
+
+	/**
+	 * compare a is (bigger than / equal to / less than ) b
+	 */
+	public static CompareResult compare(LocalDateTime a, LocalDateTime b) {
+		if (a.isAfter(b)) {
+			return CompareResult.BIGGER_THAN;
+		} else if (a.isBefore(b)) {
+			return CompareResult.LESS_THAN;
+		} else {
+			return CompareResult.EQUAL;
 		}
 	}
 
-	public static String convert(long timeStamp) {
-		return convert(timeStamp, DateTimeFormatType.DATE_TIME);
-	}
-
-	public static String convert(long timeStamp, DateTimeFormatType type) {
-		switch (type) {
-		case DATE:
-			return DATE_FORMATTER.format(Instant.ofEpochMilli(timeStamp));
-		case TIME:
-			return TIME_FORMATTER.format(Instant.ofEpochMilli(timeStamp));
-		case DATE_TIME:
-		default:
-			return DATE_TIME_FORMATTER.format(Instant.ofEpochMilli(timeStamp));
-		}
-	}
-
-	public static long convert(String str) {
-		return convert(str, DateTimeFormatType.DATE_TIME);
-	}
-
-	public static long convert(String str, DateTimeFormatType type) {
-		LocalDateTime dateTime = null;
-		switch (type) {
-		case DATE:
-		case TIME:
-			// TODO
-			System.out.println("currently not avaliable");
-			return -1;
-		case DATE_TIME:
-		default:
-			dateTime = LocalDateTime.parse(str, DATE_TIME_FORMATTER);
-		}
-		Instant ts = dateTime.atZone(CodeConstants.ZONE_TPE).toInstant();
-		return ts.toEpochMilli();
+	public static CompareResult compare(String dateStrA, String dateStrB) {
+		return compare(convertToDateTime(dateStrA), convertToDateTime(dateStrB));
 	}
 
 	public static boolean isLeap(int year) {
