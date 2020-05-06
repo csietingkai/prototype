@@ -38,13 +38,13 @@ public final class AuthTokenService {
 		String existingAuthTokenString = this.stringRedisTemplate.opsForValue()
 				.get(CodeConstants.AUTH_USER_KEY + user.getId());
 
-		AuthToken authToken = null;
+		AuthToken authToken = this.generate(user);
 		if (Optional.ofNullable(existingAuthTokenString).isPresent()) {
 			authToken = this.authTokenRedisTemplate.opsForValue()
 					.get(CodeConstants.AUTH_TOKEN_KEY + existingAuthTokenString);
-			authToken.setExpiryDate(getExpiryDate());
-		} else {
-			this.generate(user);
+			if (authToken.getExpiryDate().before(new Date(TimeUtil.getCurrentDateTime()))) {
+				authToken.setExpiryDate(getExpiryDate());
+			}
 		}
 		this.stringRedisTemplate.opsForValue().set(CodeConstants.AUTH_USER_KEY + user.getId(),
 				authToken.getTokenString(), CodeConstants.AUTH_TOKEN_VALID_HOURS, TimeUnit.HOURS);
