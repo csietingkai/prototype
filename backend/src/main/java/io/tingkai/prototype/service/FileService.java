@@ -2,7 +2,10 @@ package io.tingkai.prototype.service;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.Consumer;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -14,6 +17,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSBuckets;
 import com.mongodb.client.gridfs.GridFSFindIterable;
+import com.mongodb.client.gridfs.model.GridFSFile;
 import com.mongodb.client.gridfs.model.GridFSUploadOptions;
 import com.mongodb.client.model.Filters;
 
@@ -76,5 +80,22 @@ public class FileService {
 	protected GridFSBucket getBucket(String repositoryName) {
 		MongoDatabase database = this.mongoClient.getDatabase(AppConstants.GRID_FS_DATABASE);
 		return GridFSBuckets.create(database, repositoryName);
+	}
+
+	/**
+	 * filter same name file
+	 */
+	private GridFSFindIterable filter(GridFSFindIterable iterable) {
+		Set<GridFSFile> files = new HashSet<GridFSFile>();
+		iterable.forEach(new Consumer<GridFSFile>() {
+
+			@Override
+			public void accept(GridFSFile file) {
+				if (files.contains(file)) {
+
+				}
+			}
+		});
+		return iterable;
 	}
 }

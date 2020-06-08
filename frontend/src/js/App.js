@@ -23,9 +23,7 @@ export default class App extends React.Component {
 
 	setToken = (token) => {
 		util.setToken(token);
-		this.setState({
-			tokenValidateResult: true
-		});
+		this.setState({ tokenValidateResult: true });
 	}
 
 	removeToken = () => {
@@ -39,9 +37,7 @@ export default class App extends React.Component {
 	getValidateResult = (token) => {
 		if (token) {
 			auth.validate(token).then((response) => {
-				this.setState({
-					tokenValidateResult: response.success
-				});
+				this.setState({ tokenValidateResult: response.success });
 			});
 		}
 	}

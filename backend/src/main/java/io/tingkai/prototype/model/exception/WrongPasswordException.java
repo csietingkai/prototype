@@ -1,5 +1,7 @@
 package io.tingkai.prototype.model.exception;
 
+import io.tingkai.prototype.constant.MessageConstant;
+
 /**
  * when frontend send login request and username exist in sql database but
  * password is wrong, throw this exception
@@ -7,21 +9,9 @@ package io.tingkai.prototype.model.exception;
  * @author tingkai
  */
 @SuppressWarnings("serial")
-public class WrongPasswordException extends Exception {
+public class WrongPasswordException extends BaseException {
 
 	public WrongPasswordException() {
-		super();
-	}
-
-	public WrongPasswordException(String message) {
-		super(message);
-	}
-
-	public WrongPasswordException(String message, Throwable t) {
-		super(message, t);
-	}
-
-	public WrongPasswordException(Throwable t) {
-		super(t);
+		super(MessageConstant.WRONG_PASSWORD);
 	}
 }

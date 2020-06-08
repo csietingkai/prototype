@@ -34,7 +34,7 @@ export default class LoginPage extends React.Component {
 
 	handleLoginClick = async () => {
 		let response = await auth.login(this.state.username, this.state.password);
-		let authToken = response.authToken;
+		let authToken = response.data;
 		if (response.success && authToken) {
 			notify.success(response.message);
 			this.props.setToken(authToken.tokenString);

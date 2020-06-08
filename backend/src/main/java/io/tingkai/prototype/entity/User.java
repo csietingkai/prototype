@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import io.tingkai.prototype.constant.DatabaseContants;
 import io.tingkai.prototype.enumeration.Role;
+import lombok.Data;
 
 /**
  * Entity for sql database table 'users'
@@ -20,6 +21,7 @@ import io.tingkai.prototype.enumeration.Role;
  * @author tingkai
  */
 @Entity
+@Data
 @Table(name = DatabaseContants.TABLE_USER)
 public class User {
 
@@ -33,68 +35,5 @@ public class User {
 	private String pwd;
 	@Enumerated(EnumType.STRING)
 	private Role role;
-
 	private boolean confirm;
-
-	public User() {
-		super();
-	}
-
-	public User(UUID id, String name, String email, String pwd, Role role, boolean confirm) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.pwd = pwd;
-		this.role = role;
-		this.confirm = confirm;
-	}
-
-	public UUID getId() {
-		return id;
-	}
-
-	public void setId(UUID id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPwd() {
-		return pwd;
-	}
-
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
-	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
-	public boolean isConfirm() {
-		return confirm;
-	}
-
-	public void setConfirm(boolean confirm) {
-		this.confirm = confirm;
-	}
 }

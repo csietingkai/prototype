@@ -9,9 +9,9 @@ import io.tingkai.prototype.constant.MessageConstant;
  * @author tingkai
  */
 @SuppressWarnings("serial")
-public class IllegalRoleException extends BaseException {
+public class AuthTokenExpireException extends BaseException {
 
-	public IllegalRoleException(String roleStr) {
-		super(MessageConstant.NO_THIS_ROLE, roleStr);
+	public AuthTokenExpireException() {
+		super(MessageConstant.AUTH_TOKEN_EXPIRE);
 	}
 }

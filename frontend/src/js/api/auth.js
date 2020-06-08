@@ -7,14 +7,13 @@ const REGISTER_PATH = constant.API_BASE_URL + '/register';
 const VALIDATE_PATH = constant.API_BASE_URL + '/validate';
 
 const login = async (username, password) => {
-	return axios.post(LOGIN_PATH, null, {
+	const response = await axios.post(LOGIN_PATH, null, {
 		params: {
 			username,
 			password
 		}
-	}).then((response) => {
-		return response.data;
-	});
+	})
+	return response.data;
 }
 
 const register = async (username, email, password) => {
@@ -28,13 +27,12 @@ const register = async (username, email, password) => {
 }
 
 const validate = async (tokenString) => {
-	return axios.get(VALIDATE_PATH, {
+	const response = await axios.get(VALIDATE_PATH, {
 		params: {
 			tokenString
 		}
-	}).then((response) => {
-		return response.data;
-	});
+	})
+	return response.data;
 }
 
 export default {

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import io.tingkai.prototype.constant.MessageConstant;
 import io.tingkai.prototype.dao.UserDao;
 import io.tingkai.prototype.entity.User;
 import io.tingkai.prototype.enumeration.Role;
@@ -15,8 +14,8 @@ import io.tingkai.prototype.model.exception.WrongPasswordException;
 import io.tingkai.prototype.util.ContextUtil;
 
 /**
- * provide method for upload, download, find, delete user stored in sql
- * database table 'users'
+ * provide method for upload, download, find, delete user stored in sql database
+ * table 'users'
  * 
  * @author tingkai
  */
@@ -36,9 +35,9 @@ public class UserService {
 			if (this.bCryptPasswordEncoder.matches(pwd, user.getPwd())) {
 				return user;
 			}
-			throw new WrongPasswordException(MessageConstant.ERROR_MSG_WRONG_PASSWORD);
+			throw new WrongPasswordException();
 		} else {
-			throw new UserNotFoundException(MessageConstant.ERROR_MSG_USER_NOT_FOUND);
+			throw new UserNotFoundException(name);
 		}
 	}
 
