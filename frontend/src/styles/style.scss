@@ -1,0 +1,55 @@
+@import 'position';
+@import 'width';
+@import 'height';
+@import 'sidebar';
+
+$background-color: #f3f3f3;
+$miku-green: #39c5bb;
+
+body {
+    background-color: $background-color;
+}
+
+.center {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+}
+
+.simple-border {
+    border: 2px solid
+}
+
+.centered-elements {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+}
+
+.centered-element {
+    flex: 1;
+    text-align: center;
+}
+
+.login-block {
+    @extend .center;
+    @extend .simple-border;
+    width: 30%;
+    border-color: #a0b8b6;
+    border-radius: 3px;
+}
+
+.title {
+    padding: 0px 24px 0px 12px;
+    font-size: 1.2rem;
+    color: rgb(181, 41, 18);
+    border-left: 3px #b52912 solid;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.color-red {
+    color: red;
+}

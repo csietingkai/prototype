@@ -1,0 +1,42 @@
+$space-size: 10px;
+$interval-size: 10px;
+
+.top-interval {
+    margin-top: $interval-size;
+}
+
+.bottom-interval {
+    margin-bottom: $interval-size;
+}
+
+.left-interval {
+    margin-left: $interval-size;
+}
+
+.right-interval {
+    margin-right: $interval-size;
+}
+
+.no-interval {
+    margin: 0;
+}
+
+.top-space {
+    padding-top: $space-size;
+}
+
+.bottom-space {
+    padding-bottom: $space-size;
+}
+
+.left-space {
+    padding-left: $space-size;
+}
+
+.right-space {
+    padding-right: $space-size;
+}
+
+.no-space {
+    padding: 0
+}
