@@ -35,21 +35,17 @@ public final class AuthTokenService {
 	 * and return it.
 	 */
 	public AuthToken issue(User user) {
-		String existingAuthTokenString = this.stringRedisTemplate.opsForValue()
-				.get(CodeConstants.AUTH_USER_KEY + user.getId());
+		String existingAuthTokenString = this.stringRedisTemplate.opsForValue().get(CodeConstants.AUTH_USER_KEY + user.getId());
 
 		AuthToken authToken = this.generate(user);
 		if (Optional.ofNullable(existingAuthTokenString).isPresent()) {
-			authToken = this.authTokenRedisTemplate.opsForValue()
-					.get(CodeConstants.AUTH_TOKEN_KEY + existingAuthTokenString);
+			authToken = this.authTokenRedisTemplate.opsForValue().get(CodeConstants.AUTH_TOKEN_KEY + existingAuthTokenString);
 			if (authToken.getExpiryDate().before(new Date(TimeUtil.getCurrentDateTime()))) {
 				authToken.setExpiryDate(getExpiryDate());
 			}
 		}
-		this.stringRedisTemplate.opsForValue().set(CodeConstants.AUTH_USER_KEY + user.getId(),
-				authToken.getTokenString(), CodeConstants.AUTH_TOKEN_VALID_HOURS, TimeUnit.HOURS);
-		this.authTokenRedisTemplate.opsForValue().set(CodeConstants.AUTH_TOKEN_KEY + authToken.getTokenString(),
-				authToken, CodeConstants.AUTH_TOKEN_VALID_HOURS, TimeUnit.HOURS);
+		this.stringRedisTemplate.opsForValue().set(CodeConstants.AUTH_USER_KEY + user.getId(), authToken.getTokenString(), CodeConstants.AUTH_TOKEN_VALID_HOURS, TimeUnit.HOURS);
+		this.authTokenRedisTemplate.opsForValue().set(CodeConstants.AUTH_TOKEN_KEY + authToken.getTokenString(), authToken, CodeConstants.AUTH_TOKEN_VALID_HOURS, TimeUnit.HOURS);
 
 		return authToken;
 	}

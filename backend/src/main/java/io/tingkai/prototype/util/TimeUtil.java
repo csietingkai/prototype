@@ -16,8 +16,7 @@ import io.tingkai.prototype.enumeration.CompareResult;
  */
 public class TimeUtil {
 
-	private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter
-			.ofPattern(CodeConstants.DATE_TIME_FORMAT).withZone(CodeConstants.ZONE_TPE);
+	private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(CodeConstants.DATE_TIME_FORMAT).withZone(CodeConstants.ZONE_TPE);
 
 	public static long getCurrentDate() {
 		return LocalDate.now().atStartOfDay(CodeConstants.ZONE_TPE).toInstant().toEpochMilli();

@@ -48,8 +48,7 @@ public class RedisConfig {
 	RedisTemplate<?, ?> redisTemplate(RedisConnectionFactory connectionFactory) {
 		RedisTemplate<byte[], byte[]> template = new RedisTemplate<>();
 		template.setConnectionFactory(connectionFactory);
-		Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<Object>(
-				Object.class);
+		Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<Object>(Object.class);
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
 		jackson2JsonRedisSerializer.setObjectMapper(objectMapper);

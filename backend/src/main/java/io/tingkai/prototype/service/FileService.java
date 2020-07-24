@@ -2,10 +2,8 @@ package io.tingkai.prototype.service;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashSet;
+import java.net.URLConnection;
 import java.util.Optional;
-import java.util.Set;
-import java.util.function.Consumer;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -17,7 +15,6 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSBuckets;
 import com.mongodb.client.gridfs.GridFSFindIterable;
-import com.mongodb.client.gridfs.model.GridFSFile;
 import com.mongodb.client.gridfs.model.GridFSUploadOptions;
 import com.mongodb.client.model.Filters;
 
@@ -45,6 +42,7 @@ public class FileService {
 	public OutputStream getUploadStream(String repositoryName, String sourceFileName, String category) {
 		Document metadata = new Document();
 		metadata.append(GridFSFileField.METADATA_UPLOADER_KEY, ContextUtil.getUserName());
+		metadata.append(GridFSFileField.METADATA_CONTENT_TYPE_KEY, URLConnection.guessContentTypeFromName(sourceFileName));
 		if (Optional.ofNullable(category).isPresent()) {
 			metadata.append(GridFSFileField.METADATA_CATEGORY_KEY, category);
 		}
@@ -74,28 +72,11 @@ public class FileService {
 	}
 
 	public GridFSFindIterable findByMetadata(String repositoryName, String attributeName, String value) {
-		return this.find(repositoryName, GridFSFileField.METDATA_PREFIX + attributeName, value);
+		return this.find(repositoryName, GridFSFileField.METADATA_PREFIX + attributeName, value);
 	}
 
 	protected GridFSBucket getBucket(String repositoryName) {
 		MongoDatabase database = this.mongoClient.getDatabase(AppConstants.GRID_FS_DATABASE);
 		return GridFSBuckets.create(database, repositoryName);
-	}
-
-	/**
-	 * filter same name file
-	 */
-	private GridFSFindIterable filter(GridFSFindIterable iterable) {
-		Set<GridFSFile> files = new HashSet<GridFSFile>();
-		iterable.forEach(new Consumer<GridFSFile>() {
-
-			@Override
-			public void accept(GridFSFile file) {
-				if (files.contains(file)) {
-
-				}
-			}
-		});
-		return iterable;
 	}
 }

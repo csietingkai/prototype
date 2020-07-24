@@ -7,7 +7,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 /**
- * Override Spring Authentication flow, check current user's AuthToken is validate or not.
+ * Override Spring Authentication flow, check current user's AuthToken is
+ * validate or not.
  * 
  * @author tingkai
  */

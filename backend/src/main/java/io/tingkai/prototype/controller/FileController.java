@@ -22,6 +22,7 @@ import com.mongodb.client.gridfs.GridFSFindIterable;
 
 import io.tingkai.prototype.constant.GridFSFileField;
 import io.tingkai.prototype.entity.File;
+import io.tingkai.prototype.model.response.FileUploadResponse;
 import io.tingkai.prototype.model.response.SimpleResponse;
 import io.tingkai.prototype.repository.FileRepository;
 import io.tingkai.prototype.service.FileService;
@@ -53,14 +54,12 @@ public class FileController {
 	private RepositoryService repositoryService;
 
 	@RequestMapping(value = FileController.UPLOAD_PATH, method = RequestMethod.POST)
-	public SimpleResponse upload(@RequestParam MultipartFile file, @RequestParam(required = false) String category)
-			throws IOException {
+	public FileUploadResponse upload(@RequestParam MultipartFile file, @RequestParam(required = false) String category) throws IOException {
 		FileRepository fileRepository = this.repositoryService.getFileRepository(file.getOriginalFilename());
-		OutputStream updaloadStream = this.fileService.getUploadStream(fileRepository.getName(),
-				file.getOriginalFilename(), category);
+		OutputStream updaloadStream = this.fileService.getUploadStream(fileRepository.getName(), file.getOriginalFilename(), category);
 		updaloadStream.write(file.getBytes());
 		updaloadStream.close();
-		return new SimpleResponse(true);
+		return new FileUploadResponse(true, file.getOriginalFilename());
 	}
 
 	@RequestMapping(value = FileController.DOWNLOAD_PATH)

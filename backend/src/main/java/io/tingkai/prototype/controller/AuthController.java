@@ -45,16 +45,14 @@ public class AuthController {
 	private MailService mailService;
 
 	@RequestMapping(value = AuthController.LOGIN_PATH, method = RequestMethod.POST)
-	public LoginResponse login(@RequestParam String username, @RequestParam String password)
-			throws UserNotFoundException, WrongPasswordException {
+	public LoginResponse login(@RequestParam String username, @RequestParam String password) throws UserNotFoundException, WrongPasswordException {
 		User user = this.userService.login(username, password);
 		AuthToken token = this.authTokenService.issue(user);
 		return new LoginResponse(true, MessageConstant.LOGIN_SUCCESS, token);
 	}
 
 	@RequestMapping(value = AuthController.REGISTER_PATH, method = RequestMethod.POST)
-	public SimpleResponse register(@RequestBody User user,
-			@RequestParam(required = false, defaultValue = "true") boolean sendMail) throws IllegalRoleException {
+	public SimpleResponse register(@RequestBody User user, @RequestParam(required = false, defaultValue = "true") boolean sendMail) throws IllegalRoleException {
 		if (user.getRole() == Role.USER) {
 			this.userService.create(user);
 		} else if (user.getRole() == Role.ADMIN || (user.getRole() == Role.ROOT && !this.userService.isRootExist())) {

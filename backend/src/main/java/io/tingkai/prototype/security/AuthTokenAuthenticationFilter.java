@@ -32,8 +32,7 @@ public class AuthTokenAuthenticationFilter extends GenericFilterBean {
 	protected AuthenticationManager authenticationManager;
 
 	@Override
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
-			throws IOException, ServletException {
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
 
 		String authTokenString = request.getHeader("X-Auth-Token");
@@ -42,8 +41,7 @@ public class AuthTokenAuthenticationFilter extends GenericFilterBean {
 			try {
 				Authentication authentication = this.authenticationManager.authenticate(authTokenAuthentication);
 				Object detail = authentication.getDetails();
-				if (detail instanceof AuthToken && Role.NONE != ((AuthToken) detail).getRole()
-						&& ((AuthToken) detail).getExpiryDate().after(new Date())) {
+				if (detail instanceof AuthToken && Role.NONE != ((AuthToken) detail).getRole() && ((AuthToken) detail).getExpiryDate().after(new Date())) {
 					SecurityContextHolder.getContext().setAuthentication(authentication);
 				} else {
 					SecurityContextHolder.getContext().setAuthentication(null);

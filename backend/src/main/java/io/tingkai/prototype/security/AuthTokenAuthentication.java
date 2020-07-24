@@ -80,7 +80,6 @@ public class AuthTokenAuthentication implements Authentication {
 
 	@Override
 	public String toString() {
-		return "AuthTokenAuthentication [getCredentials()=" + getCredentials() + ", getDetails()=" + getDetails()
-				+ ", getName()=" + getName() + ", getPrincipal()=" + getPrincipal() + "]";
+		return "AuthTokenAuthentication [getCredentials()=" + getCredentials() + ", getDetails()=" + getDetails() + ", getName()=" + getName() + ", getPrincipal()=" + getPrincipal() + "]";
 	}
 }
