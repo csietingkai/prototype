@@ -66,7 +66,7 @@ elif [ "$1" = 'build' ]; then
 		mvn clean install package
 		docker build . --rm --tag=$backend_image_name:$version
 		docker push $backend_image_name:$version
-		docker image $backend_image_name:$version
+		docker image rm $backend_image_name:$version
 		git checkout -- src/main/resources/application.properties
 		cd ..
 	elif [ "$2" = 'frontend' ]; then
@@ -75,12 +75,13 @@ elif [ "$1" = 'build' ]; then
 		docker container rm $frontend_container_name
 		cd ..
 		cd frontend
-		sed -i "s/localhost:38080/api:8080/g" package.json
-		sed -i "s/PORT=33000/PORT=3000/g" package.json
+		# sed -i "s/localhost:38080/api:8080/g" .env
+		sed -i "s/33000/3000/g" webpack.config.js
 		docker build . --rm --tag=$frontend_image_name:$version
 		docker push $frontend_image_name:$version
 		docker image rm $frontend_image_name:$version
-		git checkout -- package.json
+		git checkout -- webpack.config.js
+		git checkout -- .env
 		cd ..
 	fi
 

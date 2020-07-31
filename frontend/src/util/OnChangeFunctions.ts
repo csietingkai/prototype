@@ -1,3 +1,5 @@
+import { isNull } from 'util';
+
 export const onTextChange = (component: React.Component, stateName: string) => (event: any) => {
     const newState: any = component.state;
     newState[stateName] = getEventValue(event, 'target', 'value');
@@ -24,7 +26,7 @@ const getEventValue = (event: any, ...eventKey: string[]): any => {
     let value: any = event;
     for (let i = 0; i < eventKey.length; i++) {
         const key = eventKey[i];
-        if (value[key]) {
+        if (!isNull(value[key])) {
             value = value[key];
         } else {
             return value;
