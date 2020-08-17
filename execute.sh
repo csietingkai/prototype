@@ -1,28 +1,23 @@
 #!/bin/bash
 
-if ! [ -x "$(command -v docker)" ]; then
-	echo 'Error: docker is not installed.' >&2
-fi
+## check commands used in this bash file are all installed
+check_tools () {
+	if ! [ -x "$(command -v $1)" ]; then
+		echo 'Error:' $1 'is not installed.' >&2
+		return 1
+	fi
+	return 0
+}
 
-if ! [ -x "$(command -v git)" ]; then
-	echo 'Error: git is not installed.' >&2
-fi
-
-if ! [ -x "$(command -v mvn)" ]; then
-	echo 'Error: maven is not installed.' >&2
-fi
-
-if ! [ -x "$(command -v redis-cli)" ]; then
-	echo 'Error: redis-tools is not installed.' >&2
-fi
-
-if ! [ -x "$(command -v mongodump)" ]; then
-	echo 'Error: mongo-tools is not installed.' >&2
-fi
-
-if ! [ -x "$(command -v pg_dumpall)" ]; then
-	echo 'Error: postgresql-client-11 and postgresql-client-common is not installed.' >&2
-fi
+declare -a tools=( 'docker' 'git' 'mvn' 'redis-cli' 'mongodump' 'pg_dumpall')
+check_result=0
+for tool in "${tools[@]}" 
+do
+	check_tools $tool
+	if [ $? -eq 1 ]; then
+		check_result=$?
+	fi
+done
 
 declare -a commands=("localhost" "build" "deploy" "backup")
 
@@ -65,7 +60,7 @@ elif [ "$1" = 'build' ]; then
 		sed -i "s/38080/8080/g" src/main/resources/application.properties
 		mvn clean install package
 		docker build . --rm --tag=$backend_image_name:$version
-		docker push $backend_image_name:$version
+#		docker push $backend_image_name:$version
 		docker image rm $backend_image_name:$version
 		git checkout -- src/main/resources/application.properties
 		cd ..
@@ -78,7 +73,7 @@ elif [ "$1" = 'build' ]; then
 		# sed -i "s/localhost:38080/api:8080/g" .env
 		sed -i "s/33000/3000/g" webpack.config.js
 		docker build . --rm --tag=$frontend_image_name:$version
-		docker push $frontend_image_name:$version
+#		docker push $frontend_image_name:$version
 		docker image rm $frontend_image_name:$version
 		git checkout -- webpack.config.js
 		git checkout -- .env
