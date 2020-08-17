@@ -1,50 +1,38 @@
 package io.tingkai.prototype.model.response;
 
+import java.text.MessageFormat;
+
+import lombok.Data;
+
 /**
  * base response
  * 
  * @author tingkai
  */
+@Data
 public abstract class BaseResponse<T> {
 
 	private boolean isSuccess;
 
-	private String message;
-
 	private T data;
 
+	private String message;
+
 	public BaseResponse(Exception e) {
-		this(false, e.getMessage(), null);
+		this(false, null, e.getMessage());
 	}
 
-	public BaseResponse(boolean isSuccess, String message, T data) {
+	public BaseResponse(boolean isSuccess, T data, String message) {
 		super();
 		this.isSuccess = isSuccess;
-		this.message = message;
 		this.data = data;
+		this.message = message;
 	}
 
-	public boolean isSuccess() {
-		return isSuccess;
-	}
-
-	public void setSuccess(boolean isSuccess) {
+	public BaseResponse(boolean isSuccess, T data, String pattern, String... params) {
+		super();
 		this.isSuccess = isSuccess;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	public T getData() {
-		return data;
-	}
-
-	public void setData(T data) {
 		this.data = data;
+		this.message = MessageFormat.format(pattern, (Object[]) params);
 	}
 }

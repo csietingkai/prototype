@@ -74,7 +74,7 @@ public class AuthTokenAuthentication implements Authentication {
 		if (!isAuthenticated) {
 			this.isAuthenticated = false;
 		} else {
-			throw new IllegalArgumentException("");
+			throw new IllegalArgumentException();
 		}
 	}
 

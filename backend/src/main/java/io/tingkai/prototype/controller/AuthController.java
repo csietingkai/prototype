@@ -15,8 +15,7 @@ import io.tingkai.prototype.enumeration.Role;
 import io.tingkai.prototype.model.exception.IllegalRoleException;
 import io.tingkai.prototype.model.exception.UserNotFoundException;
 import io.tingkai.prototype.model.exception.WrongPasswordException;
-import io.tingkai.prototype.model.response.LoginResponse;
-import io.tingkai.prototype.model.response.SimpleResponse;
+import io.tingkai.prototype.model.response.AuthResponse;
 import io.tingkai.prototype.security.AuthToken;
 import io.tingkai.prototype.security.AuthTokenService;
 import io.tingkai.prototype.service.MailService;
@@ -45,14 +44,14 @@ public class AuthController {
 	private MailService mailService;
 
 	@RequestMapping(value = AuthController.LOGIN_PATH, method = RequestMethod.POST)
-	public LoginResponse login(@RequestParam String username, @RequestParam String password) throws UserNotFoundException, WrongPasswordException {
+	public AuthResponse login(@RequestParam String username, @RequestParam String password) throws UserNotFoundException, WrongPasswordException {
 		User user = this.userService.login(username, password);
 		AuthToken token = this.authTokenService.issue(user);
-		return new LoginResponse(true, MessageConstant.LOGIN_SUCCESS, token);
+		return new AuthResponse(true, token, MessageConstant.LOGIN_SUCCESS);
 	}
 
 	@RequestMapping(value = AuthController.REGISTER_PATH, method = RequestMethod.POST)
-	public SimpleResponse register(@RequestBody User user, @RequestParam(required = false, defaultValue = "true") boolean sendMail) throws IllegalRoleException {
+	public AuthResponse register(@RequestBody User user, @RequestParam(required = false, defaultValue = "true") boolean sendMail) throws IllegalRoleException {
 		if (user.getRole() == Role.USER) {
 			this.userService.create(user);
 		} else if (user.getRole() == Role.ADMIN || (user.getRole() == Role.ROOT && !this.userService.isRootExist())) {
@@ -65,23 +64,23 @@ public class AuthController {
 			this.mailService.sendConfirmEmail(user.getEmail());
 		}
 
-		return new SimpleResponse(true);
+		return new AuthResponse(true, null, MessageConstant.SUCCESS);
 	}
 
 	@RequestMapping(value = AuthController.CONFIRM_PATH, method = RequestMethod.POST)
-	public SimpleResponse confirm(@RequestParam String email) {
+	public AuthResponse confirm(@RequestParam String email) {
 		// TODO browser can not open, but postman can
 		this.userService.confirm(email);
-		return new SimpleResponse(true);
+		return new AuthResponse(true, null, MessageConstant.SUCCESS);
 	}
 
 	@RequestMapping(value = AuthController.VALIDATE_PATH, method = RequestMethod.GET)
-	public LoginResponse validate(@RequestParam String tokenString) {
+	public AuthResponse validate(@RequestParam String tokenString) {
 		AuthToken token = this.authTokenService.validate(tokenString);
 		if (Optional.ofNullable(token).isPresent()) {
-			return new LoginResponse(true, MessageConstant.LOGIN_SUCCESS, token);
+			return new AuthResponse(true, token, MessageConstant.LOGIN_SUCCESS);
 		} else {
-			return new LoginResponse(false, MessageConstant.USER_NOT_FOUND, null);
+			return new AuthResponse(false, null, MessageConstant.AUTH_TOKEN_EXPIRE);
 		}
 	}
 }

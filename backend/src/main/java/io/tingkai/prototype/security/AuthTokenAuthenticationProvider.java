@@ -6,6 +6,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import io.tingkai.prototype.constant.MessageConstant;
+
 /**
  * Override Spring Authentication flow, check current user's AuthToken is
  * validate or not.
@@ -27,7 +29,7 @@ public class AuthTokenAuthenticationProvider implements AuthenticationProvider {
 			}
 		}
 
-		throw new BadCredentialsException("BAD_TOKEN");
+		throw new BadCredentialsException(MessageConstant.AUTHENTICATE_FAIL);
 	}
 
 	@Override

@@ -10,7 +10,7 @@ import io.tingkai.prototype.constant.MessageConstant;
 public class SimpleResponse extends BaseResponse<Void> {
 
 	public SimpleResponse(boolean isSuccess) {
-		super(isSuccess, (isSuccess ? MessageConstant.SUCCESS : MessageConstant.FAIL), null);
+		super(isSuccess, null, (isSuccess ? MessageConstant.SUCCESS : MessageConstant.FAIL));
 	}
 
 	public SimpleResponse(Exception e) {

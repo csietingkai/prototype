@@ -13,7 +13,7 @@ import io.tingkai.prototype.model.exception.IllegalRoleException;
 import io.tingkai.prototype.model.exception.UserNotFoundException;
 import io.tingkai.prototype.model.exception.WrongPasswordException;
 import io.tingkai.prototype.model.response.BaseResponse;
-import io.tingkai.prototype.model.response.LoginResponse;
+import io.tingkai.prototype.model.response.AuthResponse;
 import io.tingkai.prototype.model.response.SimpleResponse;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +26,7 @@ public class ExceptionHelper {
 		if (AppConstants.DEBUG_MODE) {
 			log.debug(e.getMessage(), e);
 		}
-		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(e));
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new AuthResponse(e));
 	}
 
 	@ExceptionHandler(IllegalRoleException.class)
@@ -34,7 +34,7 @@ public class ExceptionHelper {
 		if (AppConstants.DEBUG_MODE) {
 			log.debug(e.getMessage(), e);
 		}
-		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(e));
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new AuthResponse(e));
 	}
 
 	@ExceptionHandler(UserNotFoundException.class)
@@ -42,7 +42,7 @@ public class ExceptionHelper {
 		if (AppConstants.DEBUG_MODE) {
 			log.debug(e.getMessage(), e);
 		}
-		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(e));
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new AuthResponse(e));
 	}
 
 	@ExceptionHandler(WrongPasswordException.class)
@@ -50,7 +50,7 @@ public class ExceptionHelper {
 		if (AppConstants.DEBUG_MODE) {
 			log.debug(e.getMessage(), e);
 		}
-		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(e));
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new AuthResponse(e));
 	}
 
 	@ExceptionHandler(Exception.class)

@@ -8,7 +8,7 @@ import java.util.Optional;
  * @author tingkai
  */
 public enum FileType {
-	PNG("png"), JPEG("jpeg"), JPG("jpg"), GIF("gif"), MP4("mp4"), MKV("mkv"), MP3("mp3"), FLAC("flac"), M4A("m4a"), AAC("aac"), WAV("wav"), DOC("doc"), DOCX("docx"), XLS("xls"), XLSX("xlsx"), PPT("ppt"), PPTX("pptx"), PDF("pdf"), ZIP("zip"), RAR("rar"), ZIP7("7z"), TARGZ("tar.gz"), OTHER("");
+	PNG("png"), JPEG("jpeg"), JPG("jpg"), GIF("gif"), MP4("mp4"), MKV("mkv"), MP3("mp3"), FLAC("flac"), M4A("m4a"), AAC("aac"), WAV("wav"), DOC("doc"), DOCX("docx"), XLS("xls"), XLSX("xlsx"), PPT("ppt"), PPTX("pptx"), PDF("pdf"), CSV("csv"), ZIP("zip"), RAR("rar"), ZIP7("7z"), TARGZ("tar.gz"), OTHER("");
 
 	String value;
 	String endString;

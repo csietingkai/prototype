@@ -12,6 +12,7 @@ public class MessageConstant {
 	public static final String FAIL = "FAIL";
 
 	// auth
+	public static final String AUTHENTICATE_FAIL = "Bad Token";
 	public static final String LOGIN_SUCCESS = "Login Success";
 	public static final String USER_NOT_FOUND = "Username: {0} not found";
 	public static final String WRONG_PASSWORD = "Wrong password";

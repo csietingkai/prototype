@@ -21,8 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mongodb.client.gridfs.GridFSFindIterable;
 
 import io.tingkai.prototype.constant.GridFSFileField;
+import io.tingkai.prototype.constant.MessageConstant;
 import io.tingkai.prototype.entity.File;
-import io.tingkai.prototype.model.response.FileUploadResponse;
+import io.tingkai.prototype.model.response.FileResponse;
 import io.tingkai.prototype.model.response.SimpleResponse;
 import io.tingkai.prototype.repository.FileRepository;
 import io.tingkai.prototype.service.FileService;
@@ -54,25 +55,27 @@ public class FileController {
 	private RepositoryService repositoryService;
 
 	@RequestMapping(value = FileController.UPLOAD_PATH, method = RequestMethod.POST)
-	public FileUploadResponse upload(@RequestParam MultipartFile file, @RequestParam(required = false) String category) throws IOException {
+	public FileResponse<Void> upload(@RequestParam MultipartFile file, @RequestParam(required = false) String category) throws IOException {
 		FileRepository fileRepository = this.repositoryService.getFileRepository(file.getOriginalFilename());
 		OutputStream updaloadStream = this.fileService.getUploadStream(fileRepository.getName(), file.getOriginalFilename(), category);
 		updaloadStream.write(file.getBytes());
 		updaloadStream.close();
-		return new FileUploadResponse(true, file.getOriginalFilename());
+		return new FileResponse<Void>(true, null, MessageConstant.FILE_UPLOAD_SUCCESS, file.getOriginalFilename());
 	}
 
+	// TODO response with msg and file
 	@RequestMapping(value = FileController.DOWNLOAD_PATH)
-	public ResponseEntity<Resource> download(@RequestParam String filename) {
+	public ResponseEntity<FileResponse<Resource>> download(@RequestParam String filename) {
 		FileRepository fileRepository = this.repositoryService.getFileRepository(filename);
 		InputStream downloadStream = this.fileService.getDownloadStream(fileRepository.getName(), filename);
 		InputStreamResource resource = new InputStreamResource(downloadStream);
 		HttpHeaders header = new HttpHeaders();
+		// TODO text constant
 		header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename);
 		header.add(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate");
 		header.add(HttpHeaders.PRAGMA, "no-cache");
 		header.add(HttpHeaders.EXPIRES, "0");
-		return ResponseEntity.ok().headers(header).contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
+		return ResponseEntity.ok().headers(header).contentType(MediaType.APPLICATION_OCTET_STREAM).body(new FileResponse<Resource>(true, resource, MessageConstant.FILE_DOWNLOAD_SUCCESS));
 	}
 
 	@RequestMapping(value = FileController.DELETE_PATH, method = RequestMethod.DELETE)
@@ -83,27 +86,31 @@ public class FileController {
 	}
 
 	@RequestMapping(value = FileController.FIND_ONE_PATH, method = RequestMethod.GET)
-	public File findOne(@RequestParam String repositoryName, @RequestParam String id) {
+	public FileResponse<File> findOne(@RequestParam String repositoryName, @RequestParam String id) {
 		GridFSFindIterable iterable = this.fileService.findById(repositoryName, id);
-		return FileUtil.convert(iterable.first());
+		File file = FileUtil.convert(iterable.first());
+		return new FileResponse<File>(true, file, MessageConstant.SUCCESS);
 	}
 
 	@RequestMapping(value = FileController.LIST_PATH, method = RequestMethod.GET)
-	public List<File> list(@RequestParam String repositoryName) {
+	public FileResponse<List<File>> list(@RequestParam String repositoryName) {
 		GridFSFindIterable iterable = this.fileService.find(repositoryName);
-		return FileUtil.convert(iterable);
+		List<File> files = FileUtil.convert(iterable);
+		return new FileResponse<List<File>>(true, files, MessageConstant.SUCCESS);
 	}
 
 	@RequestMapping(value = FileController.HISTORY_PATH, method = RequestMethod.GET)
-	public List<File> history(@RequestParam String repositoryName, @RequestParam String filename) {
+	public FileResponse<List<File>> history(@RequestParam String repositoryName, @RequestParam String filename) {
 		GridFSFindIterable iterable = this.fileService.find(repositoryName, GridFSFileField.FILENAME, filename);
-		return FileUtil.convert(iterable);
+		List<File> files = FileUtil.convert(iterable);
+		return new FileResponse<List<File>>(true, files, MessageConstant.SUCCESS);
 	}
 
 	@RequestMapping(value = FileController.REPOSITORY_LIST_PATH, method = RequestMethod.GET)
-	public List<String> repositories() {
-		return this.repositoryService.getFileRepositories().stream().map((repository) -> {
+	public FileResponse<List<String>> repositories() {
+		List<String> repositoryNames = this.repositoryService.getFileRepositories().stream().map((repository) -> {
 			return repository.getName();
 		}).collect(Collectors.toList());
+		return new FileResponse<List<String>>(true, repositoryNames, MessageConstant.SUCCESS);
 	}
 }
