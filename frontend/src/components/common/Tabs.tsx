@@ -10,7 +10,7 @@ interface TabsProps {
 
 interface TabsState { }
 
-export class Tabs extends React.Component<TabsProps, TabsState> {
+export default class Tabs extends React.Component<TabsProps, TabsState> {
     constructor(props: TabsProps) {
         super(props);
     }

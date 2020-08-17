@@ -6,7 +6,7 @@ interface ExampleProps { }
 
 interface ExampleState { }
 
-export class Example extends React.Component<ExampleProps, ExampleState> {
+export default class Example extends React.Component<ExampleProps, ExampleState> {
     constructor(props: ExampleProps) {
         super(props);
         this.state = {};

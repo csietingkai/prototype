@@ -6,7 +6,7 @@ interface HomeProps { }
 
 interface HomeState { }
 
-export class Home extends React.Component<HomeProps, HomeState> {
+export default class Home extends React.Component<HomeProps, HomeState> {
     constructor(props: HomeProps) {
         super(props);
         this.state = {};

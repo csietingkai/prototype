@@ -9,3 +9,9 @@ export const isEmpty = (str: string): boolean => {
 export const isBlank = (str: string): boolean => {
     return isNull(str) || !str.trim().length;
 };
+
+export default {
+    isNull,
+    isEmpty,
+    isBlank
+};

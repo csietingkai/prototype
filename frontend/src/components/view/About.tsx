@@ -6,7 +6,7 @@ interface AboutProps { }
 
 interface AboutState { }
 
-export class About extends React.Component<AboutProps, AboutState> {
+export default class About extends React.Component<AboutProps, AboutState> {
     constructor(props: AboutProps) {
         super(props);
         this.state = {};

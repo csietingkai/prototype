@@ -3,8 +3,8 @@ import * as React from 'react';
 import { ToastContainer } from 'react-toastify';
 
 // components
-import { Login } from 'components/view/Login';
-import { Main } from 'components/view/Main';
+import Login from 'components/view/Login';
+import Main from 'components/view/Main';
 
 // apis
 import { login, register, validate } from 'api/auth';
@@ -12,10 +12,6 @@ import { login, register, validate } from 'api/auth';
 // utils
 import { getAuthToken, setAuthToken, removeAuthToken } from 'util/TokenHelper';
 import notify from 'util/Notify';
-
-// css
-
-// images
 
 export interface AppProps { }
 

@@ -4,11 +4,11 @@ import { Container, Col, Row } from 'react-bootstrap';
 import { Switch, Route } from 'react-router-dom';
 
 // components
-import { Sidebar } from 'components/view/Sidebar';
-import { Header } from 'components/view/Header';
+import Sidebar from 'components/view/Sidebar';
+import Header from 'components/view/Header';
 
 // utils
-import { RouterConfig } from 'util/RouteConfig';
+import RouterConfig from 'util/RouteConfig';
 
 interface MainProps {
     logout: () => void;
@@ -18,8 +18,7 @@ interface MainState {
     isSidebarShow: boolean;
 }
 
-
-export class Main extends React.Component<MainProps, MainState> {
+export default class Main extends React.Component<MainProps, MainState> {
     constructor(props: MainProps) {
         super(props);
         this.state = {

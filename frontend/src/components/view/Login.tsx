@@ -3,8 +3,8 @@ import * as React from 'react';
 import { Container } from 'react-bootstrap';
 
 // components
-import { Tabs } from 'components/common/Tabs';
-import { Form } from 'components/common/Form';
+import Tabs from 'components/common/Tabs';
+import Form from 'components/common/Form';
 import UserIcon from 'components/common/icons/UserIcon';
 import LockIcon from 'components/common/icons/LockIcon';
 
@@ -23,7 +23,7 @@ interface LoginState {
     confirmPassword: string;
 }
 
-export class Login extends React.Component<LoginProps, LoginState> {
+export default class Login extends React.Component<LoginProps, LoginState> {
     constructor(props: LoginProps) {
         super(props);
         this.state = {

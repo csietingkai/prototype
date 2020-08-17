@@ -2,9 +2,9 @@
 import * as React from 'react';
 
 // components
-import { About } from 'components/view/About';
-import { Home } from 'components/view/Home';
-import { Example } from 'components/view/Example';
+import About from 'components/view/About';
+import Home from 'components/view/Home';
+import Example from 'components/view/Example';
 import HomeIcon from 'components/common/icons/HomeIcon';
 import InfoIcon from 'components/common/icons/InfoIcon';
 import TableIcon from 'components/common/icons/TableIcon';
@@ -16,7 +16,7 @@ interface IRouterConfig {
     component: React.ComponentType<any>;
 }
 
-export const RouterConfig: Array<IRouterConfig> = [
+const RouterConfig: Array<IRouterConfig> = [
     {
         text: 'Home',
         route: '/',
@@ -36,3 +36,5 @@ export const RouterConfig: Array<IRouterConfig> = [
         component: Example
     }
 ];
+
+export default RouterConfig;

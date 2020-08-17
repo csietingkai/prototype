@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Container, Row, InputGroup, Form as RbForm, Button } from 'react-bootstrap';
 
 // components
-import { Title } from 'components/common/Title';
+import Title from 'components/common/Title';
 
 interface FormContent {
     text: string;
@@ -31,7 +31,7 @@ interface FormProps {
 
 interface FormState { }
 
-export class Form extends React.Component<FormProps, FormState> {
+export default class Form extends React.Component<FormProps, FormState> {
     constructor(props: FormProps) {
         super(props);
         this.state = {};

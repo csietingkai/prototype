@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 
 // utils
-import { RouterConfig } from 'util/RouteConfig';
+import RouterConfig from 'util/RouteConfig';
 
 interface SidebarProps {
     isShow: boolean;
@@ -12,7 +12,7 @@ interface SidebarProps {
 
 interface SidebarState { }
 
-export class Sidebar extends React.Component<SidebarProps, SidebarState> {
+export default class Sidebar extends React.Component<SidebarProps, SidebarState> {
     constructor(props: SidebarProps) {
         super(props);
         this.state = {};

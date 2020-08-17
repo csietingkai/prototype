@@ -5,7 +5,7 @@ interface HorizontalSpacingProps { }
 
 interface HorizontalSpacingState { }
 
-export class HorizontalSpacing extends React.Component<HorizontalSpacingProps, HorizontalSpacingState> {
+export default class HorizontalSpacing extends React.Component<HorizontalSpacingProps, HorizontalSpacingState> {
     constructor(props: HorizontalSpacingProps) {
         super(props);
         this.state = {};
