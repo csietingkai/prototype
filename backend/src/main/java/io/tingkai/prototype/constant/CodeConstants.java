@@ -33,5 +33,6 @@ public class CodeConstants {
 	public static final String CONFIRM_EMAIL_CONTENT = "Click the following link to verify email:\n";
 
 	// === other === //
+	public static final char UNDERLINE = '_';
 	public static final String EMPTY_STRING = "";
 }
