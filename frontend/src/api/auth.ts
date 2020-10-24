@@ -16,7 +16,7 @@ export const login = async (username: string, password: string) => {
 export const register = async (username: string, email: string, password: string, sendMail?: boolean) => {
     const { data } = await axios.post(API_URL + AUTH_REGISTER_PATH, {
         name: username,
-        email: email,
+        email,
         pwd: password,
         role: Role.USER
     }, { params: { sendMail } });
