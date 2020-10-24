@@ -11,6 +11,9 @@ import java.time.ZoneId;
  */
 public class CodeConstants {
 
+	// === init === //
+	public static final String DB_INIT_ROOT_USERNAME = "root";
+
 	// === date time format === //
 	public static final ZoneId ZONE_TPE = ZoneId.of("Asia/Taipei");
 	public static final ZoneId ZONE_UTC = ZoneId.of("UTC");
@@ -35,4 +38,5 @@ public class CodeConstants {
 	// === other === //
 	public static final char UNDERLINE = '_';
 	public static final String EMPTY_STRING = "";
+	public static final String RANDOM_RANGE = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 }

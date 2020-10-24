@@ -63,8 +63,7 @@ public class FileController {
 		return new FileResponse<Void>(true, null, MessageConstant.FILE_UPLOAD_SUCCESS, file.getOriginalFilename());
 	}
 
-	// TODO response with msg and file
-	@RequestMapping(value = FileController.DOWNLOAD_PATH)
+	@RequestMapping(value = FileController.DOWNLOAD_PATH, method = RequestMethod.GET)
 	public ResponseEntity<FileResponse<Resource>> download(@RequestParam String filename) {
 		FileRepository fileRepository = this.repositoryService.getFileRepository(filename);
 		InputStream downloadStream = this.fileService.getDownloadStream(fileRepository.getName(), filename);

@@ -54,8 +54,6 @@ public class AuthController {
 	public AuthResponse register(@RequestBody User user, @RequestParam(required = false, defaultValue = "true") boolean sendMail) throws IllegalRoleException {
 		if (user.getRole() == Role.USER) {
 			this.userService.create(user);
-		} else if (user.getRole() == Role.ADMIN || (user.getRole() == Role.ROOT && !this.userService.isRootExist())) {
-			this.userService.create(user, false);
 		} else {
 			throw new IllegalRoleException(user.getRole().name());
 		}

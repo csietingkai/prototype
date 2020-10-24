@@ -12,11 +12,30 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppConstants {
 
+	public static String INIT_ROOT_USERNAME;
+	public static int INIT_ROOT_PASSWORD_LENGTH;
+	public static String INIT_ROOT_EMAIL;
+
 	public static String GRID_FS_DATABASE;
 	public static String ZIP_FILE_ENCODING;
 	public static int FILE_IO_BUFFER_SIZE;
 	public static String CONFIRM_EMAIL_LINK;
 	public static boolean DEBUG_MODE;
+
+	@Value("${init-root-username}")
+	public void setInitRootUsername(String username) {
+		AppConstants.INIT_ROOT_USERNAME = username;
+	}
+
+	@Value("${init-root-password-length}")
+	public void setInitRootPasswordLength(int length) {
+		AppConstants.INIT_ROOT_PASSWORD_LENGTH = length;
+	}
+
+	@Value("${init-root-email}")
+	public void setInitRootEmail(String email) {
+		AppConstants.INIT_ROOT_EMAIL = email;
+	}
 
 	@Value("${spring.data.mongodb.grid-fs-database}")
 	public void setGridFsDatabase(String gridFsDatabase) {

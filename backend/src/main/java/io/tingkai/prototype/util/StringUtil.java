@@ -1,5 +1,6 @@
 package io.tingkai.prototype.util;
 
+import java.security.SecureRandom;
 import java.util.Optional;
 
 import io.tingkai.prototype.constant.CodeConstants;
@@ -34,6 +35,16 @@ public class StringUtil {
 			}
 			c = Character.toLowerCase(c);
 		}
-		return builder.toString(); 
+		return builder.toString();
+	}
+
+	public static String generateRandom(int length) {
+		SecureRandom random = new SecureRandom();
+
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < length; i++) {
+			sb.append(CodeConstants.RANDOM_RANGE.charAt(random.nextInt(CodeConstants.RANDOM_RANGE.length())));
+		}
+		return sb.toString();
 	}
 }
