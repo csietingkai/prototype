@@ -8,10 +8,5 @@ export const AUTH_LOGIN_PATH: string = '/login';
 export const AUTH_REGISTER_PATH: string = '/register';
 export const AUTH_VALIDATE_PATH: string = '/validate';
 
-export default {
-	AUTH_TOKEN_KEY,
-	AUTH_TOKEN_EXPIRE,
-	AUTH_LOGIN_PATH,
-	AUTH_REGISTER_PATH,
-	AUTH_VALIDATE_PATH,
-};
+const FILE_API_PREFIX: string = '/file';
+export const FILE_DOWNLOAD_PATH: string = FILE_API_PREFIX + '/download';

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { API_URL, AUTH_LOGIN_PATH, AUTH_REGISTER_PATH, AUTH_VALIDATE_PATH } from 'util/Contants';
+import { API_URL, AUTH_LOGIN_PATH, AUTH_REGISTER_PATH, AUTH_VALIDATE_PATH } from 'util/Constants';
 
 enum Role {
     ROOT,

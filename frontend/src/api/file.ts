@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { API_URL, FILE_DOWNLOAD_PATH } from 'util/Contants';
+import { API_URL, FILE_DOWNLOAD_PATH } from 'util/Constants';
 
 enum Role {
     ROOT,

@@ -2,7 +2,7 @@
 import * as Cookies from 'js-cookie';
 
 // utils
-import { AUTH_TOKEN_KEY, AUTH_TOKEN_EXPIRE } from 'util/Contants';
+import { AUTH_TOKEN_KEY, AUTH_TOKEN_EXPIRE } from 'util/Constants';
 
 export const setAuthToken = (token: string) => {
 	Cookies.set(AUTH_TOKEN_KEY, token, { expires: AUTH_TOKEN_EXPIRE });
