@@ -15,9 +15,3 @@ export const getAuthToken = (): string => {
 export const removeAuthToken = () => {
 	Cookies.remove(AUTH_TOKEN_KEY);
 };
-
-export default {
-	setAuthToken,
-	getAuthToken,
-	removeAuthToken
-};
