@@ -37,7 +37,7 @@ frontend_container_name=$container_prefix-client
 if [ "$1" = 'localhost' ]; then
 	if [ "$2" = 'server' ]; then
 		cd docker
-		docker-compose --project-name $project_name up -d postgres mongodb redis
+		docker-compose --project-name $project_name up -d postgres mongo redis
 		docker container ls -a
 		cd ..
 	elif [ "$2" = 'backend' ]; then
