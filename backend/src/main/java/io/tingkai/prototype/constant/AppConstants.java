@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 public class AppConstants {
 
 	public static String INIT_ROOT_USERNAME;
+	public static String INIT_ROOT_PASSWORD;
 	public static int INIT_ROOT_PASSWORD_LENGTH;
 	public static String INIT_ROOT_EMAIL;
 
@@ -25,6 +26,11 @@ public class AppConstants {
 	@Value("${init-root-username}")
 	public void setInitRootUsername(String username) {
 		AppConstants.INIT_ROOT_USERNAME = username;
+	}
+
+	@Value("${init-root-password}")
+	public void setInitRootPassword(String password) {
+		AppConstants.INIT_ROOT_PASSWORD = password;
 	}
 
 	@Value("${init-root-password-length}")

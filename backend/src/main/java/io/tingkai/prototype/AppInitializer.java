@@ -1,5 +1,7 @@
 package io.tingkai.prototype;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -37,7 +39,10 @@ public class AppInitializer {
 	private void addRoot() {
 		User root = new User();
 		root.setName(AppConstants.INIT_ROOT_USERNAME);
-		String initRootPassword = StringUtil.generateRandom(AppConstants.INIT_ROOT_PASSWORD_LENGTH);
+		String initRootPassword = AppConstants.INIT_ROOT_PASSWORD;
+		if (!Optional.ofNullable(initRootPassword).isPresent()) {
+			initRootPassword = StringUtil.generateRandom(AppConstants.INIT_ROOT_PASSWORD_LENGTH);
+		}
 		root.setPwd(this.bCryptPasswordEncoder.encode(initRootPassword));
 		root.setEmail(AppConstants.INIT_ROOT_EMAIL);
 		root.setRole(Role.ROOT);
