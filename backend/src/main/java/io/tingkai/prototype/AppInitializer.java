@@ -40,7 +40,7 @@ public class AppInitializer {
 		User root = new User();
 		root.setName(AppConstants.INIT_ROOT_USERNAME);
 		String initRootPassword = AppConstants.INIT_ROOT_PASSWORD;
-		if (!Optional.ofNullable(initRootPassword).isPresent()) {
+		if (!Optional.ofNullable(initRootPassword).isPresent() && !StringUtil.isBlank(initRootPassword)) {
 			initRootPassword = StringUtil.generateRandom(AppConstants.INIT_ROOT_PASSWORD_LENGTH);
 		}
 		root.setPwd(this.bCryptPasswordEncoder.encode(initRootPassword));
