@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import io.tingkai.prototype.constant.AppConstants;
 import io.tingkai.prototype.dao.UserDao;
 import io.tingkai.prototype.entity.User;
 import io.tingkai.prototype.enumeration.Role;
@@ -81,6 +82,15 @@ public class UserService {
 			}
 		}
 		return false;
+	}
+
+	public void createRoot(String initRootPassword) {
+		User root = new User();
+		root.setName(AppConstants.INIT_ROOT_USERNAME);
+		root.setPwd(this.bCryptPasswordEncoder.encode(initRootPassword));
+		root.setEmail(AppConstants.INIT_ROOT_EMAIL);
+		root.setRole(Role.ROOT);
+		this.userDao.save(root);
 	}
 
 	private Optional<User> getCurrentLoginUser() {
