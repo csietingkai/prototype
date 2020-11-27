@@ -6,6 +6,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
+/**
+ * 身分證字號 util
+ * @author tingkai
+ */
 public class SecurityIdUtil {
 
 	private static final Map<Character, String> COUNTY_NAME = initMap();
