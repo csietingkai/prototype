@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
+import io.tingkai.prototype.constant.CodeConstants;
 import io.tingkai.prototype.enumeration.Role;
 
 /**
@@ -35,7 +36,7 @@ public class AuthTokenAuthenticationFilter extends GenericFilterBean {
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
 
-		String authTokenString = request.getHeader("X-Auth-Token");
+		String authTokenString = request.getHeader(CodeConstants.REQUEST_TOKEN_KEY);
 		if (authTokenString != null) {
 			AuthTokenAuthentication authTokenAuthentication = new AuthTokenAuthentication(authTokenString);
 			try {

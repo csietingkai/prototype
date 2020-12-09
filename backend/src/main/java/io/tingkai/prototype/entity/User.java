@@ -24,7 +24,6 @@ import lombok.Data;
 @Data
 @Table(name = DatabaseContants.TABLE_USER)
 public class User {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;

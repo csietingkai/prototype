@@ -1,6 +1,6 @@
 package io.tingkai.prototype;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -18,10 +18,10 @@ public class TaxIdUtilTest {
 		String taxId1 = "04595257";
 		String taxId2 = "10458575";
 		String taxId3 = "10458572";
-		
+
 		// verify
-		Assert.assertTrue(TaxIdUtil.verify(taxId1));
-		Assert.assertTrue(TaxIdUtil.verify(taxId2));
-		Assert.assertFalse(TaxIdUtil.verify(taxId3));
+		Assertions.assertTrue(TaxIdUtil.verify(taxId1));
+		Assertions.assertTrue(TaxIdUtil.verify(taxId2));
+		Assertions.assertFalse(TaxIdUtil.verify(taxId3));
 	}
 }

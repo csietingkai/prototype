@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import org.apache.tika.Tika;
+import org.springframework.http.HttpHeaders;
 
 import com.mongodb.client.gridfs.GridFSFindIterable;
 import com.mongodb.client.gridfs.model.GridFSFile;
@@ -47,7 +48,6 @@ public class FileUtil {
 		return files;
 	}
 
-	@SuppressWarnings("deprecation")
 	public static File convert(GridFSFile gridfsFile) {
 		File file = null;
 		if (Optional.ofNullable(gridfsFile).isPresent()) {
@@ -56,9 +56,19 @@ public class FileUtil {
 			file.setFilename(gridfsFile.getFilename());
 			file.setSize(gridfsFile.getLength());
 			file.setUploadDate(gridfsFile.getUploadDate());
-			file.setMd5(gridfsFile.getMD5());
+//			file.setMd5(gridfsFile.getMetadata());
 			file.setMetadata(gridfsFile.getMetadata());
 		}
 		return file;
+	}
+
+	public static HttpHeaders getFileHeader(String filename) {
+		HttpHeaders header = new HttpHeaders();
+		// TODO text constant
+		header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename);
+		header.add(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate");
+		header.add(HttpHeaders.PRAGMA, "no-cache");
+		header.add(HttpHeaders.EXPIRES, "0");
+		return header;
 	}
 }

@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import io.tingkai.prototype.constant.MessageConstant;
+import io.tingkai.prototype.util.AppUtil;
 
 /**
  * Override Spring Authentication flow, check current user's AuthToken is
@@ -24,7 +25,7 @@ public class AuthTokenAuthenticationProvider implements AuthenticationProvider {
 	public Authentication authenticate(Authentication authentication) {
 		if (authentication.getCredentials() != null) {
 			AuthToken authToken = this.authTokenService.validate(authentication.getCredentials().toString());
-			if (authToken != null) {
+			if (AppUtil.isPresent(authToken)) {
 				return new AuthTokenAuthentication(authToken);
 			}
 		}

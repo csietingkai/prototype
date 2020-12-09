@@ -1,7 +1,5 @@
 package io.tingkai.prototype.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +18,7 @@ import io.tingkai.prototype.security.AuthToken;
 import io.tingkai.prototype.security.AuthTokenService;
 import io.tingkai.prototype.service.MailService;
 import io.tingkai.prototype.service.UserService;
+import io.tingkai.prototype.util.AppUtil;
 
 /**
  * Controller let user login and register
@@ -47,7 +46,7 @@ public class AuthController {
 	public AuthResponse login(@RequestParam String username, @RequestParam String password) throws UserNotFoundException, WrongPasswordException {
 		User user = this.userService.login(username, password);
 		AuthToken token = this.authTokenService.issue(user);
-		return new AuthResponse(true, token, MessageConstant.LOGIN_SUCCESS);
+		return new AuthResponse(true, token, MessageConstant.LOGIN_SUCCESS, username);
 	}
 
 	@RequestMapping(value = AuthController.REGISTER_PATH, method = RequestMethod.POST)
@@ -75,7 +74,7 @@ public class AuthController {
 	@RequestMapping(value = AuthController.VALIDATE_PATH, method = RequestMethod.GET)
 	public AuthResponse validate(@RequestParam String tokenString) {
 		AuthToken token = this.authTokenService.validate(tokenString);
-		if (Optional.ofNullable(token).isPresent()) {
+		if (AppUtil.isPresent(token)) {
 			return new AuthResponse(true, token, MessageConstant.LOGIN_SUCCESS);
 		} else {
 			return new AuthResponse(false, null, MessageConstant.AUTH_TOKEN_EXPIRE);

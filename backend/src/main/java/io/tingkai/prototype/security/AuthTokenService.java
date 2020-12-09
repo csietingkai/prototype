@@ -2,7 +2,6 @@ package io.tingkai.prototype.security;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import io.tingkai.prototype.constant.CodeConstants;
 import io.tingkai.prototype.entity.User;
+import io.tingkai.prototype.util.AppUtil;
 import io.tingkai.prototype.util.TimeUtil;
 
 /**
@@ -38,7 +38,7 @@ public final class AuthTokenService {
 		String existingAuthTokenString = this.stringRedisTemplate.opsForValue().get(CodeConstants.AUTH_USER_KEY + user.getId());
 
 		AuthToken authToken = this.generate(user);
-		if (Optional.ofNullable(existingAuthTokenString).isPresent()) {
+		if (AppUtil.isPresent(existingAuthTokenString)) {
 			authToken = this.authTokenRedisTemplate.opsForValue().get(CodeConstants.AUTH_TOKEN_KEY + existingAuthTokenString);
 			if (authToken.getExpiryDate().before(new Date(TimeUtil.getCurrentDateTime()))) {
 				authToken.setExpiryDate(getExpiryDate());
@@ -56,7 +56,11 @@ public final class AuthTokenService {
 	}
 
 	public AuthToken validate(String tokenString) {
-		return this.authTokenRedisTemplate.opsForValue().get(CodeConstants.AUTH_TOKEN_KEY + tokenString);
+		AuthToken token = this.authTokenRedisTemplate.opsForValue().get(CodeConstants.AUTH_TOKEN_KEY + tokenString);
+		if (AppUtil.isEmpty(token) || token.getExpiryDate().before(new Date())) {
+			token = null;
+		}
+		return token;
 	}
 
 	private AuthToken generate(User user) {

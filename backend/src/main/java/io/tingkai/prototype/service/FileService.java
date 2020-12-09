@@ -3,14 +3,13 @@ package io.tingkai.prototype.service;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLConnection;
-import java.util.Optional;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mongodb.MongoClient;
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSBuckets;
@@ -21,6 +20,7 @@ import com.mongodb.client.model.Filters;
 import io.tingkai.prototype.constant.AppConstants;
 import io.tingkai.prototype.constant.GridFSFileField;
 import io.tingkai.prototype.repository.FileRepository;
+import io.tingkai.prototype.util.AppUtil;
 import io.tingkai.prototype.util.ContextUtil;
 
 /**
@@ -43,7 +43,7 @@ public class FileService {
 		Document metadata = new Document();
 		metadata.append(GridFSFileField.METADATA_UPLOADER_KEY, ContextUtil.getUserName());
 		metadata.append(GridFSFileField.METADATA_CONTENT_TYPE_KEY, URLConnection.guessContentTypeFromName(sourceFileName));
-		if (Optional.ofNullable(category).isPresent()) {
+		if (AppUtil.isPresent(category)) {
 			metadata.append(GridFSFileField.METADATA_CATEGORY_KEY, category);
 		}
 		GridFSUploadOptions options = new GridFSUploadOptions();

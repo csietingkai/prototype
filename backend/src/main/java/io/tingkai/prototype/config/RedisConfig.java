@@ -13,7 +13,9 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 
 /**
  * Setting of {@link RedisTemplate} and redis connection
@@ -50,7 +52,7 @@ public class RedisConfig {
 		template.setConnectionFactory(connectionFactory);
 		Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<Object>(Object.class);
 		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+		objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
 		jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
 		template.setKeySerializer(new StringRedisSerializer());
 		template.setValueSerializer(jackson2JsonRedisSerializer);

@@ -26,6 +26,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
+				// TODO frontend port change
 				registry.addMapping("/*").allowedOrigins("http://localhost:33000");
 			}
 		};

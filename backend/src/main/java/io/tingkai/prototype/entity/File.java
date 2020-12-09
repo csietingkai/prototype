@@ -8,7 +8,6 @@ import lombok.Data;
 
 @Data
 public class File {
-
 	private String id;
 	private String filename;
 	private long size;

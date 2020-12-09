@@ -68,12 +68,7 @@ public class FileController {
 		FileRepository fileRepository = this.repositoryService.getFileRepository(filename);
 		InputStream downloadStream = this.fileService.getDownloadStream(fileRepository.getName(), filename);
 		InputStreamResource resource = new InputStreamResource(downloadStream);
-		HttpHeaders header = new HttpHeaders();
-		// TODO text constant
-		header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename);
-		header.add(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate");
-		header.add(HttpHeaders.PRAGMA, "no-cache");
-		header.add(HttpHeaders.EXPIRES, "0");
+		HttpHeaders header = FileUtil.getFileHeader(filename);
 		return ResponseEntity.ok().headers(header).contentType(MediaType.APPLICATION_OCTET_STREAM).body(new FileResponse<Resource>(true, resource, MessageConstant.FILE_DOWNLOAD_SUCCESS));
 	}
 

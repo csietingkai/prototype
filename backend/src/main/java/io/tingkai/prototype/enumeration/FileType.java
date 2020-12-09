@@ -1,6 +1,6 @@
 package io.tingkai.prototype.enumeration;
 
-import java.util.Optional;
+import io.tingkai.prototype.util.AppUtil;
 
 /**
  * File types aka file extension
@@ -8,6 +8,7 @@ import java.util.Optional;
  * @author tingkai
  */
 public enum FileType {
+
 	PNG("png"), JPEG("jpeg"), JPG("jpg"), GIF("gif"), MP4("mp4"), MKV("mkv"), MP3("mp3"), FLAC("flac"), M4A("m4a"), AAC("aac"), WAV("wav"), DOC("doc"), DOCX("docx"), XLS("xls"), XLSX("xlsx"), PPT("ppt"), PPTX("pptx"), PDF("pdf"), CSV("csv"), ZIP("zip"), RAR("rar"), ZIP7("7z"), TARGZ("tar.gz"), OTHER("");
 
 	String value;
@@ -15,7 +16,7 @@ public enum FileType {
 
 	private FileType(String value) {
 		this.value = value;
-		if (Optional.ofNullable(value).isPresent()) {
+		if (AppUtil.isPresent(value)) {
 			this.endString = "." + value;
 		}
 	}
@@ -29,7 +30,7 @@ public enum FileType {
 	}
 
 	public static FileType convertByString(String value) {
-		if (Optional.ofNullable(value).isPresent()) {
+		if (AppUtil.isPresent(value)) {
 			for (FileType type : FileType.values()) {
 				if (value.equals(type.getValue())) {
 					return type;
@@ -40,7 +41,7 @@ public enum FileType {
 	}
 
 	public static FileType getTypeByFilename(String filename) {
-		if (Optional.ofNullable(filename).isPresent()) {
+		if (AppUtil.isPresent(filename)) {
 			for (FileType type : FileType.values()) {
 				if (filename.endsWith(type.getEndWith())) {
 					return type;

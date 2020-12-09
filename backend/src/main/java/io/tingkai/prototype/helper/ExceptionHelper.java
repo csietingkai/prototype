@@ -12,8 +12,8 @@ import io.tingkai.prototype.model.exception.AuthTokenExpireException;
 import io.tingkai.prototype.model.exception.IllegalRoleException;
 import io.tingkai.prototype.model.exception.UserNotFoundException;
 import io.tingkai.prototype.model.exception.WrongPasswordException;
-import io.tingkai.prototype.model.response.BaseResponse;
 import io.tingkai.prototype.model.response.AuthResponse;
+import io.tingkai.prototype.model.response.BaseResponse;
 import io.tingkai.prototype.model.response.SimpleResponse;
 import lombok.extern.slf4j.Slf4j;
 

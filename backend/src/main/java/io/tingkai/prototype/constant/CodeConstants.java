@@ -24,6 +24,7 @@ public class CodeConstants {
 	public static final LocalDateTime DATE_TIME_MAX = LocalDateTime.of(2099, Month.DECEMBER, 31, 23, 59);
 
 	// === security === //
+	public static final String REQUEST_TOKEN_KEY = "X-Auth-Token";
 	public static final String PRNG_NAME = "SHA1PRNG";
 	public static final String DIGEST_ALGORITHM_NAME = "SHA-256";
 	public static final int PRNG_PRODUCT_LENGTH = 32;

@@ -14,7 +14,6 @@ import lombok.Data;
 @SuppressWarnings("serial")
 @Data
 public class AuthToken implements Serializable {
-
 	private String name;
 	private Role role;
 	private String tokenString;
