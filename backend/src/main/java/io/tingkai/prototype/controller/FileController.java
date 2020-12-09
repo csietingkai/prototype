@@ -1,8 +1,6 @@
 package io.tingkai.prototype.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +23,6 @@ import io.tingkai.prototype.constant.MessageConstant;
 import io.tingkai.prototype.entity.File;
 import io.tingkai.prototype.model.response.FileResponse;
 import io.tingkai.prototype.model.response.SimpleResponse;
-import io.tingkai.prototype.repository.FileRepository;
 import io.tingkai.prototype.service.FileService;
 import io.tingkai.prototype.service.RepositoryService;
 import io.tingkai.prototype.util.FileUtil;
@@ -56,18 +53,13 @@ public class FileController {
 
 	@RequestMapping(value = FileController.UPLOAD_PATH, method = RequestMethod.POST)
 	public FileResponse<Void> upload(@RequestParam MultipartFile file, @RequestParam(required = false) String category) throws IOException {
-		FileRepository fileRepository = this.repositoryService.getFileRepository(file.getOriginalFilename());
-		OutputStream updaloadStream = this.fileService.getUploadStream(fileRepository.getName(), file.getOriginalFilename(), category);
-		updaloadStream.write(file.getBytes());
-		updaloadStream.close();
+		this.fileService.upload(file, category);
 		return new FileResponse<Void>(true, null, MessageConstant.FILE_UPLOAD_SUCCESS, file.getOriginalFilename());
 	}
 
 	@RequestMapping(value = FileController.DOWNLOAD_PATH, method = RequestMethod.GET)
 	public ResponseEntity<FileResponse<Resource>> download(@RequestParam String filename) {
-		FileRepository fileRepository = this.repositoryService.getFileRepository(filename);
-		InputStream downloadStream = this.fileService.getDownloadStream(fileRepository.getName(), filename);
-		InputStreamResource resource = new InputStreamResource(downloadStream);
+		InputStreamResource resource = this.fileService.download(filename);
 		HttpHeaders header = FileUtil.getFileHeader(filename);
 		return ResponseEntity.ok().headers(header).contentType(MediaType.APPLICATION_OCTET_STREAM).body(new FileResponse<Resource>(true, resource, MessageConstant.FILE_DOWNLOAD_SUCCESS));
 	}

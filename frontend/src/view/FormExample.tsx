@@ -63,7 +63,7 @@ class FormExample extends React.Component<FormExampleProps, FormExampleState> {
                                     { key: 'password', title: 'Password', type: InputType.password, helpText: 'Please enter a complex password' },
                                     { key: 'textarea', title: 'Textarea', type: InputType.textarea },
                                     { key: 'select', title: 'Select', type: InputType.select, options: selectRecords },
-                                    { key: 'radio', title: 'Radios', options: radioRecords },
+                                    { key: 'radio', title: 'Radios', type: InputType.radio, options: radioRecords },
                                     { key: 'checkbox', title: 'Checkboxes', type: InputType.checkbox, options: checkboxRecords },
                                     { key: 'file', title: 'File input', type: InputType.file }
                                 ].map(x => {

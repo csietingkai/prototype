@@ -12,6 +12,5 @@ public class File {
 	private String filename;
 	private long size;
 	private Date uploadDate;
-	private String md5;
 	private Document metadata;
 }
