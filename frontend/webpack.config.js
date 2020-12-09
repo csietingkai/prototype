@@ -1,70 +1,68 @@
-const webpack = require('webpack');
 const path = require('path');
+const webpack = require('webpack');
 const dotenv = require('dotenv');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+const BUILD_DIR = path.resolve(__dirname, 'build');
+const SRC_DIR = path.resolve(__dirname, 'src');
 
 module.exports = () => {
+    // call dotenv and it will return an Object with a parsed key
     const env = dotenv.config().parsed;
 
+    // reduce it to a nice object, the same as before
     const envKeys = Object.keys(env).reduce((prev, next) => {
         prev[`process.env.${next}`] = JSON.stringify(env[next]);
         return prev;
     }, {});
 
     return {
-        entry: './src/index.tsx',
-        target: 'web',
-        mode: env.MODE,
-        devServer: {
-            contentBase: path.join(__dirname, 'dist'),
-            compress: true,
-            port: 33000,
-            historyApiFallback: true
+        entry: {
+            index: [SRC_DIR + '/index.tsx']
         },
         output: {
-            path: path.resolve(__dirname, 'build'),
-            filename: 'bundle.js'
+            path: BUILD_DIR,
+            filename: '[name].bundle.js'
+        },
+        resolve: {
+            extensions: ['.ts', '.tsx', '.js', 'jsx'],
+            modules: [SRC_DIR, 'node_modules'],
+            alias: {
+                src: SRC_DIR
+            }
         },
         module: {
             rules: [
+                { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
+                { test: /\.s[ac]ss$/, use: ['style-loader', 'css-loader', 'sass-loader'] },
+                { test: /\.css$/, use: ['style-loader', 'css-loader'] },
                 {
-                    test: /\.ts(x)?$/,
-                    loader: 'awesome-typescript-loader'
+                    test: /\.(png|jp(e)?g|gif|ico)$/,
+                    use: [{
+                        loader: 'url-loader',
+                        options: {
+                            name: './image/[name].[hash].[ext]'
+                        }
+                    }]
                 },
                 {
-                    enforce: 'pre',
-                    test: /\.js$/,
-                    loader: 'source-map-loader'
-                },
-                {
-                    test: /\.(sc|sa|c)ss$/,
-                    use: [
-                        MiniCssExtractPlugin.loader,
-                        {
-                            loader: 'css-loader'
-                        },
-                        'sass-loader'
-                    ]
+                    test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                    loader: 'url-loader',
+                    options: {
+                        name: './fonts/[name].[hash].[ext]'
+                    }
                 }
             ]
         },
         plugins: [
-            new HtmlWebpackPlugin({
-                template: './index.html'
-            }),
-            new MiniCssExtractPlugin({
-                filename: 'style.css'
-            }),
-            new webpack.DefinePlugin(envKeys)
+            new HtmlWebpackPlugin({ template: './index.html' }),
+            new webpack.DefinePlugin(envKeys),
+            // new CopyWebpackPlugin([{ from: './src/assets/image', to: 'image' }])
         ],
-        devtool: 'source-map',
-        resolve: {
-            extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
-            modules: [path.resolve(__dirname, './src'), 'node_modules'],
-            alias: {
-                src: path.resolve(__dirname, './src')
-            }
+        devServer: {
+            port: 33000
         }
     }
 };

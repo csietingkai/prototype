@@ -1,0 +1,98 @@
+import classNames from 'classnames';
+import * as React from 'react';
+import { Button, Card as RbCard, Collapse } from 'react-bootstrap';
+
+import { AngleDownIcon, AngleUpIcon } from 'component/common/Icons';
+
+import { Variant } from 'util/Enum';
+
+export interface CardProps {
+    title: string;
+    accent?: Variant;
+    border?: Variant; // notice: if border and accent exist at the same time, accent will become border style and render together
+    background?: Variant;
+    textCenter?: boolean;
+    collapsable?: boolean;
+    footer?: string;
+}
+
+export interface CardState {
+    collapseOpen: boolean;
+    status: string;
+}
+
+export default class Card extends React.Component<CardProps, CardState> {
+
+    constructor(props: CardProps) {
+        super(props);
+        this.state = {
+            collapseOpen: true,
+            status: ''
+        };
+    }
+
+    private onEntering = () => {
+        this.setState({ status: 'Opening...' });
+    };
+
+    private onEntered = () => {
+        this.setState({ status: 'Opened' });
+    };
+
+    private onExiting = () => {
+        this.setState({ status: 'Closing...' });
+    };
+
+    private onExited = () => {
+        this.setState({ status: 'Closed' });
+    };
+
+    private toggle = () => {
+        this.setState({ collapseOpen: !this.state.collapseOpen });
+    };
+
+    render() {
+        const { title, accent, border, background, textCenter, collapsable, footer, children } = this.props;
+        const { collapseOpen } = this.state;
+        const cardClassName = classNames(
+            (accent ? `card-accent-${accent}` : ''),
+            (border ? `border-${border}` : ''),
+            (background ? `bg-${background} text-white` : ''),
+            (textCenter ? 'text-center' : '')
+        );
+        const collapseIcon = collapseOpen ? AngleUpIcon() : AngleDownIcon();
+        const cardBody = (
+            <RbCard.Body>
+                {children}
+            </RbCard.Body>
+        );
+        return (
+            <RbCard className={cardClassName}>
+                <RbCard.Header>
+                    <strong>{title}</strong>
+                    {collapsable && <div className='card-actions' onClick={this.toggle}><Button variant='link'>{collapseIcon}</Button></div>}
+                </RbCard.Header>
+                {
+                    collapsable ?
+                        <Collapse
+                            in={this.state.collapseOpen}
+                            onEntering={this.onEntering}
+                            onEntered={this.onEntered}
+                            onExiting={this.onExiting}
+                            onExited={this.onExited}
+                        >
+                            <div>{cardBody}</div>
+                        </Collapse>
+                        :
+                        <>{cardBody}</>
+                }
+                {
+                    footer &&
+                    <RbCard.Footer>
+                        {footer}
+                    </RbCard.Footer>
+                }
+            </RbCard>
+        );
+    }
+}

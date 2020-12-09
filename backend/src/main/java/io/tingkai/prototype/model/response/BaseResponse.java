@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 public abstract class BaseResponse<T> {
 
-	private boolean isSuccess;
+	private boolean success;
 
 	private T data;
 
@@ -22,16 +22,9 @@ public abstract class BaseResponse<T> {
 		this(false, null, e.getMessage());
 	}
 
-	public BaseResponse(boolean isSuccess, T data, String message) {
+	public BaseResponse(boolean success, T data, String pattern, String... params) {
 		super();
-		this.isSuccess = isSuccess;
-		this.data = data;
-		this.message = message;
-	}
-
-	public BaseResponse(boolean isSuccess, T data, String pattern, String... params) {
-		super();
-		this.isSuccess = isSuccess;
+		this.success = success;
 		this.data = data;
 		this.message = MessageFormat.format(pattern, (Object[]) params);
 	}

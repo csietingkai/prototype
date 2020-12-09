@@ -9,12 +9,12 @@ import io.tingkai.prototype.controller.FileController;
  */
 public class FileResponse<T> extends BaseResponse<T> {
 
-	public FileResponse(boolean isSuccess, T t, String pattern) {
-		super(isSuccess, t, pattern);
+	public FileResponse(boolean success, T t, String pattern) {
+		super(success, t, pattern);
 	}
 
-	public FileResponse(boolean isSuccess, T t, String pattern, String... params) {
-		super(isSuccess, t, pattern, params);
+	public FileResponse(boolean success, T t, String pattern, String... params) {
+		super(success, t, pattern, params);
 	}
 
 	public FileResponse(Exception e) {

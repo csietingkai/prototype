@@ -11,12 +11,12 @@ import io.tingkai.prototype.security.AuthToken;
  */
 public class AuthResponse extends BaseResponse<AuthToken> {
 
-	public AuthResponse(boolean isSuccess, AuthToken authToken, String pattern) {
-		super(isSuccess, authToken, pattern);
+	public AuthResponse(boolean success, AuthToken authToken, String pattern) {
+		super(success, authToken, pattern);
 	}
 
-	public AuthResponse(boolean isSuccess, AuthToken authToken, String pattern, String... params) {
-		super(isSuccess, authToken, pattern, params);
+	public AuthResponse(boolean success, AuthToken authToken, String pattern, String... params) {
+		super(success, authToken, pattern, params);
 	}
 
 	public AuthResponse(Exception e) {

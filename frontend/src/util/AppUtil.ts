@@ -1,12 +1,15 @@
-export const isNull = (str: string): boolean => {
-    return str === null || str === undefined;
+import { SortType } from 'util/Enum';
+import { Record } from 'util/Interface';
+
+export const isNull = (obj: any): boolean => {
+    return obj === null || obj === undefined;
 };
 
-export const isEmpty = (str: string): boolean => {
+export const isStringEmpty = (str: string): boolean => {
     return isNull(str) || !str.length;
 };
 
-export const isBlank = (str: string): boolean => {
+export const isStringBlank = (str: string): boolean => {
     return isNull(str) || !str.trim().length;
 };
 
@@ -14,9 +17,17 @@ export const isObjEqual = (objA: any, objB: any): boolean => {
     return JSON.stringify(objA) === JSON.stringify(objB);
 };
 
-export const isNumber = (obj: any) : boolean => {
+export const isNumber = (obj: any): boolean => {
     return (!isNaN(obj)) && /^-?\d+(\.\d*)?$/.test(obj);
-}
+};
+
+export const isArray = (obj: any): boolean => {
+    return Array.isArray(obj);
+};
+
+export const isArrayEmpty = (obj: any): boolean => {
+    return !isArray(obj) || obj.map((x: any) => x).length === 0;
+};
 
 export const isValidDate = (obj: any): boolean => {
     return obj instanceof Date && !isNaN(obj.getTime());
@@ -26,20 +37,31 @@ export const isFunction = (obj: any): boolean => {
     return obj && {}.toString.call(obj) === '[object Function]';
 };
 
-export interface Record {
-    key: string;
-    value: string;
+export const isExternalUrl = (url: string): boolean => {
+    return !isStringBlank(url) && substr(trim(url), 0, 4) === 'http';
 };
 
-export const convert = (records: Record[], key: string): string => {
+export const trim = (str: string): string => {
+    return isStringBlank(str) ? '' : str.trim();
+};
+
+export const substr = (str: string, from: number, length?: number): string => {
+    return isStringBlank(str) ? '' : str.substr(from, length);
+};
+
+export const find = <K, V>(records: Record<K, V>[], key: K): boolean => {
+    const record = records.find(x => x.key === key);
+    return !!record;
+};
+export const convert = <K, V>(records: Record<K, V>[], key: K): K | V => {
     const record = records.find(x => x.key === key);
     return record ? record.value : key;
 };
 
-export const reverseConvert = (records: Record[], value: string): string => {
+export const reverseConvert = <K, V>(records: Record<K, V>[], value: V): K | V => {
     const record = records.find(x => x.value === value);
-    return record ? record.value : value;
-}
+    return record ? record.key : value;
+};
 
 export const groupBy = (datas: any[], key: string) => {
     return datas.reduce((group, item) => {
@@ -53,8 +75,7 @@ export const groupBy = (datas: any[], key: string) => {
 
 export const getValueByKeys = (obj: any, ...keys: string[]): any => {
     let value: any = obj;
-    for (let i = 0; i < keys.length; i++) {
-        const key = keys[i];
+    for (const key of keys) {
         if (!isNull(value[key])) {
             value = value[key];
         } else {
@@ -66,9 +87,24 @@ export const getValueByKeys = (obj: any, ...keys: string[]): any => {
 
 export const sum = (list: number[]): number => {
     return list.reduce((acc, val) => { return acc + val; }, 0);
-}
+};
 
 export const sumByKey = (list: any[], key: string): number => {
-    const convertedList: number[] = list.map(item => parseFloat(item[key]) || 0);
-    return sum(convertedList);
-}
+    return sum(list.map(item => parseFloat(item[key]) || 0));
+};
+
+export const Comparator = (sortType: SortType = SortType.ASC) => <T extends {}>(a: T, b: T): number => {
+    if (sortType === SortType.ASC) {
+        return a > b ? 1 : (a === b ? 0 : -1);
+    } else {
+        return a < b ? 1 : (a === b ? 0 : -1);
+    }
+};
+
+export const sort = <T extends {}>(list: T[], sortType: SortType = SortType.ASC): T[] => {
+    return list.sort(Comparator(sortType));
+};
+
+export const sortByKey = (list: any[], key: string, sortType: SortType = SortType.ASC): any[] => {
+    return sort(list.map(x => x[key], sortType));
+};

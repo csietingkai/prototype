@@ -1,24 +1,26 @@
 // react
-import { toast } from 'react-toastify';
+import { toast, ToastOptions } from 'react-toastify';
 
-export const info = (msg: string) => {
-    toast.info(msg);
+import { NOTIFICATION_DEFAULT_CONFIG } from 'util/Constant';
+
+const info = (msg: string, options: ToastOptions = NOTIFICATION_DEFAULT_CONFIG) => {
+    toast.info(msg, options);
 };
 
-export const success = (msg: string) => {
-    toast.success(msg);
+const success = (msg: string, options: ToastOptions = NOTIFICATION_DEFAULT_CONFIG) => {
+    toast.success(msg, options);
 };
 
-export const warning = (msg: string) => {
-    toast.warning(msg);
+const warning = (msg: string, options: ToastOptions = NOTIFICATION_DEFAULT_CONFIG) => {
+    toast.warning(msg, options);
 };
 
-export const error = (msg: string) => {
-    toast.error(msg);
+const error = (msg: string, options: ToastOptions = NOTIFICATION_DEFAULT_CONFIG) => {
+    toast.error(msg, options);
 };
 
-export const dark = (msg: string) => {
-    toast.dark(msg);
+const dark = (msg: string, options: ToastOptions = NOTIFICATION_DEFAULT_CONFIG) => {
+    toast.dark(msg, options);
 };
 
 export default { info, success, warning, error, dark };

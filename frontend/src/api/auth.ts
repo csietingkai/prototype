@@ -1,29 +1,30 @@
 import axios from 'axios';
 
-import { API_URL, AUTH_LOGIN_PATH, AUTH_REGISTER_PATH, AUTH_VALIDATE_PATH } from 'util/Constants';
+import { API_URL, AUTH_LOGIN_PATH, AUTH_REGISTER_PATH, AUTH_VALIDATE_PATH } from 'util/Constant';
+import { Role } from 'util/Enum';
+import { AuthResponse } from 'util/Interface';
 
-enum Role {
-    ROOT,
-    ADMIN,
-    USER
-}
-
-export const login = async (username: string, password: string) => {
-    const { data } = await axios.post(API_URL + AUTH_LOGIN_PATH, null, { params: { username, password } });
+const login = async (username: string, password: string) => {
+    const response = await axios.post(API_URL + AUTH_LOGIN_PATH, null, { params: { username, password } });
+    const data: AuthResponse = response.data;
     return data;
 };
 
-export const register = async (username: string, email: string, password: string, sendMail?: boolean) => {
-    const { data } = await axios.post(API_URL + AUTH_REGISTER_PATH, {
+const register = async (username: string, email: string, password: string, sendMail?: boolean) => {
+    const response = await axios.post(API_URL + AUTH_REGISTER_PATH, {
         name: username,
         email,
         pwd: password,
         role: Role.USER
     }, { params: { sendMail } });
+    const data: AuthResponse = response.data;
     return data;
 };
 
-export const validate = async (tokenString: string) => {
-    const { data } = await axios.get(API_URL + AUTH_VALIDATE_PATH, { params: { tokenString } });
+const validate = async (tokenString: string) => {
+    const response = await axios.get(API_URL + AUTH_VALIDATE_PATH, { params: { tokenString } });
+    const data: AuthResponse = response.data;
     return data;
 };
+
+export default { login, register, validate };
