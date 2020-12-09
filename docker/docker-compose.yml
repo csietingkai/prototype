@@ -1,5 +1,7 @@
 version: "3"
 
+# port for this project used: 1100 ~ 1149
+
 services:
   postgres:
     image: postgres:${POSTGRES_VERSION}
@@ -11,15 +13,6 @@ services:
       - ${POSTGRES_DIR}:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_ROOT_PASSWORD}
-  redis:
-    image: redis:${REDIS_VERSION}
-    container_name: ${CONTAINER_NAME_PREFIX}-${REDIS_SERVICE}
-    restart: always
-    command: --requirepass ${REDIS_ROOT_PASSWORD}
-    ports:
-      - ${REDIS_PORT}:${REDIS_INTERNEL_PORT}
-    volumes:
-      - ${REDIS_DIR}:/data
   mongo:
     image: mongo:${MONGO_VERSION}
     container_name: ${CONTAINER_NAME_PREFIX}-${MONGO_SERVICE}
@@ -32,6 +25,15 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+  redis:
+    image: redis:${REDIS_VERSION}
+    container_name: ${CONTAINER_NAME_PREFIX}-${REDIS_SERVICE}
+    restart: always
+    command: --requirepass ${REDIS_ROOT_PASSWORD}
+    ports:
+      - ${REDIS_PORT}:${REDIS_INTERNEL_PORT}
+    volumes:
+      - ${REDIS_DIR}:/data
   api:
     image: tingkai/prototype-backend:${API_VERSION}
     container_name: ${CONTAINER_NAME_PREFIX}-${API_SERVICE}
