@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const dotenv = require('dotenv');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const BUILD_DIR = path.resolve(__dirname, 'build');
 const SRC_DIR = path.resolve(__dirname, 'src');
@@ -58,11 +57,10 @@ module.exports = () => {
         },
         plugins: [
             new HtmlWebpackPlugin({ template: './index.html' }),
-            new webpack.DefinePlugin(envKeys),
-            // new CopyWebpackPlugin([{ from: './src/assets/image', to: 'image' }])
+            new webpack.DefinePlugin(envKeys)
         ],
         devServer: {
-            port: 33000
+            port: 3000
         }
     }
 };

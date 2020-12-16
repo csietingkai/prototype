@@ -2,15 +2,11 @@ import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
-import { getAuthToken } from 'reducer/Selector';
-
 import Card from 'component/common/Card';
+import { Variant } from 'util/Enum';
+import { firstDigitUppercase } from 'util/AppUtil';
 
-import { AuthToken } from 'util/Interface';
-
-export interface CardsExampleProps {
-    authToken?: AuthToken;
-}
+export interface CardsExampleProps { }
 
 export interface CardsExampleState { }
 
@@ -18,8 +14,7 @@ class CardsExample extends React.Component<CardsExampleProps, CardsExampleState>
 
     constructor(props: CardsExampleProps) {
         super(props);
-        this.state = {
-        };
+        this.state = {};
     }
 
     render() {
@@ -52,32 +47,46 @@ class CardsExample extends React.Component<CardsExampleProps, CardsExampleState>
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs='12' sm='6' md='4'>
-                        <Card
-                            title='Card outline primary'
-                            border='primary'
-                        >
-                            Primary Content Here.
-                        </Card>
-                    </Col>
-                    <Col xs='12' sm='6' md='4'>
-                        <Card
-                            title='Card with secondary accent'
-                            accent='secondary'
-                        >
-                            Secondary Content Here.
-                        </Card>
-                    </Col>
+                    {
+                        (['primary', 'secondary', 'success', 'info', 'warning', 'danger'] as Variant[]).map(border =>
+                            <Col key={`card-outline-${border}`} xs='12' sm='6' md='4'>
+                                <Card
+                                    title={`Card outline ${border}`}
+                                    border={border}
+                                >
+                                    {`${firstDigitUppercase(border)} Content Here.`}
+                                </Card>
+                            </Col>
+                        )
+                    }
                 </Row>
                 <Row>
-                    <Col xs='12' sm='6' md='4'>
-                        <Card
-                            title='Card with Danger Background'
-                            background='danger'
-                        >
-                            Backgroud Content Here.
-                        </Card>
-                    </Col>
+                    {
+                        (['primary', 'secondary', 'success', 'info', 'warning', 'danger'] as Variant[]).map(accent =>
+                            <Col key={`card-outline-${accent}`} xs='12' sm='6' md='4'>
+                                <Card
+                                    title={`Card with ${accent} accent`}
+                                    accent={accent}
+                                >
+                                    {`${firstDigitUppercase(accent)} Content Here.`}
+                                </Card>
+                            </Col>
+                        )
+                    }
+                </Row>
+                <Row>
+                    {
+                        (['primary', 'secondary', 'success', 'info', 'warning', 'danger'] as Variant[]).map(background =>
+                            <Col key={`card-outline-${background}`} xs='12' sm='6' md='4'>
+                                <Card
+                                    title={`Card with ${background} Background`}
+                                    background={background}
+                                >
+                                    {`${firstDigitUppercase(background)} Background Content Here.`}
+                                </Card>
+                            </Col>
+                        )
+                    }
                 </Row>
                 <Row>
                     <Col xs='12' sm='6' md='4'>
@@ -94,10 +103,8 @@ class CardsExample extends React.Component<CardsExampleProps, CardsExampleState>
     }
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        authToken: getAuthToken(state)
-    };
+const mapStateToProps = () => {
+    return {};
 };
 
 export default connect(mapStateToProps)(CardsExample);;

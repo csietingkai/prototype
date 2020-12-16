@@ -1,7 +1,12 @@
-import { AddressCardIcon, BoxesIcon, ListUlIcon, TachometerAltIcon, TextHeightIcon } from 'component/common/Icons';
+import { AddressCardIcon, BoxesIcon, ImagesIcon, TachometerAltIcon, TextHeightIcon } from 'component/common/Icons';
 import { ToastOptions, ToastPosition } from 'react-toastify';
+import CardsExample from 'view/CardsExample';
+import DashBoard from 'view/DashBoard';
+import FormExample from 'view/FormExample';
+import ImageExample from 'view/ImageExample';
+
+import { isArrayEmpty } from 'util/AppUtil';
 import { Record, SidebarItem } from 'util/Interface';
-import { isArrayEmpty } from './AppUtil';
 
 // general
 export const API_URL: string = process.env.API_URL;
@@ -15,6 +20,10 @@ export const AUTH_VALIDATE_PATH: string = '/validate';
 const FILE_API_PREFIX: string = '/file';
 export const FILE_UPLOAD_PATH: string = FILE_API_PREFIX + '/upload';
 export const FILE_DOWNLOAD_PATH: string = FILE_API_PREFIX + '/download';
+
+// api item
+const ITEM_API_PREFIX: string = '/item';
+export const ITEM_GET_ALL_PATH: string = ITEM_API_PREFIX + '/getAll';
 
 // localStorage
 export const AUTH_TOKEN_KEY: string = 'AUTH_TOKEN';
@@ -37,7 +46,8 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     {
         name: 'Dashboard',
         url: '/dashboard',
-        icon: TachometerAltIcon()
+        icon: TachometerAltIcon(),
+        component: DashBoard
     },
     {
         name: 'Component',
@@ -52,23 +62,33 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
             {
                 name: 'Cards',
                 url: '/cards',
-                icon: AddressCardIcon()
+                icon: AddressCardIcon(),
+                component: CardsExample
             },
             {
                 name: 'Forms',
                 url: '/forms',
-                icon: TextHeightIcon()
+                icon: TextHeightIcon(),
+                component: FormExample
+                // },
+                // {
+                //     name: 'Image',
+                //     url: '/image',
+                //     icon: ImagesIcon(),
+                //     component: ImageExample
             }
         ]
     }
 ];
-const getRoutes = (items: SidebarItem[]): Record<string, string>[] => {
+
+// breadcrumbs
+const getBreadcrumbsRoutes = (items: SidebarItem[]): Record<string, string>[] => {
     return items.reduce((current: Record<string, string>[], item: SidebarItem) => {
         if (item.url) {
             current = current.concat({ key: item.url, value: item.name });
             if (!isArrayEmpty(item.children)) {
                 current = current.concat(
-                    getRoutes(item.children.map(child => {
+                    getBreadcrumbsRoutes(item.children.map(child => {
                         return child.url ? { ...child, url: item.url + child.url } : { ...child };
                     }))
                 );
@@ -77,4 +97,23 @@ const getRoutes = (items: SidebarItem[]): Record<string, string>[] => {
         return current;
     }, []);
 };
-export const ROUTES: Record<string, string>[] = [{ key: '/', value: 'Home' }].concat(getRoutes(SIDEBAR_ITEMS));
+export const BREADCRUMBS_ROUTES: Record<string, string>[] = [{ key: '/', value: 'Home' }].concat(getBreadcrumbsRoutes(SIDEBAR_ITEMS));
+
+// app routes
+const getAppRoutes = (items: SidebarItem[]) => {
+    return items.reduce((current: any[], item: SidebarItem) => {
+        if (item.url) {
+            if (!isArrayEmpty(item.children)) {
+                current = current.concat(
+                    getAppRoutes(item.children.map(child => {
+                        return child.url ? { ...child, url: item.url + child.url } : { ...child };
+                    }))
+                );
+            } else {
+                current = current.concat({ path: item.url, name: item.name, component: item.component });
+            }
+        }
+        return current;
+    }, []);
+};
+export const APP_ROUTES = getAppRoutes(SIDEBAR_ITEMS);

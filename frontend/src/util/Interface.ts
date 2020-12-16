@@ -41,4 +41,5 @@ export interface SidebarItem {
     url?: string;
     icon?: JSX.Element;
     children?: SidebarItem[];
+    component?: React.ComponentType<any>;
 }

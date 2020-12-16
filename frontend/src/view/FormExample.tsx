@@ -2,18 +2,14 @@ import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
-import { getAuthToken } from 'reducer/Selector';
-
 import Card from 'component/common/Card';
 import Form, { Input } from 'component/common/Form';
 
-import { AuthToken, Record } from 'util/Interface';
+import { Record } from 'util/Interface';
 import { isNull } from 'util/AppUtil';
 import { InputType } from 'util/Enum';
 
-export interface FormExampleProps {
-    authToken?: AuthToken;
-}
+export interface FormExampleProps { }
 
 export interface FormExampleState {
     values: any;
@@ -85,10 +81,8 @@ class FormExample extends React.Component<FormExampleProps, FormExampleState> {
     }
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        authToken: getAuthToken(state)
-    };
+const mapStateToProps = () => {
+    return {};
 };
 
 export default connect(mapStateToProps)(FormExample);;

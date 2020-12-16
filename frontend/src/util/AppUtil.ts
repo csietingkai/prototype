@@ -1,3 +1,4 @@
+import { getAuthToken } from 'reducer/StateHolder';
 import { SortType } from 'util/Enum';
 import { Record } from 'util/Interface';
 
@@ -47,6 +48,10 @@ export const trim = (str: string): string => {
 
 export const substr = (str: string, from: number, length?: number): string => {
     return isStringBlank(str) ? '' : str.substr(from, length);
+};
+
+export const firstDigitUppercase = (str: string): string => {
+    return substr(str, 0, 1).toUpperCase() + substr(str, 1);
 };
 
 export const find = <K, V>(records: Record<K, V>[], key: K): boolean => {
@@ -107,4 +112,10 @@ export const sort = <T extends {}>(list: T[], sortType: SortType = SortType.ASC)
 
 export const sortByKey = (list: any[], key: string, sortType: SortType = SortType.ASC): any[] => {
     return sort(list.map(x => x[key], sortType));
+};
+
+export const getAuthHeader = () => {
+    return {
+        'X-Auth-Token': getAuthToken()?.tokenString
+    };
 };

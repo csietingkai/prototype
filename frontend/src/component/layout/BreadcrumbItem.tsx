@@ -3,7 +3,7 @@ import { BreadcrumbItem as RbBreadcrumbItem } from 'react-bootstrap';
 import { Link, RouteChildrenProps } from 'react-router-dom';
 
 import { convert, find } from 'util/AppUtil';
-import { ROUTES } from 'util/Constant';
+import { BREADCRUMBS_ROUTES } from 'util/Constant';
 
 export interface BreadcrumbItemProps extends RouteChildrenProps<any> { }
 
@@ -17,8 +17,8 @@ export default class BreadcrumbItem extends React.Component<BreadcrumbItemProps,
 
     render() {
         const { match } = this.props;
-        if (find(ROUTES, match.url)) {
-            const routeName: string = convert(ROUTES, match.url);
+        if (find(BREADCRUMBS_ROUTES, match.url)) {
+            const routeName: string = convert(BREADCRUMBS_ROUTES, match.url);
             return (
                 match.isExact ?
                     (

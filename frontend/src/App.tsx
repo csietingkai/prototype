@@ -22,6 +22,8 @@ import AuthApi from 'api/auth';
 import { AuthResponse, AuthToken } from 'util/Interface';
 import Notify from 'util/Notify';
 import { InputType } from 'util/Enum';
+import SwitchExample from 'view/ImageExample';
+import { APP_ROUTES } from 'util/Constant';
 
 export interface AppProps extends RouteChildrenProps<any> {
     authToken?: AuthToken;
@@ -100,38 +102,11 @@ class App extends React.Component<AppProps, AppState> {
                         <Breadcrumb {...this.props} />
                         <Container fluid>
                             <Switch>
-                                <Route path='/dashboard' name='Dashboard' component={DashBoard} />
-                                {/* <Route path='/theme/colors' name='Colors' component={Colors} /> */}
-                                {/* <Route path='/theme/typography' name='Typography' component={Typography} /> */}
-                                <Route path='/base/cards' name='Cards' component={CardsExample} />
-                                <Route path='/base/forms' name='Forms' component={FormExample} />
-                                {/* <Route path='/base/switches' name='Swithces' component={Switches} /> */}
-                                {/* <Route path='/base/tables' name='Tables' component={Tables} /> */}
-                                {/* <Route path='/base/tabs' name='Tabs' component={Tabs} /> */}
-                                {/* <Route path='/base/breadcrumbs' name='Breadcrumbs' component={Breadcrumbs} /> */}
-                                {/* <Route path='/base/carousels' name='Carousels' component={Carousels} /> */}
-                                {/* <Route path='/base/collapses' name='Collapses' component={Collapses} /> */}
-                                {/* <Route path='/base/dropdowns' name='Dropdowns' component={Dropdowns} /> */}
-                                {/* <Route path='/base/jumbotrons' name='Jumbotrons' component={Jumbotrons} /> */}
-                                {/* <Route path='/base/list-groups' name='ListGroups' component={ListGroups} /> */}
-                                {/* <Route path='/base/navbars' name='Navbars' component={Navbars} /> */}
-                                {/* <Route path='/base/navs' name='Navs' component={Navs} /> */}
-                                {/* <Route path='/base/paginations' name='Paginations' component={Paginations} /> */}
-                                {/* <Route path='/base/popovers' name='Popovers' component={Popovers} /> */}
-                                {/* <Route path='/base/progress-bar' name='Progress Bar' component={ProgressBar} /> */}
-                                {/* <Route path='/base/tooltips' name='Tooltips' component={Tooltips} /> */}
-                                {/* <Route path='/buttons/buttons' name='Buttons' component={Buttons} /> */}
-                                {/* <Route path='/buttons/button-dropdowns' name='ButtonDropdowns' component={ButtonDropdowns} /> */}
-                                {/* <Route path='/buttons/button-groups' name='ButtonGroups' component={ButtonGroups} /> */}
-                                {/* <Route path='/buttons/social-buttons' name='Social Buttons' component={SocialButtons} /> */}
-                                {/* <Route path='/icons/flags' name='Flags' component={Flags} /> */}
-                                {/* <Route path='/icons/font-awesome' name='Font Awesome' component={FontAwesome} /> */}
-                                {/* <Route path='/icons/simple-line-icons' name='Simple Line Icons' component={SimpleLineIcons} /> */}
-                                {/* <Route path='/notifications/alerts' name='Alerts' component={Alerts} /> */}
-                                {/* <Route path='/notifications/badges' name='Badges' component={Badges} /> */}
-                                {/* <Route path='/notifications/modals' name='Modals' component={Modals} /> */}
-                                {/* <Route path='/widgets' name='Widgets' component={Widgets} /> */}
-                                {/* <Route path='/charts' name='Charts' component={Charts} /> */}
+                                {
+                                    APP_ROUTES.map((route, idx) => {
+                                        return <Route key={`route-${idx}-${route.path}`} path={route.path} name={route.name} component={route.component} />;
+                                    })
+                                }
                                 <Redirect from='/' to='/dashboard' />
                             </Switch>
                         </Container>

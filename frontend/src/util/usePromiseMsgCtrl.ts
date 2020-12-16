@@ -13,7 +13,7 @@ const usePromiseMsgCtrl = (confirmHandler: (arg0: any) => void, cancelHandler: (
     const confirmResolver = React.useRef<any>({});
     const openActionConfirm = React.useCallback((message?: string) => {
         return message
-            ? new Promise<any>(function (this: { current: any }, resolve: any, reject: any) {
+            ? new Promise<any>(function (this: { current: any; }, resolve: any, reject: any) {
                 openConfirmModal(message);
                 this.current = { resolve, reject };
             }.bind(confirmResolver))
@@ -25,16 +25,16 @@ const usePromiseMsgCtrl = (confirmHandler: (arg0: any) => void, cancelHandler: (
     }, [confirmHandler]);
 
     const handleCancel = React.useCallback(() => {
-        cancelHandler(confirmResolver.current)
+        cancelHandler(confirmResolver.current);
         closeConfirmModal();
     }, [cancelHandler]);
 
     const handleClose = React.useCallback(() => {
-        closeHandler && closeHandler(confirmResolver.current);
+        closeHandler(confirmResolver.current);
         closeConfirmModal();
     }, []);
     return [confirmModal, openActionConfirm, handleConfirm, handleCancel, handleClose];
-}
+};
 
 export default usePromiseMsgCtrl;
 

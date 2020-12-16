@@ -1,10 +1,14 @@
 import axios from 'axios';
 
-import { API_URL, FILE_DOWNLOAD_PATH } from 'util/Constant';
+import { getAuthHeader } from 'util/AppUtil';
+import { API_URL, FILE_DOWNLOAD_PATH, FILE_UPLOAD_PATH } from 'util/Constant';
 import { FileResponse } from 'util/Interface';
 
 const upload = async (file: any, category?: string) => {
-    const response = await axios.post(API_URL + FILE_DOWNLOAD_PATH, { file, category });
+    const headers = Object.assign(getAuthHeader(), { 'content-type': 'multipart/form-data' });
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await axios.post(API_URL + FILE_UPLOAD_PATH, { formData, category }, { headers });
     const data: FileResponse = response.data;
     return data;
 };
