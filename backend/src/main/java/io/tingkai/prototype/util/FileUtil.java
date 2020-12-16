@@ -3,7 +3,6 @@ package io.tingkai.prototype.util;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 import org.apache.tika.Tika;
@@ -50,7 +49,7 @@ public class FileUtil {
 
 	public static File convert(GridFSFile gridfsFile) {
 		File file = null;
-		if (Optional.ofNullable(gridfsFile).isPresent()) {
+		if (AppUtil.isPresent(gridfsFile)) {
 			file = new File();
 			file.setId(gridfsFile.getObjectId().toString());
 			file.setFilename(gridfsFile.getFilename());

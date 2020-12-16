@@ -1,7 +1,5 @@
 package io.tingkai.prototype.util;
 
-import java.util.Optional;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -17,7 +15,7 @@ public class ContextUtil {
 
 	public static String getUserName() {
 		AuthTokenAuthentication authToken = getAuthToken();
-		if (Optional.ofNullable(authToken).isPresent()) {
+		if (AppUtil.isPresent(authToken)) {
 			return authToken.getPrincipal().toString();
 		}
 		return CodeConstants.EMPTY_STRING;
@@ -25,7 +23,7 @@ public class ContextUtil {
 
 	public static String getTokenString() {
 		AuthTokenAuthentication authToken = getAuthToken();
-		if (Optional.ofNullable(authToken).isPresent()) {
+		if (AppUtil.isPresent(authToken)) {
 			return authToken.getCredentials().toString();
 		}
 		return CodeConstants.EMPTY_STRING;

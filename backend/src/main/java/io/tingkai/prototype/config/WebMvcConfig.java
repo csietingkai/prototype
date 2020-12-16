@@ -7,6 +7,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import io.tingkai.prototype.constant.AppConstants;
+
 /**
  * Simple configuration for spring, currently only provide
  * {@link PasswordEncoder}
@@ -26,8 +28,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				// TODO frontend port change
-				registry.addMapping("/*").allowedOrigins("http://localhost:33000");
+				registry.addMapping("/*").allowedOrigins(AppConstants.FRONTEND_URL).allowedMethods("*");
 			}
 		};
 	}

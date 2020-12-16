@@ -23,6 +23,8 @@ public class AppConstants {
 	public static String CONFIRM_EMAIL_LINK;
 	public static boolean DEBUG_MODE;
 
+	public static String FRONTEND_URL;
+
 	@Value("${init-root-username}")
 	public void setInitRootUsername(String username) {
 		AppConstants.INIT_ROOT_USERNAME = username;
@@ -66,5 +68,10 @@ public class AppConstants {
 	@Value("${debug-mode}")
 	public void setDebugMode(boolean debugMode) {
 		AppConstants.DEBUG_MODE = debugMode;
+	}
+
+	@Value("${frontend-url}")
+	public void setFrontendUrl(String frontendUrl) {
+		AppConstants.FRONTEND_URL = frontendUrl;
 	}
 }

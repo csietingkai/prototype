@@ -3,11 +3,11 @@ package io.tingkai.prototype.util;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Random;
 
 /**
  * 身分證字號 util
+ * 
  * @author tingkai
  */
 public class SecurityIdUtil {
@@ -56,7 +56,7 @@ public class SecurityIdUtil {
 	 */
 	public boolean verify(String idnoStr) {
 		// 檢查身分證字號長度是否為 10
-		if (!Optional.ofNullable(idnoStr).isPresent() || idnoStr.length() != 10) {
+		if (AppUtil.isEmpty(idnoStr) || idnoStr.length() != 10) {
 			return false;
 		}
 
