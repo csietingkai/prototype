@@ -58,10 +58,10 @@ public class FileController {
 	}
 
 	@RequestMapping(value = FileController.DOWNLOAD_PATH, method = RequestMethod.GET)
-	public ResponseEntity<FileResponse<Resource>> download(@RequestParam String filename) {
+	public ResponseEntity<Resource> download(@RequestParam String filename) {
 		InputStreamResource resource = this.fileService.download(filename);
 		HttpHeaders header = FileUtil.getFileHeader(filename);
-		return ResponseEntity.ok().headers(header).contentType(MediaType.APPLICATION_OCTET_STREAM).body(new FileResponse<Resource>(true, resource, MessageConstant.FILE_DOWNLOAD_SUCCESS));
+		return ResponseEntity.ok().headers(header).contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
 	}
 
 	@RequestMapping(value = FileController.DELETE_PATH, method = RequestMethod.DELETE)

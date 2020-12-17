@@ -114,7 +114,7 @@ export default class Form extends React.Component<FormProps, FormState> {
         const { values: form } = this.state;
         const input = formRef.current.querySelector(`#form-${key}`);
         if (input) {
-            form[key] = getValueByKeys(event, 'target', 'value');
+            form[key] = getValueByKeys(input, 'files', '0');
             this.props.onChange(form);
         }
     };
@@ -232,7 +232,6 @@ export default class Form extends React.Component<FormProps, FormState> {
                     <RbForm.Control
                         id={`form-${key}`}
                         type={type}
-                        value={value}
                         onChange={onFileChange}
                         disabled={disabled}
                     />

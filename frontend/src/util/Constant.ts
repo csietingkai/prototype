@@ -70,12 +70,12 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
                 url: '/forms',
                 icon: TextHeightIcon(),
                 component: FormExample
-                // },
-                // {
-                //     name: 'Image',
-                //     url: '/image',
-                //     icon: ImagesIcon(),
-                //     component: ImageExample
+            },
+            {
+                name: 'Image',
+                url: '/image',
+                icon: ImagesIcon(),
+                component: ImageExample
             }
         ]
     }

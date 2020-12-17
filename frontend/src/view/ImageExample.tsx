@@ -6,15 +6,18 @@ import Card from 'component/common/Card';
 import Form, { Input } from 'component/common/Form';
 
 import FileApi from 'api/file';
-import ItemApi from 'api/item';
 
 import { isNull } from 'util/AppUtil';
 import { InputType } from 'util/Enum';
+import { FileUploadResponse } from 'util/Interface';
+import Notify from 'util/Notify';
+import Image from 'component/common/Image';
 
 export interface ImageExampleProps { }
 
 export interface ImageExampleState {
     file: any;
+    filename: string;
 }
 
 class ImageExample extends React.Component<ImageExampleProps, ImageExampleState> {
@@ -22,16 +25,20 @@ class ImageExample extends React.Component<ImageExampleProps, ImageExampleState>
     constructor(props: ImageExampleProps) {
         super(props);
         this.state = {
-            file: null
+            file: null,
+            filename: ''
         };
     }
 
     private upload = async () => {
         if (this.state.file) {
-            // const response = await FileApi.upload(this.state.file);
-            // console.log(response);
+            const response: FileUploadResponse = await FileApi.upload(this.state.file);
+            const { success, message } = response;
+            if (success) {
+                Notify.success(message);
+                this.setState({ filename: this.state.file.name });
+            }
         }
-        const response = await ItemApi.getAll();
     };
 
     render() {
@@ -40,7 +47,7 @@ class ImageExample extends React.Component<ImageExampleProps, ImageExampleState>
                 <Row>
                     <Col xs='12' sm='12' md='12'>
                         <Card
-                            title='3d Switch'
+                            title='Upload Image'
                         >
                             <Form
                                 singleRow
@@ -58,9 +65,17 @@ class ImageExample extends React.Component<ImageExampleProps, ImageExampleState>
                                 onChange={(formState: any) => { this.setState({ file: formState.file }); }}
                             />
                             <div className='form-actions'>
-                                <Button type='submit' variant='primary' onClick={this.upload}>Save changes</Button>
-                                <Button variant='secondary'>Cancel</Button>
+                                <Button type='submit' variant='primary' onClick={this.upload}>Upload</Button>
                             </div>
+                        </Card>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs='12' sm='12' md='12'>
+                        <Card
+                            title='Image Just Uploaded'
+                        >
+                            <Image filename={this.state.filename} />
                         </Card>
                     </Col>
                 </Row>

@@ -32,7 +32,7 @@ export interface ApiResponse<T> {
 
 export interface AuthResponse extends ApiResponse<AuthToken> { }
 
-export interface FileResponse extends ApiResponse<void> { }
+export interface FileUploadResponse extends ApiResponse<void> { }
 
 // component/layout
 export interface SidebarItem {
