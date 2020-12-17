@@ -14,7 +14,7 @@ import Footer from 'component/layout/Footer';
 import Header from 'component/layout/Header';
 import Sidebar from 'component/layout/Sidebar';
 import DashBoard from 'view/DashBoard';
-import CardsExample from 'view/CardsExample';
+import CardsExample from 'view/CardExample';
 import FormExample from 'view/FormExample';
 
 import AuthApi from 'api/auth';

@@ -1,12 +1,13 @@
-import { AddressCardIcon, BoxesIcon, ImagesIcon, TachometerAltIcon, TextHeightIcon } from 'component/common/Icons';
+import { AddressCardIcon, BoxesIcon, ImagesIcon, TachometerAltIcon, TextHeightIcon, TintIcon } from 'component/common/Icons';
 import { ToastOptions, ToastPosition } from 'react-toastify';
-import CardsExample from 'view/CardsExample';
+import CardsExample from 'view/CardExample';
 import DashBoard from 'view/DashBoard';
 import FormExample from 'view/FormExample';
 import ImageExample from 'view/ImageExample';
 
 import { isArrayEmpty } from 'util/AppUtil';
 import { Record, SidebarItem } from 'util/Interface';
+import ColorExample from 'view/ColorExample';
 
 // general
 export const API_URL: string = process.env.API_URL;
@@ -50,6 +51,16 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
         component: DashBoard
     },
     {
+        name: 'Theme',
+        type: 'wrapper'
+    },
+    {
+        name: 'Colors',
+        url: '/color',
+        icon: TintIcon(),
+        component: ColorExample
+    },
+    {
         name: 'Component',
         type: 'wrapper'
     },
@@ -61,13 +72,13 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
         children: [
             {
                 name: 'Cards',
-                url: '/cards',
+                url: '/card',
                 icon: AddressCardIcon(),
                 component: CardsExample
             },
             {
                 name: 'Forms',
-                url: '/forms',
+                url: '/form',
                 icon: TextHeightIcon(),
                 component: FormExample
             },

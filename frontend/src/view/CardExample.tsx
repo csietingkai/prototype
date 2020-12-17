@@ -3,16 +3,17 @@ import { Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 import Card from 'component/common/Card';
+
 import { Variant } from 'util/Enum';
 import { firstDigitUppercase } from 'util/AppUtil';
 
-export interface CardsExampleProps { }
+export interface CardExampleProps { }
 
-export interface CardsExampleState { }
+export interface CardExampleState { }
 
-class CardsExample extends React.Component<CardsExampleProps, CardsExampleState> {
+class CardExample extends React.Component<CardExampleProps, CardExampleState> {
 
-    constructor(props: CardsExampleProps) {
+    constructor(props: CardExampleProps) {
         super(props);
         this.state = {};
     }
@@ -107,4 +108,4 @@ const mapStateToProps = () => {
     return {};
 };
 
-export default connect(mapStateToProps)(CardsExample);;
+export default connect(mapStateToProps)(CardExample);;
