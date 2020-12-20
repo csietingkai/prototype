@@ -1,5 +1,6 @@
-import { AuthToken } from 'util/Interface';
-import { Login, Logout } from './Action';
+import { Login, Logout } from 'reducer/Action';
+
+import { AuthToken } from 'api/auth';
 
 export const LoginDispatcher = (dispatch: any) => (authToken: AuthToken) => dispatch(Login(authToken));
 

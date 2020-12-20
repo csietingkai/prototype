@@ -1,5 +1,6 @@
+import { AuthToken } from 'api/auth';
+
 import { Role } from 'util/Enum';
-import { AuthToken } from 'util/Interface';
 
 // authReducer
 export const getAuthToken = (state: any): AuthToken => state.auth.authToken;

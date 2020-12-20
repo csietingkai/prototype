@@ -5,9 +5,9 @@ import { Login, Logout } from 'reducer/Action';
 import { getAuthToken, getAuthTokenString } from 'reducer/Selector';
 import rootReducer from 'reducer/Reducer';
 
-import AuthApi from 'api/auth';
+import AuthApi, { AuthResponse, AuthToken } from 'api/auth';
 
-import { AuthResponse, AuthToken, SystemState } from 'util/Interface';
+import { SystemState } from 'util/Interface';
 
 export const validateToken = (dispatch: any, getState: () => SystemState) => {
     const authToken: AuthToken = getAuthToken(getState());

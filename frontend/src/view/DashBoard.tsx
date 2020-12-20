@@ -2,7 +2,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { getAuthToken } from 'reducer/Selector';
-import { AuthToken } from 'util/Interface';
+
+import { AuthToken } from 'api/auth';
 
 export interface DashBoardProps {
     authToken?: AuthToken;

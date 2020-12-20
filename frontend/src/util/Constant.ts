@@ -1,13 +1,15 @@
-import { AddressCardIcon, BoxesIcon, ImagesIcon, TachometerAltIcon, TextHeightIcon, TintIcon } from 'component/common/Icons';
+import { AddressCardIcon, BoxesIcon, EditIcon, ImagesIcon, TableIcon, TachometerAltIcon, TextHeightIcon, TintIcon } from 'component/common/Icons';
 import { ToastOptions, ToastPosition } from 'react-toastify';
 import CardsExample from 'view/CardExample';
+import ColorExample from 'view/ColorExample';
 import DashBoard from 'view/DashBoard';
 import FormExample from 'view/FormExample';
 import ImageExample from 'view/ImageExample';
+import TypographyExample from 'view/TypographyExample';
 
 import { isArrayEmpty } from 'util/AppUtil';
 import { Record, SidebarItem } from 'util/Interface';
-import ColorExample from 'view/ColorExample';
+import TableExample from 'view/TableExample';
 
 // general
 export const API_URL: string = process.env.API_URL;
@@ -60,6 +62,12 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
         icon: TintIcon(),
         component: ColorExample
     },
+    // {
+    //     name: 'Typographys',
+    //     url: '/typography',
+    //     icon: EditIcon(),
+    //     component: TypographyExample
+    // },
     {
         name: 'Component',
         type: 'wrapper'
@@ -87,6 +95,12 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
                 url: '/image',
                 icon: ImagesIcon(),
                 component: ImageExample
+            },
+            {
+                name: 'Tables',
+                url: '/table',
+                icon: TableIcon(),
+                component: TableExample
             }
         ]
     }

@@ -2,7 +2,16 @@ import axios from 'axios';
 
 import { API_URL, AUTH_LOGIN_PATH, AUTH_REGISTER_PATH, AUTH_VALIDATE_PATH } from 'util/Constant';
 import { Role } from 'util/Enum';
-import { AuthResponse } from 'util/Interface';
+import { ApiResponse } from 'util/Interface';
+
+export interface AuthToken {
+    name: string;
+    role: Role;
+    tokenString: string;
+    expiryDate: Date;
+}
+
+export interface AuthResponse extends ApiResponse<AuthToken> { }
 
 const login = async (username: string, password: string) => {
     const response = await axios.post(API_URL + AUTH_LOGIN_PATH, null, { params: { username, password } });

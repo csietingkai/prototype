@@ -2,7 +2,9 @@ import axios from 'axios';
 
 import { getAuthHeader } from 'util/AppUtil';
 import { API_URL, FILE_DOWNLOAD_PATH, FILE_UPLOAD_PATH } from 'util/Constant';
-import { FileUploadResponse } from 'util/Interface';
+import { ApiResponse } from 'util/Interface';
+
+export interface FileUploadResponse extends ApiResponse<void> { }
 
 const upload = async (file: any, category?: string) => {
     const headers = Object.assign(getAuthHeader(), { 'content-type': 'multipart/form-data' });

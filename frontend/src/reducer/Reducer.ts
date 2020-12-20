@@ -3,7 +3,9 @@ import { combineReducers } from 'redux';
 import { LOGIN, LOGOUT } from 'reducer/ActionType';
 import { getAuthToken, setAuthToken, removeAuthToken } from 'reducer/StateHolder';
 
-import { Action, AuthToken, SystemState } from 'util/Interface';
+import { AuthToken } from 'api/auth';
+
+import { Action, SystemState } from 'util/Interface';
 
 const initialState: SystemState = {
     authToken: getAuthToken()

@@ -4,14 +4,13 @@ import { connect } from 'react-redux';
 
 import Card from 'component/common/Card';
 import Form, { Input } from 'component/common/Form';
+import Image from 'component/common/Image';
 
-import FileApi from 'api/file';
+import FileApi, { FileUploadResponse } from 'api/file';
 
 import { isNull } from 'util/AppUtil';
 import { InputType } from 'util/Enum';
-import { FileUploadResponse } from 'util/Interface';
 import Notify from 'util/Notify';
-import Image from 'component/common/Image';
 
 export interface ImageExampleProps { }
 

@@ -1,4 +1,4 @@
-import { Role } from 'util/Enum';
+import { AuthToken } from 'api/auth';
 
 // common
 export interface Record<K, V> {
@@ -17,22 +17,11 @@ export interface Action<T> {
 }
 
 // api
-export interface AuthToken {
-    name: string;
-    role: Role;
-    tokenString: string;
-    expiryDate: Date;
-}
-
 export interface ApiResponse<T> {
     success: boolean;
     data: T;
     message: string;
 }
-
-export interface AuthResponse extends ApiResponse<AuthToken> { }
-
-export interface FileUploadResponse extends ApiResponse<void> { }
 
 // component/layout
 export interface SidebarItem {

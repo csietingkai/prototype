@@ -7,6 +7,7 @@ import { AngleDownIcon, AngleUpIcon } from 'component/common/Icons';
 import { Variant } from 'util/Enum';
 
 export interface CardProps {
+    icon?: JSX.Element;
     title: string;
     accent?: Variant;
     border?: Variant; // notice: if border and accent exist at the same time, accent will become border style and render together
@@ -22,6 +23,11 @@ export interface CardState {
 }
 
 export default class Card extends React.Component<CardProps, CardState> {
+
+    public static defaultProps: Partial<CardProps> = {
+        textCenter: false,
+        collapsable: false
+    };
 
     constructor(props: CardProps) {
         super(props);
@@ -52,7 +58,7 @@ export default class Card extends React.Component<CardProps, CardState> {
     };
 
     render() {
-        const { title, accent, border, background, textCenter, collapsable, footer, children } = this.props;
+        const { icon, title, accent, border, background, textCenter, collapsable, footer, children } = this.props;
         const { collapseOpen } = this.state;
         const cardClassName = classNames(
             (accent ? `card-accent-${accent}` : ''),
@@ -69,6 +75,7 @@ export default class Card extends React.Component<CardProps, CardState> {
         return (
             <RbCard className={cardClassName}>
                 <RbCard.Header>
+                    {icon}
                     <strong>{title}</strong>
                     {collapsable && <div className='card-actions' onClick={this.toggle}><Button variant='link'>{collapseIcon}</Button></div>}
                 </RbCard.Header>

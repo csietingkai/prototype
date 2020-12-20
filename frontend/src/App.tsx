@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Route, Redirect, Switch, RouteChildrenProps } from 'react-router-dom';
 
@@ -13,16 +13,11 @@ import Breadcrumb from 'component/layout/Breadcrumb';
 import Footer from 'component/layout/Footer';
 import Header from 'component/layout/Header';
 import Sidebar from 'component/layout/Sidebar';
-import DashBoard from 'view/DashBoard';
-import CardsExample from 'view/CardExample';
-import FormExample from 'view/FormExample';
 
-import AuthApi from 'api/auth';
+import AuthApi, { AuthResponse, AuthToken } from 'api/auth';
 
-import { AuthResponse, AuthToken } from 'util/Interface';
 import Notify from 'util/Notify';
 import { InputType } from 'util/Enum';
-import SwitchExample from 'view/ImageExample';
 import { APP_ROUTES } from 'util/Constant';
 
 export interface AppProps extends RouteChildrenProps<any> {

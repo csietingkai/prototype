@@ -4,7 +4,8 @@ import { RouteChildrenProps } from 'react-router-dom';
 
 import { SignInAltIcon, SignOutAltIcon } from 'component/common/Icons';
 
-import { AuthToken } from 'util/Interface';
+import { AuthToken } from 'api/auth';
+
 import Notify from 'util/Notify';
 
 export interface HeaderProps extends RouteChildrenProps<any> {

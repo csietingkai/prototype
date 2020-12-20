@@ -55,7 +55,7 @@ export interface FileInput extends BaseInput {
 export type Input = TextInput | TextareaInput | SelectInput | RadioInput | CheckboxInput | FileInput;
 
 export interface FormProps {
-    singleRow: boolean;
+    singleRow?: boolean;
     inputs: Input[];
     onChange: (formState: any) => void;
 }
@@ -67,6 +67,10 @@ export interface FormState {
 export default class Form extends React.Component<FormProps, FormState> {
 
     formRef = React.createRef<HTMLFormElement>();
+
+    public static defaultProps: Partial<FormProps> = {
+        singleRow: false
+    };
 
     constructor(props: FormProps) {
         super(props);

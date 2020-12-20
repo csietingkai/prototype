@@ -18,6 +18,12 @@ export interface ModalState {
 
 export default class Modal extends React.Component<ModalProps, ModalState> {
 
+    public static defaultProps: Partial<ModalProps> = {
+        headerText: 'Notice',
+        okBtnText: 'OK',
+        cancelBtnText: 'Cancel'
+    };
+
     constructor(props: ModalProps) {
         super(props);
         this.state = {
@@ -36,10 +42,7 @@ export default class Modal extends React.Component<ModalProps, ModalState> {
     };
 
     render() {
-        let { headerText, okBtnText, cancelBtnText } = this.props;
-        headerText = headerText || 'Notice';
-        okBtnText = okBtnText || 'OK';
-        cancelBtnText = cancelBtnText || 'Cancel';
+        const { headerText, okBtnText, cancelBtnText } = this.props;
         return (
             <RbModal show={this.state.isShow} size={this.props.size} onHide={this.toggle} centered={this.props.verticalCentered}>
                 <RbModal.Header>{headerText}</RbModal.Header>
