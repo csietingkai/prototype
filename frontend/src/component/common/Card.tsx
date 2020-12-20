@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import { Button, Card as RbCard, Collapse } from 'react-bootstrap';
+import { Card as RbCard, Collapse } from 'react-bootstrap';
 
+import Button from 'component/common/Button';
 import { AngleDownIcon, AngleUpIcon } from 'component/common/Icons';
 
 import { Variant } from 'util/Enum';

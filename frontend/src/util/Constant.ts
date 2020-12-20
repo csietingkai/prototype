@@ -1,4 +1,4 @@
-import { AddressCardIcon, BoxesIcon, EditIcon, ImagesIcon, TableIcon, TachometerAltIcon, TextHeightIcon, TintIcon } from 'component/common/Icons';
+import { AddressCardIcon, BoxesIcon, EditIcon, ImagesIcon, PlayCircleIcon, TableIcon, TachometerAltIcon, TextHeightIcon, TintIcon } from 'component/common/Icons';
 import { ToastOptions, ToastPosition } from 'react-toastify';
 import CardsExample from 'view/CardExample';
 import ColorExample from 'view/ColorExample';
@@ -10,6 +10,7 @@ import TypographyExample from 'view/TypographyExample';
 import { isArrayEmpty } from 'util/AppUtil';
 import { Record, SidebarItem } from 'util/Interface';
 import TableExample from 'view/TableExample';
+import ButtonExample from 'view/ButtonExample';
 
 // general
 export const API_URL: string = process.env.API_URL;
@@ -78,6 +79,12 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
         url: '/base',
         icon: BoxesIcon(),
         children: [
+            {
+                name: 'Buttons',
+                url: '/button',
+                icon: PlayCircleIcon(),
+                component: ButtonExample
+            },
             {
                 name: 'Cards',
                 url: '/card',

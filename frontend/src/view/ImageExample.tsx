@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
+import Button from 'component/common/Button';
 import Card from 'component/common/Card';
 import Form, { Input } from 'component/common/Form';
 import Image from 'component/common/Image';
@@ -64,7 +65,7 @@ class ImageExample extends React.Component<ImageExampleProps, ImageExampleState>
                                 onChange={(formState: any) => { this.setState({ file: formState.file }); }}
                             />
                             <div className='form-actions'>
-                                <Button type='submit' variant='primary' onClick={this.upload}>Upload</Button>
+                                <Button variant='primary' onClick={this.upload}>Upload</Button>
                             </div>
                         </Card>
                     </Col>
