@@ -95,6 +95,12 @@ export default class Table extends React.Component<TableProps, TableState> {
         }
         startPage += startPageFix;
         endPage += endPageFix;
+        if (startPage < firstPage) {
+            startPage = firstPage;
+        }
+        if (endPage > maxPage) {
+            endPage = maxPage;
+        }
         const pagination = [];
         for (let page = startPage; page <= endPage; page++) {
             pagination.push(
