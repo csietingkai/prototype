@@ -7,6 +7,8 @@ import { ToastContainer } from 'react-toastify';
 
 // components
 import App from 'App';
+import Page404 from 'view/Page404';
+import Page500 from 'view/Page500';
 
 // reducer
 import store, { validateToken } from 'reducer/Store';
@@ -31,8 +33,8 @@ const app = (
     <Provider store={store}>
         <Router>
             <Switch>
-                {/* <Route exact path='/404' name='Page 404' component={Page404} /> */}
-                {/* <Route exact path='/500' name='Page 500' component={Page500} /> */}
+                <Route exact path='/404' name='Page 404' component={Page404} />
+                <Route exact path='/500' name='Page 500' component={Page500} />
                 <Route path='/' name='Home' component={App} />
             </Switch>
         </Router>
