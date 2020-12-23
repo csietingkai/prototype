@@ -102,16 +102,18 @@ export default class Table extends React.Component<TableProps, TableState> {
             endPage = maxPage;
         }
         const pagination = [];
-        for (let page = startPage; page <= endPage; page++) {
-            pagination.push(
-                <Pagination.Item
-                    key={`table-${id}-page-${page}`}
-                    active={this.getPageByIndex(current, countPerPage) === page}
-                    onClick={this.onPageNumClick(page)}
-                >
-                    {page + 1}
-                </Pagination.Item>
-            );
+        if (data.length) {
+            for (let page = startPage; page <= endPage; page++) {
+                pagination.push(
+                    <Pagination.Item
+                        key={`table-${id}-page-${page}`}
+                        active={this.getPageByIndex(current, countPerPage) === page}
+                        onClick={this.onPageNumClick(page)}
+                    >
+                        {page + 1}
+                    </Pagination.Item>
+                );
+            }
         }
 
         return (
