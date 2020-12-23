@@ -1,4 +1,5 @@
 import * as React from 'react';
+import axios from 'axios';
 import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Route, Redirect, Switch, RouteChildrenProps } from 'react-router-dom';
@@ -16,9 +17,10 @@ import Sidebar from 'component/layout/Sidebar';
 
 import AuthApi, { AuthResponse, AuthToken } from 'api/auth';
 
+import { getAuthHeader } from 'util/AppUtil';
 import Notify from 'util/Notify';
 import { InputType } from 'util/Enum';
-import { APP_ROUTES } from 'util/Constant';
+import { API_URL, APP_ROUTES } from 'util/Constant';
 
 export interface AppProps extends RouteChildrenProps<any> {
     authToken?: AuthToken;
@@ -41,7 +43,25 @@ class App extends React.Component<AppProps, AppState> {
             username: '',
             password: ''
         };
+        this.setAxios();
     }
+
+    private setAxios = () => {
+        axios.defaults.baseURL = API_URL;
+        axios.defaults.headers = getAuthHeader();
+        axios.interceptors.response.use((response) => response, (error) => {
+            const { status } = error.response.data;
+            if (status === 403) {
+                Notify.warning('Maybe You Need to Login First.');
+            } else if (status === 404) {
+                this.props.history.push('/404');
+            } else if (status === 500) {
+                this.props.history.push('/500');
+            }
+            throw error;
+        });
+    };
+
 
     private togglLoginModal = () => {
         this.setState({ loginModalOpen: !this.state.loginModalOpen });
