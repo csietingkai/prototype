@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import io.tingkai.prototype.enumeration.FileType;
 
 /**
- * repository store compressed file, eg: zip, rar, 7z, tar.gz
+ * repository store compressed file, eg: zip, rar, 7z, tar.gz, gzip
  * 
  * @author tingkai
  */
@@ -15,6 +15,6 @@ import io.tingkai.prototype.enumeration.FileType;
 public class CompressRepository extends FileRepository {
 
 	public CompressRepository() {
-		super(Arrays.asList(FileType.ZIP, FileType.RAR, FileType.ZIP7, FileType.TARGZ));
+		super(Arrays.asList(FileType.ZIP, FileType.RAR, FileType.ZIP7, FileType.TARGZ, FileType.GZIP));
 	}
 }

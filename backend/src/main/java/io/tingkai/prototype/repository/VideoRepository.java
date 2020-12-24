@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import io.tingkai.prototype.enumeration.FileType;
 
 /**
- * repository store video file, eg: mp4, mkv
+ * repository store video file, eg: mp4, mkv, wmv, avi
  * 
  * @author tingkai
  */
@@ -15,6 +15,6 @@ import io.tingkai.prototype.enumeration.FileType;
 public class VideoRepository extends FileRepository {
 
 	public VideoRepository() {
-		super(Arrays.asList(FileType.MP4, FileType.MKV));
+		super(Arrays.asList(FileType.MP4, FileType.MKV, FileType.WMV, FileType.AVI));
 	}
 }

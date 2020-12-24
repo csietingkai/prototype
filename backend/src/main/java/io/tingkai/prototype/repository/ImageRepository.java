@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import io.tingkai.prototype.enumeration.FileType;
 
 /**
- * repository store image file, eg: png, jpeg, jpg, gif
+ * repository store image file, eg: png, jpeg, jpg, gif, svg, bmp, ico
  * 
  * @author tingkai
  */
@@ -15,6 +15,6 @@ import io.tingkai.prototype.enumeration.FileType;
 public class ImageRepository extends FileRepository {
 
 	public ImageRepository() {
-		super(Arrays.asList(FileType.PNG, FileType.JPEG, FileType.JPG, FileType.GIF));
+		super(Arrays.asList(FileType.PNG, FileType.JPEG, FileType.JPG, FileType.GIF, FileType.SVG, FileType.BMP, FileType.ICO));
 	}
 }

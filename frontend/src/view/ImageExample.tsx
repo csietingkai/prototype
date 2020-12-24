@@ -52,7 +52,7 @@ class ImageExample extends React.Component<ImageExampleProps, ImageExampleState>
                             <Form
                                 singleRow
                                 inputs={[
-                                    { key: 'file', title: 'File input', type: InputType.file }
+                                    { key: 'file', title: 'File input', type: InputType.file, accept: 'video' }
                                 ].map(x => {
                                     const input: Input = { ...x, value: this.state.file } as Input;
                                     if (input.type === 'checkbox' && isNull(input.value)) {

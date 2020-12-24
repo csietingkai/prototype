@@ -9,8 +9,14 @@ import io.tingkai.prototype.util.AppUtil;
  */
 public enum FileType {
 
-	PNG("png"), JPEG("jpeg"), JPG("jpg"), GIF("gif"), MP4("mp4"), MKV("mkv"), MP3("mp3"), FLAC("flac"), M4A("m4a"), AAC("aac"), WAV("wav"), DOC("doc"), DOCX("docx"), XLS("xls"), XLSX("xlsx"), PPT("ppt"), PPTX("pptx"), PDF("pdf"), CSV("csv"), ZIP("zip"), RAR("rar"), ZIP7("7z"), TARGZ("tar.gz"), OTHER("");
-
+	// @formatter:off
+	PNG("png"), JPEG("jpeg"), JPG("jpg"), GIF("gif"), SVG("svg"), BMP("bmp"), ICO("ico"), 
+	MP4("mp4"), MKV("mkv"), WMV("wmv"), AVI("AVI"), 
+	MP3("mp3"), FLAC("flac"), M4A("m4a"), AAC("aac"), WAV("wav"), OGG("ogg"), 
+	DOC("doc"), DOCX("docx"), XLS("xls"), XLSX("xlsx"), PPT("ppt"), PPTX("pptx"), PDF("pdf"), CSV("csv"), TXT("txt"), 
+	ZIP("zip"), RAR("rar"), ZIP7("7z"), TARGZ("tar.gz"), GZIP("gzip"), 
+	OTHER("");
+	// @formatter:on
 	String value;
 	String endString;
 
