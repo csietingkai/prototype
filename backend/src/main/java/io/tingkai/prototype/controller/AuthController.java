@@ -75,7 +75,7 @@ public class AuthController {
 	public AuthResponse validate(@RequestParam String tokenString) {
 		AuthToken token = this.authTokenService.validate(tokenString);
 		if (AppUtil.isPresent(token)) {
-			return new AuthResponse(true, token, MessageConstant.LOGIN_SUCCESS);
+			return new AuthResponse(true, token, MessageConstant.LOGIN_SUCCESS, token.getName());
 		} else {
 			return new AuthResponse(false, null, MessageConstant.AUTH_TOKEN_EXPIRE);
 		}
