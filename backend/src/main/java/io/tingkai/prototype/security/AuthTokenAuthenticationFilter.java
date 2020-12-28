@@ -20,6 +20,7 @@ import org.springframework.web.filter.GenericFilterBean;
 
 import io.tingkai.prototype.constant.CodeConstants;
 import io.tingkai.prototype.enumeration.Role;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Filter Layer of Spring, filter token string send with request is passed or
@@ -27,6 +28,7 @@ import io.tingkai.prototype.enumeration.Role;
  * 
  * @author tingkai
  */
+@Slf4j
 @Component
 public class AuthTokenAuthenticationFilter extends GenericFilterBean {
 
@@ -58,7 +60,7 @@ public class AuthTokenAuthenticationFilter extends GenericFilterBean {
 					}
 				} catch (AuthenticationException e) {
 					SecurityContextHolder.getContext().setAuthentication(null);
-					e.printStackTrace();
+					log.info(e.getMessage() + "tokenString: " + authTokenString);
 				}
 			} else {
 				SecurityContextHolder.getContext().setAuthentication(null);

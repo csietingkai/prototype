@@ -47,33 +47,9 @@ export interface CheckboxInput extends BaseInput {
     inline?: boolean;
 }
 
-type FileAcceptType = 'image' | 'sound' | 'video' | 'document' | 'compress' | 'other';
-const isFileAcceptType = (arg: string): boolean => {
-    return ['image', 'sound', 'video', 'document', 'compress', 'other'].findIndex(x => x === arg) >= 0;
-};
-const convertAcception = (acceptType: string): string => {
-    if (isFileAcceptType(acceptType)) {
-        if (acceptType === 'image') {
-            return '.png, .jpeg, .jpg, .gif, .svg, .bmp, .ico';
-        } else if (acceptType === 'sound') {
-            return '.mp3, .flac, .m4a, .aac, .wav, .ogg';
-        } else if (acceptType === 'video') {
-            return 'mp4, .mkv, .wmv, .avi';
-        } else if (acceptType === 'document') {
-            return '.doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, .csv .txt';
-        } else if (acceptType === 'compress') {
-            return '.zip, .rar, .7z, .tar.gz, .gzip';
-        } else {
-            return undefined;
-        }
-    } else {
-        return acceptType;
-    }
-};
 export interface FileInput extends BaseInput {
     type: InputType.file;
     value: any;
-    accept?: FileAcceptType | string;
 }
 
 export type Input = TextInput | TextareaInput | SelectInput | RadioInput | CheckboxInput | FileInput;
@@ -137,7 +113,7 @@ export default class Form extends React.Component<FormProps, FormState> {
         }
     };
 
-    private onFileChange = (key: string) => (event: any) => {
+    private onFileChange = (key: string) => () => {
         const { formRef } = this;
         const { values: form } = this.state;
         const input = formRef.current.querySelector(`#form-${key}`);
@@ -261,7 +237,6 @@ export default class Form extends React.Component<FormProps, FormState> {
                     </RbForm.Group>
                 );
             } else if (type === InputType.file) {
-                const fileInput: FileInput = input as FileInput;
                 inputElement = (
                     <RbForm.File
                         id={`form-${key}`}
@@ -269,7 +244,6 @@ export default class Form extends React.Component<FormProps, FormState> {
                         onChange={onFileChange}
                         disabled={disabled}
                         custom
-                        accept={convertAcception(fileInput.accept)}
                     />
                 );
             } else {

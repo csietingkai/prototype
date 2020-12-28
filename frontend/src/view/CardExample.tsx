@@ -108,4 +108,4 @@ const mapStateToProps = () => {
     return {};
 };
 
-export default connect(mapStateToProps)(CardExample);;
+export default connect(mapStateToProps)(CardExample);

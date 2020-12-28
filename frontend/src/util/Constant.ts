@@ -1,16 +1,18 @@
-import { AddressCardIcon, BoxesIcon, EditIcon, ImagesIcon, PlayCircleIcon, TableIcon, TachometerAltIcon, TextHeightIcon, TintIcon } from 'component/common/Icons';
 import { ToastOptions, ToastPosition } from 'react-toastify';
+
+import { AddressCardIcon, BoxesIcon, ChartPieIcon, ImagesIcon, PlayCircleIcon, TableIcon, TachometerAltIcon, TextHeightIcon, TintIcon } from 'component/common/Icons';
+
+import ButtonExample from 'view/ButtonExample';
 import CardsExample from 'view/CardExample';
+import ChartExample from 'view/ChartExample';
 import ColorExample from 'view/ColorExample';
 import DashBoard from 'view/DashBoard';
 import FormExample from 'view/FormExample';
 import ImageExample from 'view/ImageExample';
-import TypographyExample from 'view/TypographyExample';
+import TableExample from 'view/TableExample';
 
 import { isArrayEmpty } from 'util/AppUtil';
 import { Record, SidebarItem } from 'util/Interface';
-import TableExample from 'view/TableExample';
-import ButtonExample from 'view/ButtonExample';
 
 // general
 export const API_URL: string = process.env.API_URL;
@@ -63,12 +65,6 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
         icon: TintIcon(),
         component: ColorExample
     },
-    // {
-    //     name: 'Typographys',
-    //     url: '/typography',
-    //     icon: EditIcon(),
-    //     component: TypographyExample
-    // },
     {
         name: 'Component',
         type: 'wrapper'
@@ -110,7 +106,13 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
                 component: TableExample
             }
         ]
-    }
+    },
+    {
+        name: 'Charts',
+        url: '/chart',
+        icon: ChartPieIcon(),
+        component: ChartExample
+    },
 ];
 
 // breadcrumbs
