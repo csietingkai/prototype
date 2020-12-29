@@ -31,8 +31,8 @@ backend_image_name=$user/$project_name-backend
 frontend_image_name=$user/$project_name-frontend
 
 container_prefix=$project_name
-backend_container_name=$container_prefix-api
-frontend_container_name=$container_prefix-client
+backend_container_name=$container_prefix-backend
+frontend_container_name=$container_prefix-frontend
 
 if [ "$1" = 'localhost' ]; then
 	if [ "$2" = 'server' ]; then

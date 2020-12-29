@@ -60,7 +60,7 @@ module.exports = () => {
             new webpack.DefinePlugin(envKeys)
         ],
         devServer: {
-            port: 3001
+            port: 3000
         }
     }
 };
