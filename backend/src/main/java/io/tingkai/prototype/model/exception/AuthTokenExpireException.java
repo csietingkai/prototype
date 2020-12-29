@@ -8,8 +8,9 @@ import io.tingkai.prototype.constant.MessageConstant;
  * 
  * @author tingkai
  */
-@SuppressWarnings("serial")
 public class AuthTokenExpireException extends BaseException {
+
+	private static final long serialVersionUID = 7390528937436214867L;
 
 	public AuthTokenExpireException() {
 		super(MessageConstant.AUTH_TOKEN_EXPIRE);

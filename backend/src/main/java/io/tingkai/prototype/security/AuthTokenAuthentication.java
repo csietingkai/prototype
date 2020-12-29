@@ -13,8 +13,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
  * 
  * @author tingkai
  */
-@SuppressWarnings("serial")
 public class AuthTokenAuthentication implements Authentication {
+
+	private static final long serialVersionUID = 3476207526350034201L;
 
 	protected boolean isAuthenticated;
 

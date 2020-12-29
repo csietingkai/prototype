@@ -11,9 +11,9 @@ import lombok.Data;
  * 
  * @author tingkai
  */
-@SuppressWarnings("serial")
 @Data
 public class AuthToken implements Serializable {
+	private static final long serialVersionUID = 3013734004152704512L;
 	private String name;
 	private Role role;
 	private String tokenString;
