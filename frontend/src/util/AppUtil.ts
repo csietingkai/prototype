@@ -54,6 +54,10 @@ export const firstDigitUppercase = (str: string): string => {
     return substr(str, 0, 1).toUpperCase() + substr(str, 1);
 };
 
+export const toNumber = (obj: any, defaultVal: number = 0): number => {
+    return parseFloat(obj) || defaultVal;
+};
+
 export const find = <K, V>(records: Record<K, V>[], key: K): boolean => {
     const record = records.find(x => x.key === key);
     return !!record;

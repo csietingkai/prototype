@@ -6,7 +6,7 @@ import Card from 'component/common/Card';
 import Form, { Input } from 'component/common/Form';
 
 import { Record } from 'util/Interface';
-import { isNull } from 'util/AppUtil';
+import { isNull, isNumber } from 'util/AppUtil';
 import { InputType } from 'util/Enum';
 
 export interface FormExampleProps { }
@@ -55,6 +55,7 @@ class FormExample extends React.Component<FormExampleProps, FormExampleState> {
                                 singleRow
                                 inputs={[
                                     { key: 'text', title: 'Text Input', type: InputType.text },
+                                    { key: 'numeric', title: 'Numeric Input', type: InputType.numeric },
                                     { key: 'email', title: 'Email Input', type: InputType.email },
                                     { key: 'password', title: 'Password', type: InputType.password, helpText: 'Please enter a complex password' },
                                     { key: 'textarea', title: 'Textarea', type: InputType.textarea },
@@ -66,6 +67,8 @@ class FormExample extends React.Component<FormExampleProps, FormExampleState> {
                                     const input: Input = { ...x, value: values[x.key] } as Input;
                                     if (input.type === 'checkbox' && isNull(input.value)) {
                                         input.value = {};
+                                    } else if (input.type === 'numeric' && !isNumber(input.value)) {
+                                        input.value = 0;
                                     } else if (isNull(input.value)) {
                                         input.value = '';
                                     }
