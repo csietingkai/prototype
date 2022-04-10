@@ -1,6 +1,6 @@
 version: "3"
 
-# port for this project used: 1100 ~ 1149
+# port for this project used: 1051 ~ 1075
 
 services:
   postgres:
